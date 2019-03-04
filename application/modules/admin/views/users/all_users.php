@@ -27,18 +27,18 @@ exit('No direct script access allowed');  ?>
 				</th>
 				<th>Image
 				</th>
-				<th>First Name
+				<th><a href="<?php echo site_url()."users/all-users/first_name/". $order_method."/".$page;?>">First Name</a>   
 				</th>
-				<th>Last Name
+				<th><a href="<?php echo site_url()."users/all-users/last_name/". $order_method."/".$page;?>">Last Name</a>   
+				<th>
+				<th><a href="<?php echo site_url()."users/all-users/phone_number/". $order_method."/".$page;?>">Phone Number</a>  
 				</th>
-				<th>Phone No.
+				<th><a href="<?php echo site_url()."users/all-users/username/". $order_method."/".$page;?>">Username</a>  
 				</th>
-				<th>Username
-				</th>
-				<th>Email
+				<th><a href="<?php echo site_url()."users/all-users/user_email/". $order_method."/".$page;?>">Email</a>  
 				</th>
 				
-				<th>Status
+				<th><a href="<?php echo site_url()."users/all-users/user_status/". $order_method."/".$page;?>">Status</a>  
 				</th>
 				<th>Actions
 				</th>

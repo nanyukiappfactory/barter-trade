@@ -21,14 +21,22 @@ class Users extends Admin
         $this->load->library('session');
         $table = 'user';
     }
-    public function view_user($start = null)
+    public function view_user($order='user.first_name',$order_method='ASC')
     {
         //Pagination
         $segment = 5;
         $table = 'user';
-        $order = 'user.created_on';
-        $order_method = 'ASC';
         $where = 'deleted = 0';
+        $user_search= $this->session->userdata("search_user");
+        
+        if(!empty($user_search)&& ($user_search != null))
+        {
+            $where=array(
+                'deleted'=> 0,
+                "first_name"=>$user_search,        
+            );
+            var_dump($where);die();
+        }
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -50,7 +58,7 @@ class Users extends Admin
         $config['last_tagl_close'] = '</span></li>';
         $this->pagination->initialize($config);
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
-        $query = $this->Users_model->get_user($table, $where, $start, $config["per_page"], $page, $order, $order_method);
+        $query = $this->Users_model->get_user($table, $where, $config["per_page"], $page, $order, $order_method);
         if ($order_method == 'DESC') {
             $order_method = 'ASC';
         } else {
@@ -75,19 +83,27 @@ class Users extends Admin
         $this->load->view("site/layouts/layout", $data);
 
     }
+    // public function execute_search()
+    // {
+    //     $data=$this->Users_model->get_results();
+    //     $this->session->set_userdata('search_term',$data);
+    //     if(!isset($_SESSION['search_term']))
+    //     {
+    //      echo "wrong input" ; 
+    //     }
+    //     else
+    //     {
+    //         redirect("users/all-users");
+    //     }
+        
+    // }
     public function execute_search()
     {
-        $data=$this->Users_model->get_results();
-        $this->session->set_userdata('search_term',$data);
-        if(!isset($_SESSION['search_term']))
-        {
-         echo "wrong input" ; 
-        }
-        else
-        {
-            redirect("users/all-users");
-        }
-        
+        // Retrieve the posted search term.
+        $search_term = $this->input->post('search');
+        $this->session->set_userdata("search_user", $search_term);
+
+        redirect("users/all-users");
     }
     public function add_user()
     {

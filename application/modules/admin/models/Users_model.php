@@ -29,11 +29,21 @@ class Users_model extends CI_Model
            return false;
         }
     }
-    public function get_user($table, $where, $start,$limit,$page,  $order, $order_method)
+    public function get_user($table, $where, $limit, $page,  $order, $order_method)
     {
-        $this->db->select("*");
-        $this->db->from($table);
-        $this->db->where($where);
+       
+       
+        
+        // var_dump($search_term );die();
+        
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->where("deleted", 0);
+        $this->db->like('first_name');
+        $this->db->or_like('user_email');
+        $this->db->or_like('username');
+        $this->db->or_like('phone_number');
+        $this->db->or_like('last_name');
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         $result= $this->db->get();
@@ -58,7 +68,7 @@ class Users_model extends CI_Model
     {
         $search_term = $this->input->post('search');
         $this->db->select('*');
-        $this->db->where("deleted",0);
+        $this->db->where("deleted", 0);
         $this->db->from('user');
         $this->db->like('first_name', $search_term);
         $this->db->or_like('user_email',$search_term);
