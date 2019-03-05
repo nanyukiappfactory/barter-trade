@@ -6,7 +6,7 @@
     <ul class="nav flex-column pl-5"> 
       
     <li>
-      <a class="nav-link" href="<?php echo base_url();?>users/all-users/">
+      <a class="nav-link" href="<?php echo base_url();?>users/all-users">
                   <i class="fas fa-users"></i>
                   Users
                 </a>

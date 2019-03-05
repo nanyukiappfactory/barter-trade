@@ -21,18 +21,26 @@ class Users extends Admin
         $this->load->library('session');
         $table = 'user';
     }
-    public function view_user($start = null)
+    public function view_user($order = 'user.first_name', $order_method = 'ASC')
     {
+        
         //Pagination
+        
         $segment = 5;
         $table = 'user';
-        $order = 'user.created_on';
-        $order_method = 'ASC';
         $where = 'deleted = 0';
+        //$where="user.user_id > 0 AND user.deleted=0";  
+        $where="deleted=0";  
+        // var_dump($search_user);die();
+        
+        $search_user=$this->session->userdata("search_user");
+        if (!empty($search_user) && $search_user != null) {
+            $where .= $search_user;
+            }
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
-        $config["per_page"] = 1;
+        $config["per_page"] = 2;
         $config['num_links'] = 3;
         $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
         $config['full_tag_close'] = '</ul></nav></div>';
@@ -50,24 +58,36 @@ class Users extends Admin
         $config['last_tagl_close'] = '</span></li>';
         $this->pagination->initialize($config);
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
-        $query = $this->Users_model->get_user($table, $where, $start, $config["per_page"], $page, $order, $order_method);
+        $query = $this->Users_model->get_user($table, $where, $config["per_page"], $page, $order, $order_method);      
+       
         if ($order_method == 'DESC') {
             $order_method = 'ASC';
         } else {
             $order_method = 'DESC';
         }
-        $search_term = $this->input->post('search');
-        $v_data = array(
-            "results" => $this->Users_model->get_results($search_term)
-        );
-        $v_data = array(
-            "all_users" => $query,
-            "order" => $order,
-            "order_method" => $order_method,
-            "page" => $page,
-            "links" => $this->pagination->create_links(),
-        );
-       $data = array
+      
+        //$v_data['users']=$query;  
+    //     $all_users=array();
+    //    foreach($query->result() as $users){
+           
+    //        array_push($all_users, array(
+    //         "first_name"=>$users->first_name,
+    //         "last_name"=>$users->last_name,
+    //         "username"=>$users->username
+    //        ));
+
+    //    }
+       
+       $v_data = array(
+        "all_users"=>$query,
+        "order" => $order,
+        "order_method" => $order_method,
+        "page" => $page,
+        "links" => $this->pagination->create_links(),
+        //"search_user"=>$all_users,
+        "results"=>$this->Users_model->get_results($search_user)
+    );
+        $data = array
        (
             "title" => "Users",
             "content" => $this->load->view("admin/users/all_users", $v_data, true),
@@ -77,13 +97,23 @@ class Users extends Admin
     }
     public function execute_search()
     {
-        // Retrieve the posted search term.
+        // Retrieve the posted search term. 
         $search_term = $this->input->post('search');
-        $this->session->set_userdata("search_user", $search_term);
-
+        // if (!empty($search_term)) {
+        //   $search_term= ' AND user.first_name = "' . $search_term . '"';
+        // //   $last_name= ' AND user.last_name = "' . $search_term . '"';
+        // $user_data=$search_term;
+        $this->session->set_userdata('search_user',  $search_term);
+        $data =$this->session->set_userdata('search_user');
+          var_dump($data);die();
         redirect("users/all-users");
-    }
-
+    //}
+}
+    public function close_search()
+        {
+        $this->session->unset_userdata('search_user',$user_data);
+        redirect("users/all-users");
+        }
     public function add_user()
     {
         //form validation

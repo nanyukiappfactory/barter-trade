@@ -29,11 +29,11 @@ class Users_model extends CI_Model
            return false;
         }
     }
-    public function get_user($table, $where,$start,$limit,$page,  $order, $order_method)
-    //$table, $where, $start, $config["per_page"], $page, $order, $order_method)
+    public function get_user($table, $where,$limit,$page,  $order, $order_method)
     {
+        $where="deleted=0";
         $this->db->select("*");
-        $this->db->from($table);
+        $this->db->from($table);    
         $this->db->where($where);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
@@ -54,10 +54,11 @@ class Users_model extends CI_Model
         $this->db->from($table);
         $this->db->where($where);
         return $this->db->count_all_results();
-}
+ }
     public function get_results()
     {
         $search_term = $this->input->post('search');
+       // $this->session->set_userdata("search_user", $search_term);
         $this->db->select('*');
         $this->db->where("deleted",0);
         $this->db->from('user');
@@ -68,8 +69,12 @@ class Users_model extends CI_Model
         $this->db->or_like('last_name',$search_term);
 // Execute the query.
         $query = $this->db->get();
+        
+
+
 // Return the results.
         return $query->result_array();
+        
     }
     public function delete($id){
         // Delete member data

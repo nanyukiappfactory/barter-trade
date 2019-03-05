@@ -21,7 +21,7 @@ exit('No direct script access allowed');  ?>
 		<button class="basic"  ><?php echo anchor ("users/add-user/", "add user", array('style'=>"font-color:black;")); ?></button>
 		</div>
 		</div>		
-		<table class="table table-sm">
+		<table class="table table-sm table-bordered">
 			<tr>
 				<th>Count
 				</th>
@@ -30,14 +30,13 @@ exit('No direct script access allowed');  ?>
 				<th><a href="<?php echo site_url()."users/all-users/first_name/". $order_method."/".$page;?>">First Name</a>   
 				</th>
 				<th><a href="<?php echo site_url()."users/all-users/last_name/". $order_method."/".$page;?>">Last Name</a>   
-				<th>
+				</th>
 				<th><a href="<?php echo site_url()."users/all-users/phone_number/". $order_method."/".$page;?>">Phone Number</a>  
 				</th>
 				<th><a href="<?php echo site_url()."users/all-users/username/". $order_method."/".$page;?>">Username</a>  
 				</th>
 				<th><a href="<?php echo site_url()."users/all-users/user_email/". $order_method."/".$page;?>">Email</a>  
 				</th>
-				
 				<th><a href="<?php echo site_url()."users/all-users/user_status/". $order_method."/".$page;?>">Status</a>  
 				</th>
 				<th>Actions
