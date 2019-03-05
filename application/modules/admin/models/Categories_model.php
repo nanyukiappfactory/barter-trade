@@ -5,11 +5,12 @@ if (!defined('BASEPATH')) {
 
 class Categories_model extends CI_Model
 {
+    
+    public $table="category";
     public function __construct()
     {
         parent::__construct();
     }
-
     public function save_category($upload_response)
     {
         $file_name = $upload_response['file_name'];
@@ -31,11 +32,29 @@ class Categories_model extends CI_Model
     }
 
     //get category from the db
-    public function get_category()
+    public function get_category($table, $where,$limit,$page,$order,$order_method)
     {
-        $this->db->where("deleted", 0);
-        return $result = $this->db->get("category");
-
+        $where="deleted=0";
+        $this->db->select("*");
+        $this->db->from($table);    
+        $this->db->where($where);
+        $this->db->limit($limit, $page);
+        $this->db->order_by($order, $order_method);
+        $result= $this->db->get();
+        return $result;
+    }
+    public function get_results()
+    {
+        $search_term = $this->input->post('search');
+       // $this->session->set_userdata("search_user", $search_term);
+        $this->db->select('*');
+        $this->db->from('user');
+        $this->db->where("deleted",0);
+// Execute the query.
+        $query = $this->db->get();
+// Return the results.
+        return $query->result_array();
+        
     }
     
     public function get_single($category_id)

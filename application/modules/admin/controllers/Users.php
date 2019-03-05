@@ -30,7 +30,6 @@ class Users extends Admin
         $table = 'user';
         $where = 'deleted = 0';
         //$where="user.user_id > 0 AND user.deleted=0";  
-        $where="deleted=0";  
         // var_dump($search_user);die();
         
         $search_user=$this->session->userdata("search_user");
@@ -66,18 +65,6 @@ class Users extends Admin
             $order_method = 'DESC';
         }
       
-        //$v_data['users']=$query;  
-    //     $all_users=array();
-    //    foreach($query->result() as $users){
-           
-    //        array_push($all_users, array(
-    //         "first_name"=>$users->first_name,
-    //         "last_name"=>$users->last_name,
-    //         "username"=>$users->username
-    //        ));
-
-    //    }
-       
        $v_data = array(
         "all_users"=>$query,
         "order" => $order,

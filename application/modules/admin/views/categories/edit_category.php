@@ -29,17 +29,17 @@
                                 <select name="category_parent" class="form-control">
                                     <option selected="selected">no_parent</option>
                                     <?php
-foreach ($category->result() as $rows) {
-    $category_id = $rows->category_id;
-    $category_name = $rows->category_name;
+                                        foreach ($category->result() as $rows) {
+                                            $category_id = $rows->category_id;
+                                            $category_name = $rows->category_name;
 
-    ?>
+                                            ?>
 
                                     <option value="<?php echo $category_id ?>">
                                         <?php echo $category_name ?>
                                     </option>
                                     <?php }
-?>
+                                    ?>
 
                                 </select>
                             </div>
@@ -47,10 +47,7 @@ foreach ($category->result() as $rows) {
                                 <label>Category Name</label>
                                 <input type="text" class="form-control" name="category_name"
                                     placeholder="Enter category name" value="<?php echo $name?>">
-
                             </div>
-
-
                             <div class="form-group">
                                 <label>Category Image</label>
                                 <input type="file" id="category_image" name="category_image">
@@ -66,5 +63,4 @@ foreach ($category->result() as $rows) {
                         </div>
                         <?php echo form_close(); ?>
 </body>
-
 </html>

@@ -21,21 +21,80 @@ class Categories extends MX_Controller
         $this->upload_location = base_url() . "assets/uploads";
         $this->load->library("image_lib");
         $this->load->model("file_model");
+        $this->load->library('pagination');
 
     }
 
-    public function index()
+    public function index($order="category.category_name",$order_method="ASC")
     {
-        $v_data = array(
-            "all_categories" => $this->Categories_model->get_category(),
-        );
-
-        $data = array(
-            "title" => $this->site_model->display_page_title(),
+        //Pagination
+        
+        $segment = 5;
+        $table = 'category';
+        $where = 'deleted = 0';
+        //$where="user.user_id > 0 AND user.deleted=0";  
+        // var_dump($search_user);die();
+        
+        $search_category=$this->session->userdata("search_user");
+        if (!empty($search_category) && $search_category != null) {
+            $where .= $search_category;
+            }
+        $config['base_url'] = site_url() . 'categories/all-categories/' . $order . '/' . $order_method;
+        $config['total_rows'] = $this->site_model->get_count($table, $where);
+        $config['uri_segment'] = $segment;
+        $config["per_page"] = 2;
+        $config['num_links'] = 5;
+        $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
+        $config['full_tag_close'] = '</ul></nav></div>';
+        $config['num_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close'] = '</span></li>';
+        $config['cur_tag_open'] = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close'] = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close'] = '</span></li>';
+        $config['first_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close'] = '</span></li>';
+        $config['last_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close'] = '</span></li>';
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
+        $query = $this->Categories_model->get_category($table, $where, $config["per_page"], $page, $order, $order_method);      
+       
+        if ($order_method == 'DESC') {
+            $order_method = 'ASC';
+        } else {
+            $order_method = 'DESC';
+        }
+      
+       $v_data = array(
+        "all_categories"=>$query,
+        "order" => $order,
+        "order_method" => $order_method,
+        "page" => $page,
+        "links" => $this->pagination->create_links(),
+        //"search_category"=>$all_categories,
+        "results"=>$this->Categories_model->get_results($search_category)
+    );
+        $data = array
+       (
+            "title" => "Categories",
             "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
-
         );
         $this->load->view("site/layouts/layout", $data);
+
+        //end ya mwanzo
+        // $v_data = array(
+        //     "all_categories" => $this->Categories_model->get_category(),
+        // );
+
+        // $data = array(
+        //     "title" => $this->site_model->display_page_title(),
+        //     "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
+
+        // );
+        // $this->load->view("site/layouts/layout", $data);
 
     }
 
