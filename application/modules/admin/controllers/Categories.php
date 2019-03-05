@@ -182,6 +182,7 @@ class Categories extends MX_Controller
         $v_data = array(
 
             "category" => $this->Categories_model->get_category(),
+            "name"=>$category_name
 
         );
 
