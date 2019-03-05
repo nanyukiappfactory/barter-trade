@@ -67,11 +67,11 @@ if ($all_categories->num_rows() > 0) {
                         <td>
 
                             <?php if ($check == 0) {
-                echo "<button class='badge badge-danger'> deactivated</button>";
-            } else {
-                echo "<button class= 'badge badge-success'>active</button>";
-            }
-            ?>
+                                    echo "<button class='badge badge-danger'> deactivated</button>";
+                                } else {
+                                    echo "<button class= 'badge badge-success'>active</button>";
+                                }
+                            ?>
                         </td>
 
                         <td>
@@ -106,9 +106,6 @@ if ($all_categories->num_rows() > 0) {
                                                     </th>
                                                     <th>Image
                                                     </th>
-
-                                                    <th>Actions
-                                                    </th>
                                                 </tr>
 
                                                 <tr>
@@ -124,31 +121,13 @@ if ($all_categories->num_rows() > 0) {
                                                     <td><img class="thumbnail" style="height: 100px; width: 100px;"
                                                             src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->category_image; ?>" />
                                                     </td>
-                                                    <td>
-
-
-                                                        <button class="btn btn-warning">
-                                                            <?php echo anchor("categories/edit-category/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
-                                                        <?php
-if ($check == 1) {
-                echo anchor("categories/deactivate-category/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
-
-            } else {
-                echo anchor("categories/activate-category/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
-            }
-
-            ?>
-                                                        <button class="btn btn-danger"
-                                                            onclick="return confirm('Are you sure to delete?')">
-                                                            <?php echo anchor("categories/delete-category/" . $id, "<i class='fas fa-trash-alt'></i>"); ?></button>
-                                                    </td>
+                                                    
                                                 </tr>
                                             </table>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>

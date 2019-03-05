@@ -45,8 +45,9 @@ foreach ($category->result() as $rows) {
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label>Category Name</label>
+                                
                                 <input type="text" class="form-control" name="category_name"
-                                    placeholder="Enter category name">
+                                    placeholder="Enter Category Name" value="<?php echo $category_name?>">
 
                             </div>
 
