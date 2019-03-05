@@ -41,7 +41,7 @@ class Users extends Admin
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
         $config["per_page"] = 2;
-        $config['num_links'] = 3;
+        $config['num_links'] = 5;
         $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
         $config['full_tag_close'] = '</ul></nav></div>';
         $config['num_tag_open'] = '<li class="page-item"><span class="page-link">';

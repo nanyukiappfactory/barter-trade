@@ -92,8 +92,6 @@ exit('No direct script access allowed');  ?>
 				</td>
 				<td>
 				<a href="#modalLoginAvatar<?php echo $id?>"  class="btn btn-primary" data-toggle="modal" data-target="#modalLoginAvatar<?php echo $id?>"><i class="fas fa-eye"></i></a>
-					<!-- Button trigger modal -->
-					
 				<button class="btn btn-warning"><?php echo anchor("users/edit-user/".$id,'<i class="fas fa-edit"></i>');?></button>
 					 <?php
 					 if($check==0){
@@ -106,9 +104,8 @@ exit('No direct script access allowed');  ?>
 					 }
 					 ?>
                     <button class="btn btn-danger" data-toggle='modal' onclick="return confirm('Are you sure to delete?')"> <?php echo anchor("users/delete-user/".$id,"<i class='fas fa-trash-alt'></i>");?></button>
-                     </td> </tr> <?php }}} ?>
-		</table>
-					<!-- Modal -->
+                     
+				</td> <!-- Button trigger modal -->
 					<div class="modal fade" id="modalLoginAvatar<?php echo $id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 					 aria-hidden="true">
 						<div  class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
@@ -141,7 +138,9 @@ exit('No direct script access allowed');  ?>
 								</div>
 							</div>
 						</div>
-					</div>	
+					</div>
+					</tr><?php }}} ?>
+					</table>
 		<?php echo $links;?>
 	</div>
 </body>
