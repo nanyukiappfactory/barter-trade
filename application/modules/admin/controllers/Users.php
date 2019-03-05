@@ -99,15 +99,15 @@ class Users extends Admin
     {
         // Retrieve the posted search term. 
         $search_term = $this->input->post('search');
-        // if (!empty($search_term)) {
-        //   $search_term= ' AND user.first_name = "' . $search_term . '"';
-        // //   $last_name= ' AND user.last_name = "' . $search_term . '"';
+        if (!empty($search_term)) {
+          $search_term= ' AND user.first_name = "' . $search_term . '"';
+        //   $last_name= ' AND user.last_name = "' . $search_term . '"';
         // $user_data=$search_term;
         $this->session->set_userdata('search_user',  $search_term);
         $data =$this->session->set_userdata('search_user');
           var_dump($data);die();
         redirect("users/all-users");
-    //}
+    }
 }
     public function close_search()
         {
