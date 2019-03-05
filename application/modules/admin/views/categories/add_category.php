@@ -56,7 +56,7 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <a href="<?php echo site_url('admin/categories/add_category'); ?>"
+                                        <a href="<?php echo site_url('categories/add-category/'); ?>"
                                             class="btn btn-secondary">Back</a>
                                         <input type="submit" name="submit" class="btn btn-success" value="Submit">
                                     </div>

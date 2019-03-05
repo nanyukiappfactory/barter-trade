@@ -45,9 +45,8 @@ foreach ($category->result() as $rows) {
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label>Category Name</label>
-                                
                                 <input type="text" class="form-control" name="category_name"
-                                    placeholder="Enter Category Name" value="<?php echo $category_name?>">
+                                    placeholder="Enter category name">
 
                             </div>
 
@@ -58,7 +57,7 @@ foreach ($category->result() as $rows) {
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <a href="<?php echo site_url('admin/categories/index'); ?>"
+                                        <a href="<?php echo site_url('categories/all-categories/'); ?>"
                                             class="btn btn-secondary">Back</a>
                                         <input type="submit" name="submit" class="btn btn-success" value="Submit">
                                     </div>

@@ -153,10 +153,13 @@ class Users_model extends CI_Model
             "profile_thumb"=> $thumb_name,
             "deleted"=>0,
             "modified_on"=>date("Y-m-d H:i:s")
-        );         
-        if( $this->db->update("user", $data)){
+        );  
+        
+        if("user.user_id>0"){
+        $this->db->where("user_id",$id);
+        $this->db->update("user", $data);
             return true;
-         }
+        }
          else{
             return false;
          }

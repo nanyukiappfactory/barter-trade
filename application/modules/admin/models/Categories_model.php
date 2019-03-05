@@ -104,7 +104,9 @@ class Categories_model extends CI_Model
             "modified_on" => date("Y-m-d H:i:s"),
         );
 
-        if ($this->db->update("category", $data)) {
+        if ("category.category_id>0"){
+            $this->db->where("category_id", $id);
+            $this->db->update("category", $data);
             return true;
         } else {
             return false;
