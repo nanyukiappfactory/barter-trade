@@ -20,7 +20,7 @@
         <div class="card shadow mb-4 mt-4">
             <div class="card-header py-3">
 
-                <?php echo anchor("categories/all-categories/", "add category"); ?>
+                <?php echo anchor("categories/add-category/", "add category"); ?>
                 <table class="table table-sm">
                     <tr>
                         <th>#
@@ -39,7 +39,7 @@
                     <?php
 
                         if ($all_categories->num_rows() > 0) {
-                            $count = 0;
+                            $count = $page;
                             foreach ($all_categories->result() as $row) {
                                 {
                                     $count++;

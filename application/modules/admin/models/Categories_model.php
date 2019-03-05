@@ -45,15 +45,12 @@ class Categories_model extends CI_Model
     }
     public function get_results()
     {
-        $search_term = $this->input->post('search');
-       // $this->session->set_userdata("search_user", $search_term);
-        $this->db->select('*');
-        $this->db->from('user');
-        $this->db->where("deleted",0);
+       
+        $this->db->where("category.deleted=0");
 // Execute the query.
-        $query = $this->db->get();
+        $query = $this->db->get("category");
 // Return the results.
-        return $query->result_array();
+        return $query;
         
     }
     

@@ -131,11 +131,10 @@ class Categories extends MX_Controller
         }
 
         $v_data = array("validation_errors" => validation_errors(),
-            "category" => $this->Categories_model->get_category(),
+            "category" => $this->Categories_model->get_results()
         );
-
+        // var_dump($v_data);die();
         $data = array(
-
             "title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("admin/categories/add_category", $v_data, true),
         );
@@ -148,7 +147,7 @@ class Categories extends MX_Controller
         // Retrieve the posted search term.
         $search_term = $this->input->post('search');
 
-        $v_data = array("results" => $this->Categories_model->get_category($search_term));
+        $v_data = array("results" => $this->Categories_model->get_cat($search_term));
 
         $data = array(
             "title" => $this->site_model->display_page_title(),
@@ -240,7 +239,7 @@ class Categories extends MX_Controller
 
         $v_data = array(
 
-            "category" => $this->Categories_model->get_category(),
+            "category" => $this->Categories_model->get_single($id),
             "name"=>$category_name
 
         );
