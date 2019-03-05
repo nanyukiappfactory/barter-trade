@@ -21,7 +21,7 @@ class Users extends Admin
         $this->load->library('session');
         $table = 'user';
     }
-    public function view_user($order = 'user.first_name', $order_method = 'ASC')
+    public function index($order = 'user.first_name', $order_method = 'ASC')
     {
         
         //Pagination

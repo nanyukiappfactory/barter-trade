@@ -28,7 +28,7 @@
                 </li>
                 <hr>
                 <li>
-      <a class="nav-link" href="<?php echo base_url();?>categories/index">
+      <a class="nav-link" href="<?php echo base_url();?>categories/all-categories/">
       <i class="fas fa-pizza-slice"></i>
                   Categories
                 </a>

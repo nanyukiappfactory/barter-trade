@@ -20,7 +20,7 @@
         <div class="card shadow mb-4 mt-4">
             <div class="card-header py-3">
 
-                <?php echo anchor("admin/categories/add_category/", "add category"); ?>
+                <?php echo anchor("categories/all-categories/", "add category"); ?>
                 <table class="table table-sm">
                     <tr>
                         <th>#
@@ -128,19 +128,19 @@ if ($all_categories->num_rows() > 0) {
 
 
                                                         <button class="btn btn-warning">
-                                                            <?php echo anchor("admin/categories/edit_update/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
+                                                            <?php echo anchor("categories/edit-category/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
                                                         <?php
 if ($check == 1) {
-                echo anchor("admin/categories/deactivate/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
+                echo anchor("categories/deactivate-category/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
 
             } else {
-                echo anchor("admin/categories/activate/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
+                echo anchor("categories/activate-category/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
             }
 
             ?>
                                                         <button class="btn btn-danger"
                                                             onclick="return confirm('Are you sure to delete?')">
-                                                            <?php echo anchor("admin/categories/delete/" . $id, "<i class='fas fa-trash-alt'></i>"); ?></button>
+                                                            <?php echo anchor("categories/delete-category/" . $id, "<i class='fas fa-trash-alt'></i>"); ?></button>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -156,18 +156,18 @@ if ($check == 1) {
 
 
                             <button class="btn btn-warning">
-                                <?php echo anchor("admin/categories/edit_update/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
+                                <?php echo anchor("categories/edit-category/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
                             <?php
 if ($check == 1) {
-                echo anchor("admin/categories/deactivate/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
+                echo anchor("categories/deactivate-category/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
 
             } else {
-                echo anchor("admin/categories/activate/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
+                echo anchor("categories/activate-category/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
             }
 
             ?></button>
                             <button class="btn btn-danger" onclick="return confirm('Are you sure to delete?')">
-                                <?php echo anchor("admin/categories/delete/" . $id, "<i class='fas fa-trash-alt'></i>"); ?></button>
+                                <?php echo anchor("categories/delete-category/" . $id, "<i class='fas fa-trash-alt'></i>"); ?></button>
                         </td>
                     </tr>
                     <?php }}}?>

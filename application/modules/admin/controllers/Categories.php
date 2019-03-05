@@ -32,7 +32,7 @@ class Categories extends MX_Controller
 
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("admin/Categories/all_categories", $v_data, true),
+            "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
 
         );
         $this->load->view("site/layouts/layout", $data);
@@ -59,7 +59,7 @@ class Categories extends MX_Controller
 
                 if ($this->Categories_model->save_category($upload_response)) {
                     $this->session->set_flashdata('success', 'category Added successfully!!');
-                    redirect("admin/Categories");
+                    redirect("categories/all-categories");
                 } else {
                     $this->session->set_flashdata('error', 'unable to add category. Try again!!');
                 }
@@ -78,7 +78,7 @@ class Categories extends MX_Controller
         $data = array(
 
             "title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("admin/Categories/add_category", $v_data, true),
+            "content" => $this->load->view("admin/categories/add_category", $v_data, true),
         );
 
         $this->load->view("site/layouts/layout", $data);
@@ -98,14 +98,14 @@ class Categories extends MX_Controller
         $this->load->view("site/layouts/layout", $data);
     }
 
-    public function delete($category_id)
+    public function delete_category($category_id)
     {
         $this->Categories_model->delete($category_id);
-        redirect("admin/Categories");
+        redirect("categories/all-categories");
     }
 
     //deactivate
-    public function deactivate($id)
+    public function deactivate_category($id)
     {
         $load_deactivate = $this->Categories_model->deactivate_category($id);
         $v_data = array(
@@ -114,15 +114,15 @@ class Categories extends MX_Controller
 
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("admin/Categories/all_categories", $v_data, true),
+            "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
         );
 
         $this->load->view("site/layouts/layout", $data);
-        redirect("admin/Categories");
+        redirect("categories/all-categories");
     }
 
     //activate
-    public function activate($id)
+    public function activate_category($id)
     {
         $load_activate = $this->Categories_model->activate_category($id);
         $v_data = array(
@@ -135,11 +135,11 @@ class Categories extends MX_Controller
         );
 
         $this->load->view("site/layouts/layout", $data);
-        redirect("admin/Categories");
+        redirect("categories/all-categories");
     }
 
     //edit update
-    public function edit_update($id)
+    public function edit_category($id)
     {
         $this->form_validation->set_rules("category_parent", 'Category Parent', "required");
         $this->form_validation->set_rules("category_name", 'Category Name', "required");
@@ -157,7 +157,7 @@ class Categories extends MX_Controller
 
                 if ($this->Categories_model->edit_update_category($id, $upload_response)) {
                     $this->session->set_flashdata('success', 'category ,Added successfully!!');
-                    redirect("admin/Categories/");
+                    redirect("categories/all-categories");
                 } else {
                     $this->session->set_flashdata('error', 'unable to add category. Try again!!');
                 }
@@ -188,7 +188,7 @@ class Categories extends MX_Controller
         $data = array(
 
             "title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("admin/Categories/edit_category", $v_data, true),
+            "content" => $this->load->view("admin/categories/edit_category", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
     }
