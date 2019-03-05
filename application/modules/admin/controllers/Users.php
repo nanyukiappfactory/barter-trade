@@ -96,11 +96,11 @@ class Users extends Admin
         redirect("users/all-users");
     }
 }
-    public function close_search()
-        {
-        $this->session->unset_userdata('search_user',$user_data);
-        redirect("users/all-users");
-        }
+    // public function close_search()
+    //     {
+    //     $this->session->unset_userdata('search_user',$user_data);
+    //     redirect("users/all-users");
+    //     }
     public function add_user()
     {
         //form validation

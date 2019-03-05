@@ -55,15 +55,15 @@ exit('No direct script access allowed');  ?>
                         $phone_number=$row->phone_number;
                         $username=$row->username;
                         $user_email=$row->user_email;
-                        $profile_icon=$row->profile_icon;
+						$profile_icon=$row->profile_icon;
+						$profile_thumb=$row->profile_thumb;
 						$check=$row->user_status;
-                       
                         ?>
 			<tr>
 				<td>
 					<?php echo $count;?>
 				</td>
-				<td><img class="thumbnail" style="height: 100px; width: 100px;" src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->profile_icon; ?>" /></td>
+				<td><img class="thumbnail" style="height: 100px; width: 100px;" src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->profile_thumb; ?>" /></td>
 				<td>
 					<?php echo $first_name;?>
 				</td>
@@ -111,7 +111,7 @@ exit('No direct script access allowed');  ?>
 						<div  class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-								<img  src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->profile_icon; ?>" alt="avatar" class="rounded-circle img-responsive"/>
+								<img  src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->profile_thumb; ?>" alt="avatar" class="rounded-circle img-responsive"/>
 											
 								</div>
 											<div class="modal-body  mb-1">
