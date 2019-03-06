@@ -90,6 +90,24 @@ $route['categories/delete-category'] ='admin/categories/delete_category';
 $route['categories/delete-category/(:num)'] ='admin/categories/delete_category/$1';
 $route['categories/search-category'] = 'admin/categories/execute_search';
 
+//user type routes
+$route['user-types/add-user-type']='admin/user_types/add_user_type';
+$route['user-types/all-user-types']='admin/user_types/index';
+$route['user-types/all-user-types/(:any)/(:any)/(:num)'] ='admin/user_types/index/$1/$2/$3';
+$route['user-types/all-user-types/(:any)/(:any)'] ='admin/user_types/index/$1/$2';
+$route['user-types/all-user-types/(:num)'] ='admin/user_types/index/$1';
+$route['user-types/edit-user-type'] ='admin/user_types/edit_user_type';
+$route['user-types/edit-user-type/(:num)'] ='admin/user_types/edit_user_type/$1';
+$route['user-types/activate-user-type'] = 'admin/user_types/activate_user_type';
+$route['user-types/activate-user-type/(:num)'] = 'admin/user_types/activate_user_type/$1';
+$route['user-types/deactivate-user-type']= 'admin/user_types/deactivate_user_type';
+$route['user-types/deactivate-user-type/(:num)']= 'admin/user_types/deactivate_user_type/$1';
+$route['user-types/delete-user-type'] ='admin/user_types/delete_user_type';
+$route['user-types/delete-user-type/(:num)'] ='admin/user_types/delete_user_type/$1';
+$route['user-types/search-user-type'] = 'admin/user_types/execute_search';
+
 $route['categories/index']='admin/categories/index';
 $route['roles/index']='admin/roles/index';
 $route['user-type-roles/index']='admin/user_type_roles/index';
+$route['user-types/index']='admin/user_types/index';
+
