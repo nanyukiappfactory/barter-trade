@@ -78,56 +78,45 @@ class User_types_model extends CI_Model
         {
             $this->session->set_flashdata("error","Unable to delete");
             return FALSE;
-        }
-        
+        }        
     }
+
     public function deactivate_user_type($id)
-    {
-        
-        $this->db->select('user_type_name');
-        $this->db->from('user_type');
-        $this->db->where("user_type_id",$id);
-        $result = $this->db->get();
-        $username=$result->result_array();
-    //    var_dump($username);die();
-       
-       $this->db->set("user_type_status",0);
-       if($this->db->update("user_type"))
-       {       
-            $remain=$this->get_single($id);
-           $this->session->set_flashdata("success","Successfully deactivated");//implode($username));
-            return $remain;
-       }
-       else 
-       {
-        $this->session->set_flashdata("error","Unable to deactivate "); //echo implode($username);
-        return FALSE;
-       }
+    {        
+        // deactivate member data      
+        $this->db->where("user_type_id",$id); 
+        $this->db->set("user_type_status", 0);       
+        if($this->db->update("user_type"))
+        {
+            $this->session->set_flashdata("success","activated successfully ");
+            return $this->db->get("user_type");
+        }
+        else
+        {
+            $this->session->set_flashdata("error","Unable to activate");
+            return FALSE;
+        }
     }    
+
     //activate
     public function activate_user_type($id)
-    {
-        $this->db->select('user_type_name');
-        $this->db->from('user_type');
-        $this->db->where("user_type_id",$id);
-        $result = $this->db->get();
-        $username=$result->result_array();
-        $this->db->set("user_type_status",1);
-       if($this->db->update("user_type"))
-       {
-            $remain=$this->get_single($id);
-            $this->session->set_flashdata("success","Activated successfully "); //echo implode($username);
-            return $remain;
-       }
-       else 
-       {
-        $this->session->set_flashdata("error","Unable to activate "); //echo implode($username);
-        return FALSE;
-       }
+    {  
+        //activate member data       
+        $this->db->where("user_type_id",$id); 
+        $this->db->set("user_type_status", 1);       
+        if($this->db->update("user_type"))
+        {
+            $this->session->set_flashdata("success","activated successfully ");
+            return $this->db->get("user_type");
+        }
+        else
+        {
+            $this->session->set_flashdata("error","Unable to activate");
+            return FALSE;
+        }
     }
     public function edit_update_user_type($id)
-    {
-       
+    {       
         $this->db->where("user_type_id",$id);
         $this->db->get("user_type");
         //Capture data to be updated
