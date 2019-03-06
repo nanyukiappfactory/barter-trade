@@ -69,7 +69,7 @@ class Roles extends admin
         "page" => $page,
         "links" => $this->pagination->create_links(),
         //"search_role"=>$all_roles,
-        "results"=>$this->Roles_model->get_results($search_role)
+        "role" => $this->Roles_model->get_results(),
     );
         $data = array
        (
@@ -144,6 +144,7 @@ class Roles extends admin
         $load_deactivate = $this->Roles_model->deactivate_role($id);
         $v_data = array(
             "all_roles" => $load_deactivate,
+            "role" => $this->Roles_model->get_results(),
         );
         $data = array(
 
@@ -157,9 +158,13 @@ class Roles extends admin
     //activate
     public function activate_role($id)
     {
+        $segment=5;
+        $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         $load_activate = $this->Roles_model->activate_role($id);
         $v_data = array(
             "all_roles" => $load_activate,
+            "role" => $this->Roles_model->get_results(),
+            "page"=>$page
         );
 
         $data = array(
@@ -168,7 +173,7 @@ class Roles extends admin
         );
 
         $this->load->view("site/layouts/layout", $data);
-        redirect("admin/Roles");
+        redirect("roles/all-roles");
     }
 
     //edit update
@@ -211,5 +216,6 @@ class Roles extends admin
             "content" => $this->load->view("admin/Roles/edit_role", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
+        redirect("roles/all-roles");
     }
 }

@@ -62,7 +62,7 @@
                         else
                         {
 
-                            foreach ($results->result() as $rows)
+                            foreach ($role->result() as $rows)
                             {
                                 if($rows->role_id==$parent)
                                 {
@@ -111,14 +111,10 @@
                                                 </th>
                                                 <th>Role Name
                                                 </th>
-                                                <th>Actions
-                                                </th>
                                             </tr>
 
                                             <tr>
-                                                <td>
-                                                    <?php echo $count; ?>
-                                                </td>
+                                                
                                                 <td>
                                                 <?php
                                                     if($parent == 0)
@@ -128,7 +124,7 @@
                                                     else
                                                     {
 
-                                                        foreach ($results->result() as $rows)
+                                                        foreach ($role->result() as $rows)
                                                         {
                                                             if($rows->role_id==$parent)
                                                             {
@@ -144,7 +140,6 @@
                                                 <td>
                                                     <?php echo $role_name; ?>
                                                 </td>
-                                                <td>
                                             </tr>
                                         </table>
                                     </div>

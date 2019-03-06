@@ -28,6 +28,7 @@
                                 <label>Role Parent</label>
                                 <select name="role_parent" class="form-control">
                                     <!-- <option value="" disabled selected>Select Parent... -->
+                                    <option value="0">no_parent</option>
                                     <option selected="selected">
                                   <?php
                                   if($parent==0)
