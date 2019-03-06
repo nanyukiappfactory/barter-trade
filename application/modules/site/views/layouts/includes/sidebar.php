@@ -14,7 +14,7 @@
      <hr>
      <li>
       <a class="nav-link" href="<?php echo base_url();?>user-types/all-user-types">
-                  <i class="fas fa-users"></i>
+                  <i class="fas fa-chalkboard-teacher"></i>
                   User Types
                 </a>
      </li>

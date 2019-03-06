@@ -172,8 +172,8 @@ class User_types extends Admin
 
         if ($this->form_validation->run()) {
 
-            if ($this->User_types_model->edit_update_user($id)) {
-                $this->session->set_flashdata('success', 'user type ,Added successfully!!');
+            if ($this->User_types_model->edit_update_user_type($id)) {
+                $this->session->set_flashdata('success', 'user type updated successfully!!');
                 redirect("user-types/all-user-types");
             } else {
                 $this->session->set_flashdata('error', 'unable to edit user type. Try again!!');

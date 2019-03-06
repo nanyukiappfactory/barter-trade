@@ -120,6 +120,8 @@ $route['user-types/delete-user-type'] ='admin/user_types/delete_user_type';
 $route['user-types/delete-user-type/(:num)'] ='admin/user_types/delete_user_type/$1';
 $route['user-types/search-user-type'] = 'admin/user_types/execute_search';
 
+//$route['user-types/all-user-types/user-type-name/(:any)/(:any)'] = 'admin/user_types/all_user_types/user_type_name/$1/$2';
+
 $route['categories/index']='admin/categories/index';
 $route['roles/index']='admin/roles/index';
 $route['user-type-roles/index']='admin/user_type_roles/index';
