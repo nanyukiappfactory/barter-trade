@@ -103,10 +103,12 @@ class Users_model extends CI_Model
     //    var_dump($username);die();
        
        $this->db->set("user_status",0);
-       if($this->db->update("user"))
-       {       
+      
+        if($this->db->where("user_id",$id))
+       {    
+            $this->db->update("user");   
             $remain=$this->get_single($id);
-           $this->session->set_flashdata("success","Successfully deactivated");//implode($username));
+            $this->session->set_flashdata("success","Successfully deactivated");//implode($username));
             return $remain;
        }
        else 
@@ -120,12 +122,12 @@ class Users_model extends CI_Model
     {
         $this->db->select('username');
         $this->db->from('user');
-        $this->db->where("user_id",$id);
         $result = $this->db->get();
         $username=$result->result_array();
         $this->db->set("user_status",1);
-       if($this->db->update("user"))
+       if($this->db->where("user_id",$id))
        {
+            $this->db->update("user");
             $remain=$this->get_single($id);
             $this->session->set_flashdata("success","Activated successfully "); //echo implode($username);
             return $remain;

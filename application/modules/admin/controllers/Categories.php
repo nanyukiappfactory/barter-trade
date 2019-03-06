@@ -3,10 +3,10 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-//require_once "./application/modules/admin/controllers/Admin.php";
+require_once "./application/modules/admin/controllers/Admin.php";
 
-//class categories extends admin
-class Categories extends MX_Controller
+class Categories extends admin
+//class Categories extends MX_Controller
 {
     public $upload_path;
     public $upload_location;

@@ -18,19 +18,16 @@
 
     <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
         <div class="card shadow mb-4 mt-4">
-            <div class="card-header py-3">
-
-
+            <div class="card-header py-3"><?php echo anchor("roles/add-role/", "add role","class='btn btn-dark'"); ?>
             </div>
-            <?php echo anchor("admin/roles/add_role/", "add role"); ?>
-            <table class="table table-sm">
+            <table class="table table-sm table-bordered table-responsive">
                 <tr>
                     <th>#
                     </th>
-                    <th>Role Name
-                    </th>
-                    <th>Parent
-                    </th>
+                    <th><a href="<?php echo site_url()."roles/all-roles/role_name/". $order_method."/".$page;?>">Role Name</a>   
+				    </th>
+                    <th><a href="<?php echo site_url()."roles/all-roles/parent/". $order_method."/".$page;?>">Parent </a>   
+				    </th>
                     <th>Status
                     </th>
                     <th>Actions
@@ -57,7 +54,26 @@ if ($all_roles->num_rows() > 0) {
                         <?php echo $role_name; ?>
                     </td>
                     <td>
-                        <?php echo $parent; ?>
+                        <?php
+                        if($parent == 0)
+                        {
+                            echo " ";
+                        }
+                        else
+                        {
+
+                            foreach ($all_roles->result() as $rows)
+                            {
+                                if($rows->role_id==$parent)
+                                {
+                                    echo $rows->role_name;
+                                    break; 
+                                }
+                                
+                            }
+                        
+                        }   ?>                       
+                        
                     </td>
                     <td>
 
@@ -93,8 +109,6 @@ if ($all_roles->num_rows() > 0) {
                                     <div class="modal-body">
                                         <table class="table">
                                             <tr>
-                                                <th>#
-                                                </th>
                                                 <th>Role Parent
                                                 </th>
                                                 <th>Role Name
@@ -108,34 +122,37 @@ if ($all_roles->num_rows() > 0) {
                                                     <?php echo $count; ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $parent; ?>
+                                                <?php
+                                                    if($parent == 0)
+                                                    {
+                                                        echo " ";
+                                                    }
+                                                    else
+                                                    {
+
+                                                        foreach ($all_roles->result() as $rows)
+                                                        {
+                                                            if($rows->role_id==$parent)
+                                                            {
+                                                                echo $rows->role_name;
+                                                                break; 
+                                                            }
+                                                            
+                                                        }
+                                                    
+                                                    }   ?>                       
+                        
                                                 </td>
                                                 <td>
                                                     <?php echo $role_name; ?>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-warning">
-                                                        <?php echo anchor("admin/Manage_users/edit_update/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
-                                                    <?php
-if ($check == 1) {
-                echo anchor("admin/roles/deactivate/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
-
-            } else {
-                echo anchor("admin/roles/activate/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
-            }
-
-            ?>
-                                                    <button class="btn btn-danger"
-                                                        onclick="return confirm('Are you sure to delete?')">
-                                                        <?php echo anchor("admin/roles/delete/" . $id, "<i class='fas fa-trash-alt'></i>"); ?></button>
-                                                </td>
                                             </tr>
                                         </table>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -143,23 +160,23 @@ if ($check == 1) {
 
 
                         <button class="btn btn-warning">
-                            <?php echo anchor("admin/roles/edit_update/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
+                            <?php echo anchor("roles/edit-role/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
                         <?php
 if ($check == 1) {
-                echo anchor("admin/roles/deactivate/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
+                echo anchor("roles/deactivate-role/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
 
             } else {
-                echo anchor("admin/roles/activate/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
+                echo anchor("roles/activate-role/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
             }
 
             ?></button>
                         <button class="btn btn-danger" onclick="return confirm('Are you sure to delete?')">
-                            <?php echo anchor("admin/roles/delete/" . $id, "<i class='fas fa-trash-alt'></i>"); ?></button>
+                            <?php echo anchor("roles/delete-role/" . $id, "<i class='fas fa-trash-alt'></i>"); ?></button>
                     </td>
                 </tr>
                 <?php }}}?>
             </table>
-
+<?php echo $links ?>
         </div>
     </div>
     </div>

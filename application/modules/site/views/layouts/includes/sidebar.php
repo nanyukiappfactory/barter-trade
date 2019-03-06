@@ -21,7 +21,7 @@
      </li>
      <hr>
      <li>
-      <a class="nav-link" href="<?php echo base_url();?>roles/index">
+      <a class="nav-link" href="<?php echo base_url();?>roles/all-roles/">
       <i class="fas fa-tasks"></i>
                   Roles
                 </a>

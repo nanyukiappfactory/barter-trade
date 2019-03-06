@@ -58,7 +58,26 @@
                             <?php echo $category_name; ?>
                         </td>
                         <td>
-                            <?php echo $category_parent; ?>
+                        <?php
+                        if($category_parent == 0)
+                        {
+                            echo " ";
+                        }
+                        else
+                        {
+
+                            foreach ($all_categories->result() as $rows)
+                            {
+                                if($rows->category_id==$category_parent)
+                                {
+                                    echo $rows->category_name;
+                                    break; 
+                                }
+                                
+                            }
+                        
+                        }   ?>                       
+                        
                         </td>
 
                         <td><img class="thumbnail" style="height: 100px; width: 100px;"
@@ -113,7 +132,27 @@
                                                         <?php echo $count; ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo $category_parent; ?>
+                                                    <?php
+                                                        if($category_parent == 0)
+                                                        {
+                                                            echo " ";
+                                                        }
+                                                        else
+                                                        {
+
+                                                            foreach ($all_categories->result() as $rows)
+                                                            {
+                                                                if($rows->category_id==$category_parent)
+                                                                {
+                                                                    echo $rows->category_name;
+                                                                    break; 
+                                                                }
+                                                                
+                                                            }
+                                                        
+                                                        }                                                         
+                                                        ?>                       
+                        
                                                     </td>
                                                     <td>
                                                         <?php echo $category_name; ?>

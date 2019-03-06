@@ -30,17 +30,17 @@
                                     <!-- <option value="" disabled selected>Select Parent... -->
                                     <option selected="selected">no_parent</option>
                                     <?php
-foreach ($role->result() as $rows) {
-    $role_id = $rows->role_id;
-    $role_name = $rows->role_name;
+                                        foreach ($role->result() as $rows) {
+                                            $role_id = $rows->role_id;
+                                            $role_name = $rows->role_name;
 
-    ?>
+                                            ?>
 
                                     <option value="<?php echo $role_id ?>">
                                         <?php echo $role_name ?>
                                     </option>
                                     <?php }
-?>
+                                    ?>
 
                                 </select>
                             </div>
@@ -50,11 +50,8 @@ foreach ($role->result() as $rows) {
 
                             </div>
 
-
-
-
                             <div class="col-md-6 mb-3">
-                                <a href="<?php echo site_url('admin/roles/add_role'); ?>"
+                                <a href="<?php echo site_url('roles/all-roles/'); ?>"
                                     class="btn btn-secondary">Back</a>
                                 <input type="submit" name="submit" class="btn btn-success" value="Submit">
                             </div>
