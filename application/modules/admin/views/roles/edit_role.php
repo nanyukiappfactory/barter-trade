@@ -28,8 +28,24 @@
                                 <label>Role Parent</label>
                                 <select name="role_parent" class="form-control">
                                     <!-- <option value="" disabled selected>Select Parent... -->
-                                    <option selected="selected">no_parent</option>
-                                    <?php
+                                    <option selected="selected">
+                                  <?php
+                                  if($parent==0)
+                                  {
+                                      echo "no_parent";
+                                  }
+                                  else
+                                  {
+                                  foreach ($role->result() as $row)
+                                  {
+                                      if($row->role_id==$parent)
+                                      {
+                                          echo $row->role_name;
+                                          break; 
+                                      }
+                                      
+                                  }
+                                }
                                         foreach ($role->result() as $rows) {
                                             $role_id = $rows->role_id;
                                             $role_name = $rows->role_name;
@@ -43,7 +59,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label>Role Name</label>
-                                <input type="text" class="form-control" name="role_name" placeholder="Enter role name">
+                                <input type="text" class="form-control" value="<?php echo $role_name?>" name="role_name" placeholder="Enter role name">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <a href="<?php echo site_url('roles/all-roles/'); ?>"

@@ -97,7 +97,6 @@ class Users_model extends CI_Model
         
         $this->db->select('username');
         $this->db->from('user');
-        $this->db->where("user_id",$id);
         $result = $this->db->get();
         $username=$result->result_array();
     //    var_dump($username);die();

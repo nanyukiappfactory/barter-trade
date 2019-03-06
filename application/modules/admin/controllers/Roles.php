@@ -28,8 +28,7 @@ class Roles extends admin
         $table = 'role';
         $where = 'deleted = 0';
         //$where="user.user_id > 0 AND user.deleted=0";  
-        // var_dump($search_user);die();
-        
+        // var_dump($search_user);die();        
         $search_role=$this->session->userdata("search_user");
         if (!empty($search_role) && $search_role != null) {
             $where .= $search_role;
@@ -37,7 +36,7 @@ class Roles extends admin
         $config['base_url'] = site_url() . 'roles/all-roles/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
-        $config["per_page"] = 2;
+        $config["per_page"] = 5;
         $config['num_links'] = 5;
         $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
         $config['full_tag_close'] = '</ul></nav></div>';
@@ -106,20 +105,16 @@ class Roles extends admin
         {
             if (!empty(validation_errors())) 
             {
-            $this->session->set_flashdata('error', 'unable to add role. Try again!!');
             $this->session->set_flashdata('error', validation_errors());        
             }
         }
-
         $v_data = array("validation_errors" => validation_errors(),
             "role" => $this->Roles_model->get_results(),
         );
-
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("admin/Roles/add_role", $v_data, true),
         );
-
         $this->load->view("site/layouts/layout", $data);
     }
 
@@ -149,9 +144,7 @@ class Roles extends admin
         $load_deactivate = $this->Roles_model->deactivate_role($id);
         $v_data = array(
             "all_roles" => $load_deactivate,
-
         );
-
         $data = array(
 
             "title" => $this->site_model->display_page_title(),
@@ -160,6 +153,7 @@ class Roles extends admin
         $this->load->view("site/layouts/layout", $data);
         redirect("roles/all-roles");
     }
+
     //activate
     public function activate_role($id)
     {
@@ -180,30 +174,41 @@ class Roles extends admin
     //edit update
     public function edit_role($id)
     {
+        
         $this->form_validation->set_rules("role_parent", 'role Parent', "required");
         $this->form_validation->set_rules("role_name", 'role Name', "required");
-
         if ($this->form_validation->run())
-         {
-            $this->Roles_model->edit_update_role($id);
-            
-            if (!empty(validation_errors()))
-            {
-            $this->session->set_flashdata('success', 'role ,Added successfully!!');
-                redirect("roles/all-roles/");
-            } else
-            {
-                $this->session->set_flashdata('error', 'unable to add role. Try again!!');
-            }            
+        { 
+        
+            $roles = $this->Roles_model->edit_update_role($id);
+
+            if ($roles == false) {
+                $this->session->set_flashdata("error. ", "unable to add role. Try again!!");
+            } else {
+                $this->session->set_flashdata("success. ", "role ,Added successfully!!");
+            }
+    }
+        $all_roles=$this->Roles_model->get_single($id);
+        if ($all_roles->num_rows() > 0)
+        {
+            $row = $all_roles->row();
+            $parent = $row->parent;
+            $role_name = $row->role_name;
         }
+       //var_dump($role_name);die();
+
         $v_data = array(
-            "role" => $this->Roles_model->get_results(),
+            "role_name"=>$role_name,    
+            "parent"=>$parent,        
+           "role" => $this->Roles_model->get_results(),
         );
+        
+       //var_dump($v_data);die();
 
         $data = array(
 
             "title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("admin/Roles/add_role", $v_data, true),
+            "content" => $this->load->view("admin/Roles/edit_role", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
     }

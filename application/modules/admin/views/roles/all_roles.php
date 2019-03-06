@@ -35,17 +35,17 @@
                 </tr>
                 <?php
 
-if ($all_roles->num_rows() > 0) {
-    $count = 0;
-    foreach ($all_roles->result() as $row) {
-        {
-            $count++;
-            $id = $row->role_id;
-            $role_name = $row->role_name;
-            $parent = $row->parent;
-            $check = $row->role_status;
+                    if ($all_roles->num_rows() > 0) {
+                        $count = $page;
+                        foreach ($all_roles->result() as $row) {
+                            {
+                                $count++;
+                                $id = $row->role_id;
+                                $role_name = $row->role_name;
+                                $parent = $row->parent;
+                                $check = $row->role_status;
 
-            ?>
+                                ?>
                 <tr>
                     <td>
                         <?php echo $count; ?>
@@ -62,7 +62,7 @@ if ($all_roles->num_rows() > 0) {
                         else
                         {
 
-                            foreach ($all_roles->result() as $rows)
+                            foreach ($results->result() as $rows)
                             {
                                 if($rows->role_id==$parent)
                                 {
@@ -76,23 +76,21 @@ if ($all_roles->num_rows() > 0) {
                         
                     </td>
                     <td>
-
-                        <?php if ($check == 0) {
-                echo "<button class='badge badge-danger'> deactivated</button>";
-            } else {
-                echo "<button class= 'badge badge-success'>active</button>";
-            }
-            ?>
+                        <?php 
+                        if ($check == 0)
+                        {
+                             echo "<button class='badge badge-danger'> deactivated</button>";
+                        }
+                        else 
+                        {
+                            echo "<button class= 'badge badge-success'>active</button>";
+                        }
+                        ?>
                     </td>
-
                     <td>
-
-
                         <a href="#role<?php echo $id ?>" class="btn btn-primary" data-toggle="modal"
                             data-target="#role<?php echo $id ?>"><i class="fas fa-eye"></i></a>
                         <!-- Button trigger modal -->
-
-
                         <!-- Modal -->
                         <div class="modal fade" id="role<?php echo $id ?>" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -130,7 +128,7 @@ if ($all_roles->num_rows() > 0) {
                                                     else
                                                     {
 
-                                                        foreach ($all_roles->result() as $rows)
+                                                        foreach ($results->result() as $rows)
                                                         {
                                                             if($rows->role_id==$parent)
                                                             {
@@ -162,12 +160,15 @@ if ($all_roles->num_rows() > 0) {
                         <button class="btn btn-warning">
                             <?php echo anchor("roles/edit-role/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
                         <?php
-if ($check == 1) {
-                echo anchor("roles/deactivate-role/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
+                    if ($check == 1) 
+                    {
+                        echo anchor("roles/deactivate-role/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
 
-            } else {
-                echo anchor("roles/activate-role/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
-            }
+                    } 
+                    else 
+                    {
+                        echo anchor("roles/activate-role/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
+                    }
 
             ?></button>
                         <button class="btn btn-danger" onclick="return confirm('Are you sure to delete?')">

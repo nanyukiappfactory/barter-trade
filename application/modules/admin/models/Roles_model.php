@@ -53,6 +53,8 @@ class Roles_model extends CI_Model
         $this->db->where("role.deleted=0");
 // Execute the query.
         $query = $this->db->get("role");
+        
+        // var_dump($query);die();
 // Return the results.
         return $query;
         
@@ -78,7 +80,7 @@ class Roles_model extends CI_Model
         $this->db->where("role_id", $id);
         $this->db->set("role_status", 0);
         if ($this->db->update("role")) {
-            $remain = $this->get_role();
+            $remain = $this->get_results();
             $this->session->set_flashdata("success", "You have deactivated" . $id);
             return $remain;
         } else {
@@ -93,7 +95,7 @@ class Roles_model extends CI_Model
         $this->db->where("role_id", $id);
         $this->db->set("role_status", 1);
         if ($this->db->update("role")) {
-            $remain = $this->get_role();
+            $remain = $this->get_results();
             $this->session->set_flashdata("success", "You have activated" . $id);
             return $remain;
         } else {
@@ -104,9 +106,7 @@ class Roles_model extends CI_Model
 
     public function edit_update_role($id)
     {
-        
         $this->db->get("role");
-
         //Capture data to be updated
         $data = array(
             "parent" => $this->input->post("role_parent"),
