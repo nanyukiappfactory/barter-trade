@@ -14,9 +14,10 @@ class Roles_model extends CI_Model
     public function save_role()
     {
         $data = array(
-            "role_parent" => $this->input->post("role_parent"),
+            "parent" => $this->input->post("role_parent"),
             "role_name" => $this->input->post("role_name"),
             "deleted" => 0,
+            "role_status"=>0
 
         );
 
@@ -28,17 +29,33 @@ class Roles_model extends CI_Model
     }
 
     //get role from the db
-    public function get_role()
+    public function get_role($table, $where,$limit,$page,$order,$order_method)
     {
-        $this->db->where("deleted", 0);
-        //$this->db->order_by("created_on", "DESC");
-        return $result = $this->db->get("role");
+        $where="deleted=0";
+        $this->db->select("*");
+        $this->db->from($table);    
+        $this->db->where($where);
+        $this->db->limit($limit, $page);
+        $this->db->order_by($order, $order_method);
+        $result= $this->db->get();
+        return $result;
+   
     }
 
     public function get_single($role_id)
     {
         $this->db->where("role_id", $role_id);
         return $this->db->get("role");
+    }
+    public function get_results()
+    {
+       
+        $this->db->where("role.deleted=0");
+// Execute the query.
+        $query = $this->db->get("role");
+// Return the results.
+        return $query;
+        
     }
 
     public function delete($id)
@@ -87,18 +104,20 @@ class Roles_model extends CI_Model
 
     public function edit_update_role($id)
     {
-        $this->db->where("role_id", $id);
+        
         $this->db->get("role");
 
         //Capture data to be updated
         $data = array(
-            "role_parent" => $this->input->post("role_parent"),
+            "parent" => $this->input->post("role_parent"),
             "role_name" => $this->input->post("role_name"),
             "deleted" => 0,
             "modified_on" => date("Y-m-d H:i:s"),
         );
 
-        if ($this->db->update("role", $data)) {
+        if ($this->db->where("role_id", $id))
+        {
+            $this->db->update("role", $data);
             return true;
         } else {
             return false;

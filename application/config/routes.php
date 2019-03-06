@@ -90,6 +90,20 @@ $route['categories/delete-category'] ='admin/categories/delete_category';
 $route['categories/delete-category/(:num)'] ='admin/categories/delete_category/$1';
 $route['categories/search-category'] = 'admin/categories/execute_search';
 
+$route['roles/add-role']='admin/roles/add_role';
+$route['roles/all-roles']='admin/roles/index';
+$route['roles/all-roles/(:any)/(:any)/(:num)'] ='admin/roles/index/$1/$2/$3';
+$route['roles/all-roles/(:any)/(:any)'] ='admin/roles/index/$1/$2';
+$route['roles/all-roles/(:num)'] ='admin/roles/index/$1';
+$route['roles/edit-role'] ='admin/roles/edit_role';
+$route['roles/edit-role/(:num)'] ='admin/roles/edit_role/$1';
+$route['roles/activate-role'] = 'admin/roles/activate_role';
+$route['roles/activate-role/(:num)'] = 'admin/roles/activate_role/$1';
+$route['roles/deactivate-role']= 'admin/roles/deactivate_role';
+$route['roles/deactivate-role/(:num)']= 'admin/roles/deactivate_role/$1';
+$route['roles/delete-role'] ='admin/roles/delete_role';
+$route['roles/delete-role/(:num)'] ='admin/roles/delete_role/$1';
+$route['roles/search-role'] = 'admin/roles/execute_search';
 //user type routes
 $route['user-types/add-user-type']='admin/user_types/add_user_type';
 $route['user-types/all-user-types']='admin/user_types/index';

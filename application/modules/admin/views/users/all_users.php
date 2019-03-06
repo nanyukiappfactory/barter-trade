@@ -21,7 +21,7 @@ exit('No direct script access allowed');  ?>
 		<button class="basic"  ><?php echo anchor ("users/add-user/", "add user", array('style'=>"font-color:black;")); ?></button>
 		</div>
 		</div>		
-		<table class="table table-sm table-bordered">
+		<table class="table table-sm table-bordered table-responsive">
 			<tr>
 				<th>Count
 				</th>

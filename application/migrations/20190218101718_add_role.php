@@ -13,8 +13,8 @@ class Migration_Add_role extends CI_Migration
                 'auto_increment' => true,
             ),
             'parent' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
+                'type' => 'INT',
+                'constraint' => '11',
                 'null' => false,
             ),
             
