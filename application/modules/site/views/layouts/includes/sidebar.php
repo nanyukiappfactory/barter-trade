@@ -12,6 +12,13 @@
                 </a>
      </li>
      <hr>
+     <li>
+      <a class="nav-link" href="<?php echo base_url();?>user-types/all-user-types">
+                  <i class="fas fa-users"></i>
+                  User Types
+                </a>
+     </li>
+     <hr>
       
       <li>
       <a class="nav-link" href="<?php echo base_url();?>user-type-roles/index">
