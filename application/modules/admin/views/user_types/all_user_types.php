@@ -32,11 +32,11 @@
                 <th>Count
                 </th>
                 <th><a
-                        href="<?php echo site_url() . "user-types/all-user-types/user-type-name/" . $order_method . "/" . $page; ?>">User
+                        href="<?php echo site_url() . "user-types/all-user-types/user_type_name/" . $order_method . "/" . $page; ?>">User
                         Type Name</a>
                 </th>
                 <th><a
-                        href="<?php echo site_url() . "user-types/all-user-types/user-type-status/" . $order_method . "/" . $page; ?>">Status</a>
+                        href="<?php echo site_url() . "user-types/all-user-types/user_type_status/" . $order_method . "/" . $page; ?>">Status</a>
                 </th>
                 <th>Actions
                 </th>
