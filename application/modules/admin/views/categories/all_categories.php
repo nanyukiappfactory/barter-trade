@@ -1,25 +1,6 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>
-        <?php echo $title; ?>
-    </title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen"
-        href="<?php echo base_url() ?>assets/themes/custom/styles.css" />
-    <!-- <script src="main.js"></script> -->
-</head>
-
-<body>
-
-    <div class="shadow-lg p-3 mb-5  mt-5 bg-white rounded">
-        <div class="card shadow mb-4 mt-4">
-            <div class="card-header py-3">
-
+<div class="shadow-lg p-3 mb-5  mt-5 bg-white rounded">
+    <div class="card shadow mb-4 mt-4">
+        <div class="card-header py-3">
                 <?php echo anchor("categories/add-category/", "add category"); ?>
                 <table class="table table-sm">
                     <tr>
@@ -37,7 +18,6 @@
                         </th>
                     </tr>
                     <?php
-
                         if ($all_categories->num_rows() > 0) {
                             $count = $page;
                             foreach ($all_categories->result() as $row) {
@@ -92,15 +72,10 @@
                                 }
                             ?>
                         </td>
-
                         <td>
-
-
                             <a href="#category<?php echo $id ?>" class="btn btn-primary" data-toggle="modal"
                                 data-target="#category<?php echo $id ?>"><i class="fas fa-eye"></i></a>
                             <!-- Button trigger modal -->
-
-
                             <!-- Modal -->
                             <div class="modal fade" id="category<?php echo $id ?>" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -139,7 +114,6 @@
                                                         }
                                                         else
                                                         {
-
                                                             foreach ($all_categories->result() as $rows)
                                                             {
                                                                 if($rows->category_id==$category_parent)
@@ -147,12 +121,9 @@
                                                                     echo $rows->category_name;
                                                                     break; 
                                                                 }
-                                                                
                                                             }
-                                                        
                                                         }                                                         
-                                                        ?>                       
-                        
+                                                        ?> 
                                                     </td>
                                                     <td>
                                                         <?php echo $category_name; ?>
@@ -160,7 +131,6 @@
                                                     <td><img class="thumbnail" style="height: 100px; width: 100px;"
                                                             src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->category_image; ?>" />
                                                     </td>
-                                                    
                                                 </tr>
                                             </table>
                                         </div>
@@ -171,8 +141,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                             <button class="btn btn-warning">
                                 <?php echo anchor("categories/edit-category/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
                             <?php
@@ -182,7 +150,6 @@
                                 } else {
                                     echo anchor("categories/activate-category/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
                                 }
-
                             ?>
                             </button>
                             <button class="btn btn-danger" onclick="return confirm('Are you sure to delete?')">
@@ -191,13 +158,7 @@
                     </tr>
                             <?php }}}?>
                 </table>
-
             </div>
-        </div>
-        
+        </div>        
     <?php echo $links ?>
-    </div>
-
-</body>
-
-</html>
+</div>

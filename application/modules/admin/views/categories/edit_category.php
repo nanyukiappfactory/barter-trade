@@ -1,23 +1,11 @@
 <?php if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
-?>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen"
-        href="<?php echo base_url() ?>assets/themes/custom/styles.css" />
-
-</head>
-
-<body>
-    <?php if (!empty($validation_errors)) {
+if (!empty($validation_errors))
+ {
     echo $validation_errors;
-}?>
-    <?php echo form_open_multipart($this->uri->uri_string()); ?>
-
+ } 
+    echo form_open_multipart($this->uri->uri_string()); ?>
     <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
         <div class="card shadow mb-4 mt-4">
             <div class="card-header py-3">
@@ -61,6 +49,9 @@
                                 </div>
                             </div>
                         </div>
-                        <?php echo form_close(); ?>
-</body>
-</html>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+<?php echo form_close(); ?>
