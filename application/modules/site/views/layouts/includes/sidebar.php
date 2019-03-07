@@ -21,7 +21,7 @@
      <hr>
       
       <li>
-      <a class="nav-link" href="<?php echo base_url();?>user-type-roles/index">
+      <a class="nav-link" href="<?php echo base_url();?>user-type-roles/all-user-type-roles">
       <i class="fas fa-user"></i>
                   User Type Role
                 </a>

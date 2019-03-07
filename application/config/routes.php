@@ -135,10 +135,3 @@ $route['user-type-roles/deactivate-user-type-role/(:num)']= 'admin/user_type_rol
 $route['user-type-roles/delete-user-type-role'] ='admin/user_type_roles/delete_user_type_role';
 $route['user-type-roles/delete-user-type-role/(:num)'] ='admin/user_type_roles/delete_user_type_role/$1';
 $route['user-type-roles/search-user-type-role'] = 'admin/user_type_roles/execute_search';
-
-
-$route['categories/index']='admin/categories/index';
-$route['roles/index']='admin/roles/index';
-$route['user-type-roles/index']='admin/user_type_roles/index';
-$route['user-types/index']='admin/user_types/index';
-
