@@ -239,8 +239,9 @@ class Categories extends admin
 
         $v_data = array(
 
-            "category" => $this->Categories_model->get_result(),
-            "name"=>$category_name
+            "category" => $this->Categories_model->get_results(),
+            "name"=>$category_name,
+            "category_parent"=>$category_parent
 
         );
 

@@ -62,6 +62,3 @@ foreach ($results as $row) {
 			</div>
 		</div>
 	</div>
-</body>
-
-</html>

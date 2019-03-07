@@ -1,9 +1,7 @@
 <?php if (!defined('BASEPATH')) 
 exit('No direct script access allowed');  ?>
-
-	<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
-		
-		<div class="card shadow mb-4 mt-4">
+<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
+	<div class="card shadow mb-4 mt-4">
 		<div class="card-header py-3">
 		<!-- <button type="button" class="btn btn-success">Add Partner</button> -->
 		<button class="basic"  ><?php echo anchor ("users/add-user/", "add user", array('style'=>"font-color:black;")); ?></button>
@@ -78,22 +76,22 @@ exit('No direct script access allowed');  ?>
 					}
 					?>
 				</td>
-				<td>
-				<a href="#modalLoginAvatar<?php echo $id?>"  class="btn btn-primary" data-toggle="modal" data-target="#modalLoginAvatar<?php echo $id?>"><i class="fas fa-eye"></i></a>
-				<button class="btn btn-warning"><?php echo anchor("users/edit-user/".$id,'<i class="fas fa-edit"></i>');?></button>
-					 <?php
-					 if($check==0){
-						echo anchor("users/activate-user/".$id,'<i class="far fa-thumbs-up"></i>', array("onclick"=>"return confirm('Are you sure to activate?')", "class"=>"btn btn-success"));
-					
-					 }
-					 else
-					 {
-						echo anchor("users/deactivate-user/".$id,'<i class="far fa-thumbs-down"></i>', array("onclick"=>"return confirm('Are you sure to deactivate?')","class"=>"btn btn-danger", 'data-toggle'=>'modal'));
-					 }
-					 ?>
-                    <button class="btn btn-danger" data-toggle='modal' onclick="return confirm('Are you sure to delete?')"> <?php echo anchor("users/delete-user/".$id,"<i class='fas fa-trash-alt'></i>");?></button>
-                     
-				</td> <!-- Button trigger modal -->
+					<td>
+					<a href="#modalLoginAvatar<?php echo $id?>"  class="btn btn-primary" data-toggle="modal" data-target="#modalLoginAvatar<?php echo $id?>"><i class="fas fa-eye"></i></a>
+					<button class="btn btn-warning"><?php echo anchor("users/edit-user/".$id,'<i class="fas fa-edit"></i>');?></button>
+						<?php
+						if($check==0){
+							echo anchor("users/activate-user/".$id,'<i class="far fa-thumbs-up"></i>', array("onclick"=>"return confirm('Are you sure to activate?')", "class"=>"btn btn-success"));
+						
+						}
+						else
+						{
+							echo anchor("users/deactivate-user/".$id,'<i class="far fa-thumbs-down"></i>', array("onclick"=>"return confirm('Are you sure to deactivate?')","class"=>"btn btn-danger", 'data-toggle'=>'modal'));
+						}
+						?>
+						<button class="btn btn-danger" data-toggle='modal' onclick="return confirm('Are you sure to delete?')"> <?php echo anchor("users/delete-user/".$id,"<i class='fas fa-trash-alt'></i>");?></button>
+						
+					</td> <!-- Button trigger modal -->
 					<div class="modal fade" id="modalLoginAvatar<?php echo $id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 					 aria-hidden="true">
 						<div  class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
@@ -127,9 +125,8 @@ exit('No direct script access allowed');  ?>
 							</div>
 						</div>
 					</div>
-					</tr><?php }}} ?>
-					</table>
+				</tr><?php }}} ?>
+		</table>
 		<?php echo $links;?>
 	</div>
-</body>
-</html>
+

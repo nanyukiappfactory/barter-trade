@@ -1,23 +1,11 @@
 <?php if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
-?>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen"
-        href="<?php echo base_url() ?>assets/themes/custom/styles.css" />
-
-</head>
-
-<body>
-    <?php if (!empty($validation_errors)) {
+if (!empty($validation_errors))
+ {
     echo $validation_errors;
-}?>
-    <?php echo form_open_multipart($this->uri->uri_string()); ?>
-
+ } 
+    echo form_open_multipart($this->uri->uri_string()); ?>
     <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
         <div class="card shadow mb-4 mt-4">
             <div class="card-header py-3">
@@ -27,8 +15,24 @@
                             <div class="col-md-6 mb-3">
                                 <label>Category Parent</label>
                                 <select name="category_parent" class="form-control">
-                                    <option selected="selected">no_parent</option>
-                                    <?php
+                                <option value="0">no_parent</option>
+                                    <option selected="selected">
+                                  <?php
+                                  if($category_parent==0)
+                                  {
+                                      echo "no_parent";
+                                  }
+                                  else
+                                  {
+                                  foreach ($category->result() as $row)
+                                  {
+                                      if($row->category_id==$category_parent)
+                                      {
+                                          echo $row->category_name;
+                                          break; 
+                                      }
+                                  }
+                                }
                                         foreach ($category->result() as $rows) {
                                             $category_id = $rows->category_id;
                                             $category_name = $rows->category_name;
@@ -61,6 +65,9 @@
                                 </div>
                             </div>
                         </div>
-                        <?php echo form_close(); ?>
-</body>
-</html>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>   
+<?php echo form_close(); ?>
