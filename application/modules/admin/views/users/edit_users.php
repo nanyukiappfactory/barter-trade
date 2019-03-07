@@ -1,8 +1,5 @@
 <?php if (!defined('BASEPATH')) 
 exit('No direct script access allowed');  ?>
-<!DOCTYPE html>
-<html>
-<body>
 <div class="container">
 	<div class="shadow-lg p-3 mb-5 bg-white rounded">
 		<div class="card shadow mb-4 mt-4">
@@ -11,9 +8,9 @@ exit('No direct script access allowed');  ?>
 					<div class="col-md-6">
 						<div class="form-row">
 							<?php if (!empty($validation_errors)) {
-    echo $validation_errors;
-}
-?>
+									echo $validation_errors;
+								}
+							?>
 							<?php echo form_open_multipart($this->uri->uri_string()); ?>
 							<div class="col-md-6 mb-3">
 								<label for='first_name'>First Name: </label>
@@ -45,7 +42,7 @@ exit('No direct script access allowed');  ?>
 								<input type="file" id="profile_icon" name="profile_icon" <?php echo $last_name;?>>
 							</div>
 							<div>
-							<input class="btn btn-dark" type="submit" value="Add" style="margin-left:20px;">
+							<input class="btn btn-dark" type="submit" value="Update" style="margin-left:20px;">
 							</div>
 							<?php echo form_close(); ?>
 						</div>
@@ -53,7 +50,4 @@ exit('No direct script access allowed');  ?>
 				</div>
 			</div>
 		</div>
-	</div>
-</body>
-
-</html>
+</div>
