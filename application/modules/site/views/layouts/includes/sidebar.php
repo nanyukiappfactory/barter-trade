@@ -1,6 +1,4 @@
-
-
-  <nav class="col-md-2 d-none d-md-block bg-light sidebar mt-50" >
+<nav class="col-md-2 d-none d-md-block bg-light sidebar mt-50" >
   <div class="sidebar-sticky pt-5" >
   
     <ul class="nav flex-column pl-5"> 

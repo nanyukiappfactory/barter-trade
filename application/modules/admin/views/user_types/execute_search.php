@@ -1,27 +1,12 @@
 <?php if (!defined('BASEPATH')) 
 exit('No direct script access allowed');  ?>
 <?php
-// List up all results.
-foreach ($results as $val)
-{
-echo $val['username'];
-}
+	// List up all results.
+	foreach ($results as $val)
+	{
+		echo $val['username'];
+	}
 ?>
-</div> -->
-<html>
-
-<head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>
-		<?php echo $title;?>
-	</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<!-- <script src="main.js"></script> -->
-</head>
-
-<body>
 	<div class="shadow-lg p-3 mb-5 bg-white rounded">
 		<div class="card shadow mb-4 mt-4">
 			<div class="card-header py-3">
@@ -37,8 +22,8 @@ echo $val['username'];
 						<th>Email</th>
 					</tr>
 					<?php
-foreach ($results as $row) {
-?>
+						foreach ($results as $row) {
+					?>
 					<tr>
 						<td>
 							<?php echo $row['first_name']; ?>
@@ -62,6 +47,3 @@ foreach ($results as $row) {
 			</div>
 		</div>
 	</div>
-</body>
-
-</html>
