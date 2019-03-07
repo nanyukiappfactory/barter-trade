@@ -13,7 +13,7 @@ class User_type_roles extends MX_Controller
         $this->load->model("site/site_model");
         $this->load->library("pagination");
     }
-    public function index($order="user_type_role.user_type_role_name",$order_method="ASC")
+    public function index($order="user_type_role.user_type_role_id",$order_method="ASC")
     {
         $segment = 5;
         $table = 'user_type_role';
