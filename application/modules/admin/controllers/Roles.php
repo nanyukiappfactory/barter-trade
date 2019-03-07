@@ -26,13 +26,12 @@ class Roles extends admin
     {
         $segment = 5;
         $table = 'role';
-        $where = 'deleted = 0';
-        //$where="user.user_id > 0 AND user.deleted=0";  
-        // var_dump($search_user);die();        
+        $where = 'deleted = 0';      
         $search_role=$this->session->userdata("search_user");
-        if (!empty($search_role) && $search_role != null) {
+        if (!empty($search_role) && $search_role != null) 
+        {
             $where .= $search_role;
-            }
+        }
         $config['base_url'] = site_url() . 'roles/all-roles/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -55,8 +54,8 @@ class Roles extends admin
         $this->pagination->initialize($config);
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         $query = $this->Roles_model->get_role($table, $where, $config["per_page"], $page, $order, $order_method);      
-       
-        if ($order_method == 'DESC') {
+        if ($order_method == 'DESC')
+        {
             $order_method = 'ASC';
         } else {
             $order_method = 'DESC';
@@ -70,21 +69,11 @@ class Roles extends admin
         "links" => $this->pagination->create_links(),
         //"search_role"=>$all_roles,
         "role" => $this->Roles_model->get_results(),
-    );
-        $data = array
-       (
+        );
+        $data = array(
             "title" => "roles",
             "content" => $this->load->view("admin/roles/all_roles", $v_data, true),
         );
-        //
-        // $v_data = array(
-        //     "all_roles" => $this->Roles_model->get_role(),
-        // );
-
-        // $data = array(
-        //     "title" => $this->site_model->display_page_title(),
-        //     "content" => $this->load->view("admin/Roles/all_roles", $v_data, true),
-        // );
         $this->load->view("site/layouts/layout", $data);
     }
 
@@ -95,8 +84,7 @@ class Roles extends admin
         $this->form_validation->set_rules("role_name", 'role Name', "required");
 
         if ($this->form_validation->run()) 
-        {
-            
+        { 
             $this->Roles_model->save_role();           
             $this->session->set_flashdata('success', 'role Added successfully!!');
             redirect("roles/all-roles");
@@ -117,19 +105,6 @@ class Roles extends admin
         );
         $this->load->view("site/layouts/layout", $data);
     }
-
-    // public function execute_search()
-    // {
-    //     // Retrieve the posted search term.
-    //     $search_term = $this->input->post('search');
-    //     $v_data = array("results" => $this->Roles_model->get_role($search_term));
-
-    //     $data = array(
-    //         "title" => $this->site_model->display_page_title(),
-    //         "content" => $this->load->view("admin/roles/execute_search", $v_data, true),
-    //     );
-    //     $this->load->view("site/layouts/layout", $data);
-    // }
 
     public function delete_role($role_id)
     {
@@ -200,16 +175,11 @@ class Roles extends admin
             $parent = $row->parent;
             $role_name = $row->role_name;
         }
-       //var_dump($role_name);die();
-
         $v_data = array(
             "role_name"=>$role_name,    
             "parent"=>$parent,        
            "role" => $this->Roles_model->get_results(),
         );
-        
-       //var_dump($v_data);die();
-
         $data = array(
 
             "title" => $this->site_model->display_page_title(),

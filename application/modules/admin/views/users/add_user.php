@@ -1,8 +1,6 @@
 <?php if (!defined('BASEPATH')) 
 exit('No direct script access allowed');  ?>
-<!DOCTYPE html>
-<html>
-<body>
+
 	<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
 		<div class="card shadow mb-4 mt-4">
 			<div class="card-header py-3">
@@ -56,5 +54,3 @@ exit('No direct script access allowed');  ?>
 		</div>
 	</div>
 </div>
-</body>
-</html>

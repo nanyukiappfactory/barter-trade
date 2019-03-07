@@ -68,7 +68,7 @@ class User_types_model extends CI_Model
     public function delete($id){
         // Delete member data
         $this->db->set("deleted",1 ,"modified_on",date("Y-m-d H:i:s"), "deleted_on", date("Y-m-d H:i:s"));
-        $this->db->where("user_type_id",$id);       
+        $this->db->where("user_type_id",$id,"deleted",0);       
         $this->db->update("user_type");
         $this->session->set_flashdata("success","Deleted successfully ");
         return $this->db->get("user_type");

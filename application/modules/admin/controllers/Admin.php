@@ -15,5 +15,8 @@ class Admin extends MX_Controller
                redirect('admin/login');
             }
         }
-        
+        public function index()
+        {
+            redirect('users/all-users');
+        }        
 }
