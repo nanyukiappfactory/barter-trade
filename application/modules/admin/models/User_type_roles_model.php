@@ -40,4 +40,91 @@ class User_type_roles_model extends CI_Model
         $this->db->where("deleted", 0);
         return $result = $this->db->get("user_type");
     }
+    public function get_user_type_role($table, $where,$limit,$page,$order,$order_method)
+    {
+        $table="user_type_role";
+        $where="deleted=0";
+        $this->db->select("*");
+        $this->db->from($table);    
+        $this->db->where($where);
+        $this->db->limit($limit, $page);
+        $this->db->order_by($order, $order_method);
+        $result= $this->db->get();
+        return $result;
+   
+    }
+    public function get_results()
+    {
+       
+        $this->db->where("user_type_role.deleted=0");
+// Execute the query.
+        $query = $this->db->get("user_type_role");
+        
+        // var_dump($query);die();
+// Return the results.
+        return $query;
+    }
+    public function delete($id)
+    {
+        // Delete member data
+        $this->db->set("deleted", 1, "modified_on", date("Y-m-d H:i:s"), "deleted_on", date("Y-m-d H:i:s"));
+        $this->db->where("user_type_role_id", $id);
+
+        if ($this->db->update("user_type_role")) {
+            $this->session->set_flashdata("success", "You have deleted" . $id);
+            return true;
+        } else {
+            $this->session->set_flashdata("error", "Unable to delete" . $id);
+            return false;
+        }
+    }
+
+    public function deactivate_user_type_role($id)
+    {
+        $this->db->where("user_type_role_id", $id);
+        $this->db->set("user_type_role_status", 0);
+        if ($this->db->update("user_type_role")) {
+            $remain = $this->get_results();
+            $this->session->set_flashdata("success", "You have deactivated" . $id);
+            return $remain;
+        } else {
+            $this->session->set_flashdata("error", "Unable to deactivate" . $id);
+            return false;
+        }
+    }
+
+    //activate
+    public function activate_user_type_role($id)
+    {
+        $this->db->where("user_type_role_id", $id);
+        $this->db->set("user_type_role_status", 1);
+        if ($this->db->update("user_type_role")) {
+            $remain = $this->get_results();
+            $this->session->set_flashdata("success", "You have activated" . $id);
+            return $remain;
+        } else {
+            $this->session->set_flashdata("error", "Unable to activate" . $id);
+            return false;
+        }
+    }
+
+    public function edit_update_user_type_role($id)
+    {
+        $this->db->get("user_type_role");
+        //Capture data to be updated
+        $data = array(
+            "role_id" => $this->input->post("role_id"),
+            "user_type_id" => $this->input->post("user_type_id"),
+            "deleted" => 0,
+            "modified_on" => date("Y-m-d H:i:s"),
+        );
+
+        if ($this->db->where("user_type_role_id", $id))
+        {
+            $this->db->update("user_type_role", $data);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

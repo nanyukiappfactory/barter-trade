@@ -121,6 +121,21 @@ $route['user-types/delete-user-type/(:num)'] ='admin/user_types/delete_user_type
 $route['user-types/search-user-type'] = 'admin/user_types/execute_search';
 
 //$route['user-types/all-user-types/user-type-name/(:any)/(:any)'] = 'admin/user_types/all_user_types/user_type_name/$1/$2';
+$route['user-type-roles/add-user-type-role']='admin/user_type_roles/add_user_type_role';
+$route['user-type-roles/all-user-type-roles']='admin/user_type_roles/index';
+$route['user-type-roles/all-user-type-roles/(:any)/(:any)/(:num)'] ='admin/user_type_roles/index/$1/$2/$3';
+$route['user-type-roles/all-user-type-roles/(:any)/(:any)'] ='admin/user_type_roles/index/$1/$2';
+$route['user-type-roles/all-user-type-roles/(:num)'] ='admin/user_type_roles/index/$1';
+$route['user-type-roles/edit-user-type-role'] ='admin/user_type_roles/edit_user_type_role';
+$route['user-type-roles/edit-user-type-role/(:num)'] ='admin/user_type_roles/edit_user_type_role/$1';
+$route['user-type-roles/activate-user-type-role'] = 'admin/user_type_roles/activate_user_type_role';
+$route['user-type-roles/activate-user-type-role/(:num)'] = 'admin/user_type_roles/activate_user_type_role/$1';
+$route['user-type-roles/deactivate-user-type-role']= 'admin/user_type_roles/deactivate_user_type_role';
+$route['user-type-roles/deactivate-user-type-role/(:num)']= 'admin/user_type_roles/deactivate_user_type_role/$1';
+$route['user-type-roles/delete-user-type-role'] ='admin/user_type_roles/delete_user_type_role';
+$route['user-type-roles/delete-user-type-role/(:num)'] ='admin/user_type_roles/delete_user_type_role/$1';
+$route['user-type-roles/search-user-type-role'] = 'admin/user_type_roles/execute_search';
+
 
 $route['categories/index']='admin/categories/index';
 $route['roles/index']='admin/roles/index';
