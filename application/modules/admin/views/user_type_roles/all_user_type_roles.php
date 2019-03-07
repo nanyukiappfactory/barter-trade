@@ -1,6 +1,6 @@
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
     <div class="card shadow mb-4 mt-4">
-        <div class="card-header py-3"><?php echo anchor("roles/add-role/", "add role","class='btn btn-dark'"); ?>
+        <div class="card-header py-3"><?php echo anchor("user-type-roles/add-user-type-role/", "Assign role","class='btn btn-dark'"); ?>
             </div>
                 <table class="table table-sm table-bordered table-responsive">
                     <tr>

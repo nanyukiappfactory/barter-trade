@@ -13,7 +13,7 @@ class User_type_roles extends MX_Controller
         $this->load->model("site/site_model");
         $this->load->library("pagination");
     }
-    public function index($order="user_type_role.user_type_role_id",$order_method="ASC")
+    public function index($order="user_type_role.user_type_id",$order_method="ASC")
     {
         $segment = 5;
         $table = 'user_type_role';
@@ -94,7 +94,7 @@ class User_type_roles extends MX_Controller
         //pass data to view
         $v_data = array(
             "title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("user_type_roles/assign_roles", $data, true),
+            "content" => $this->load->view("admin/user_type_roles/assign_roles", $data, true),
         );
 
         $this->load->view('site/layouts/layout', $v_data);
