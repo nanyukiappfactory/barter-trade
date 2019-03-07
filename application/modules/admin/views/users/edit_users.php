@@ -7,11 +7,11 @@ exit('No direct script access allowed');  ?>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-row">
-							<?php if (!empty($validation_errors)) {
+							<?php if (!empty($validation_errors)) 
+							{
 									echo $validation_errors;
-								}
-							?>
-							<?php echo form_open_multipart($this->uri->uri_string()); ?>
+							}
+								echo form_open_multipart($this->uri->uri_string()); ?>
 							<div class="col-md-6 mb-3">
 								<label for='first_name'>First Name: </label>
 								<input class="form-control" type="text" name="first_name" value="<?php echo $first_name;?>">
