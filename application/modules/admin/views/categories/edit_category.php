@@ -15,8 +15,24 @@ if (!empty($validation_errors))
                             <div class="col-md-6 mb-3">
                                 <label>Category Parent</label>
                                 <select name="category_parent" class="form-control">
-                                    <option selected="selected">no_parent</option>
-                                    <?php
+                                <option value="0">no_parent</option>
+                                    <option selected="selected">
+                                  <?php
+                                  if($category_parent==0)
+                                  {
+                                      echo "no_parent";
+                                  }
+                                  else
+                                  {
+                                  foreach ($category->result() as $row)
+                                  {
+                                      if($row->category_id==$category_parent)
+                                      {
+                                          echo $row->category_name;
+                                          break; 
+                                      }
+                                  }
+                                }
                                         foreach ($category->result() as $rows) {
                                             $category_id = $rows->category_id;
                                             $category_name = $rows->category_name;
