@@ -32,11 +32,6 @@ class Site_model extends CI_Model{
       }
       $this->db->from($table);
       $this->db->where($where);
-      $this->db->like('first_name', $search_term);
-      $this->db->or_like('user_email',$search_term);
-      $this->db->or_like('username',$search_term);
-      $this->db->or_like('phone_number',$search_term);
-      $this->db->or_like('last_name',$search_term);
       return $this->db->count_all_results();
 }
 }
