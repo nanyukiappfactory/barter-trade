@@ -24,18 +24,19 @@ class Users extends Admin
     public function index($order = 'user.first_name', $order_method = 'ASC')
     {
         
+        
         //Pagination
         
         $segment = 5;
         $table = 'user';
-        $where = 'deleted = 0';
-        //$where="user.user_id > 0 AND user.deleted=0";  
-        // var_dump($search_user);die();
-        
-        $search_user=$this->session->userdata("search_user");
-        if (!empty($search_user) && $search_user != null) {
-            $where .= $search_user;
-            }
+        $where = 'deleted=0';
+        $search_term=$this->session->userdata("search_term");
+        //var_dump($search_term);die();
+        // if (!empty($search_term) && $search_term != null) {
+        //     $where .= ' AND user.first_name LIKE"'.$search_term.'"';
+            
+        //     ;
+        // }
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -64,15 +65,12 @@ class Users extends Admin
         } else {
             $order_method = 'DESC';
         }
-      
        $v_data = array(
         "all_users"=>$query,
         "order" => $order,
         "order_method" => $order_method,
         "page" => $page,
-        "links" => $this->pagination->create_links(),
-        //"search_user"=>$all_users,
-        "results"=>$this->Users_model->get_results($search_user)
+        "links" => $this->pagination->create_links()
     );
         $data = array
        (
@@ -82,25 +80,22 @@ class Users extends Admin
         $this->load->view("site/layouts/layout", $data);
 
     }
-    public function execute_search()
+    public function execute_search($search_term=null)
     {
-        // Retrieve the posted search term. 
         $search_term = $this->input->post('search');
-        if (!empty($search_term)) {
-          $search_term= ' AND user.first_name = "' . $search_term . '"';
-        //   $last_name= ' AND user.last_name = "' . $search_term . '"';
-        // $user_data=$search_term;
-        $this->session->set_userdata('search_user',  $search_term);
-        $data =$this->session->set_userdata('search_user');
-          var_dump($data);die();
+        //var_dump($search_term);die();
+        if (!empty($search_term) && $search_term != null) {
+        $this->session->set_userdata("search_term",$search_term);
+            }           
         redirect("users/all-users");
     }
-}
-    // public function close_search()
-    //     {
-    //     $this->session->unset_userdata('search_user',$user_data);
-    //     redirect("users/all-users");
-    //     }
+    public function unset_search()
+        {
+        $this->session->unset_userdata('search_term');
+        
+        redirect("users/all-users");
+        }
+
     public function add_user()
     {
         //form validation

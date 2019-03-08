@@ -31,13 +31,21 @@ class Users_model extends CI_Model
     }
     public function get_user($table, $where,$limit,$page,  $order, $order_method)
     {
-        $where="deleted=0";
+       // $where="deleted=0";
+       
+       $search_term=$this->session->userdata("search_term");
         $this->db->select("*");
         $this->db->from($table);    
         $this->db->where($where);
+        $this->db->like('first_name', $search_term);
+        $this->db->or_like('user_email',$search_term);
+        $this->db->or_like('username',$search_term);
+        $this->db->or_like('phone_number',$search_term);
+        $this->db->or_like('last_name',$search_term);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         $result= $this->db->get();
+       // var_dump($where);die();
         return $result;
     }
     public function get_single($user_id)
@@ -54,28 +62,32 @@ class Users_model extends CI_Model
         $this->db->from($table);
         $this->db->where($where);
         return $this->db->count_all_results();
- }
-    public function get_results()
-    {
-        $search_term = $this->input->post('search');
-       // $this->session->set_userdata("search_user", $search_term);
-        $this->db->select('*');
-        $this->db->where("deleted",0);
-        $this->db->from('user');
-        $this->db->like('first_name', $search_term);
-        $this->db->or_like('user_email',$search_term);
-        $this->db->or_like('username',$search_term);
-        $this->db->or_like('phone_number',$search_term);
-        $this->db->or_like('last_name',$search_term);
-// Execute the query.
-        $query = $this->db->get();
+}
+//     public function get_results($search_term)
+//     {
+//         $search_term= $this->session->userdata('search_term');
+//         if (!empty($search_term)) {
+//         $this->db->select('*');
+//         $this->db->where("deleted",0,"user.first_name",$search_term);
+//         $this->db->from('user');
+//         $this->db->like('first_name', $search_term);
+//         $this->db->or_like('user_email',$search_term);
+//         $this->db->or_like('username',$search_term);
+//         $this->db->or_like('phone_number',$search_term);
+//         $this->db->or_like('last_name',$search_term);
+//         $query = $this->db->get();
+//         return $query->result_array();
+//         }
+//         // else
+//         // {
+//         // $this->db->select('*');
+//         // $this->db->where("deleted",0);
+//         // $this->db->from('user');
+//         // $query = $this->db->get();
+//         // return $query->result_array();
+//         // }
         
-
-
-// Return the results.
-        return $query->result_array();
-        
-    }
+//     }
     public function delete($id){
         // Delete member data
         $this->db->set("deleted", 1,"modified_on",date("Y-m-d H:i:s"),"deleted_on",date("Y-m-d H:i:s"));

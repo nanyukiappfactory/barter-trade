@@ -74,6 +74,7 @@ $route['users/deactivate-user/(:num)']= 'admin/users/deactivate_user/$1';
 $route['users/delete-user'] ='admin/users/delete_user';
 $route['users/delete-user/(:num)'] ='admin/users/delete_user/$1';
 $route['users/search-user'] = 'admin/users/execute_search';
+$route['users/close-search'] = 'admin/users/unset_search';
 
 $route['categories/add-category']='admin/categories/add_category';
 $route['categories/all-categories']='admin/categories/index';

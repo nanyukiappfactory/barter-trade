@@ -24,12 +24,19 @@ class Site_model extends CI_Model{
   }
   public function get_count($table, $where, $limit = NULL)
   {
+    
+    $search_term=$this->session->userdata("search_term");
       if($limit != NULL)
       {
           $this->db->limit($limit);
       }
       $this->db->from($table);
       $this->db->where($where);
+      $this->db->like('first_name', $search_term);
+      $this->db->or_like('user_email',$search_term);
+      $this->db->or_like('username',$search_term);
+      $this->db->or_like('phone_number',$search_term);
+      $this->db->or_like('last_name',$search_term);
       return $this->db->count_all_results();
 }
 }
