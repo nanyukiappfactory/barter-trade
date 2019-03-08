@@ -186,6 +186,5 @@ class Roles extends admin
             "content" => $this->load->view("admin/Roles/edit_role", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
-        redirect("roles/all-roles");
     }
 }

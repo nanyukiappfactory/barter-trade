@@ -40,6 +40,11 @@ class User_type_roles_model extends CI_Model
         $this->db->where("deleted", 0);
         return $result = $this->db->get("user_type");
     }
+    public function get_single($user_type_role_id)
+    {
+        $this->db->where("user_type_role_id", $user_type_role_id);
+        return $this->db->get("user_type_role");
+    }
     public function get_user_type_role($table, $where,$limit,$page,$order,$order_method)
     {
         $table="user_type_role";
@@ -113,8 +118,8 @@ class User_type_roles_model extends CI_Model
         $this->db->get("user_type_role");
         //Capture data to be updated
         $data = array(
-            "role_id" => $this->input->post("role_id"),
-            "user_type_id" => $this->input->post("user_type_id"),
+            "role_id" => $this->input->post("role"),
+            "user_type_id" => $this->input->post("user_type"),
             "deleted" => 0,
             "modified_on" => date("Y-m-d H:i:s"),
         );
@@ -126,5 +131,17 @@ class User_type_roles_model extends CI_Model
         } else {
             return false;
         }
+    }
+    public function retrieve_roles_and_user_types(){
+        $this->db->select('role.role_name, user_type.user_type_name,role.role_id,user_type.user_type_id AS user_type_PK_id,user_type_role.user_type_id');
+        $this->db->from("role");
+        $this->db->join("user_type_role","role.role_id=user_type_role.role_id");
+        $this->db->join("user_type", "user_type_role.user_type_id=user_type.user_type_id");
+        $this->db->where("user_type_role.deleted", 0);
+        $query = $this->db->get();
+        if($query->num_rows() > 1){
+            return $query;
+        }
+        
     }
 }

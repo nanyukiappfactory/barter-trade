@@ -23,8 +23,8 @@
                                 {
                                     $count++;
                                     $id = $row->user_type_role_id;
-                                    $role_id = $row->role_id;
-                                    $user_type_id = $row->user_type_id;
+                                    $role_id_FK = $row->role_id;
+                                    $user_type_id_FK = $row->user_type_id;
                                     $check = $row->user_type_role_status;
                      ?>
                     <tr>
@@ -32,27 +32,32 @@
                             <?php echo $count; ?>
                         </td>
                         <td>
-                            <?php echo $role_id; ?>
+                        <?php
+                                foreach($user_type_role->result() as $rows){
+                                    $role_id_PK = $rows->role_id;
+                                    $role_name = $rows->role_name;
+                                    if($role_id_PK==$role_id_FK)
+                                    {
+                                        echo ($role_name);
+                                        break; 
+                                    }
+                                }
+                              
+                            ?> 
                         </td>
                         <td>
                             <?php
-                            // if($parent == 0)
-                            // {
-                            //     echo " ";
-                            // }
-                            // else
-                            // {
-                            //     foreach ($role->result() as $rows)
-                            //     {
-                            //         if($rows->role_id==$parent)
-                            //         {
-                                        echo $user_type_id;
-                                //         break; 
-                                //     }
-                                // }                            
-                            //}   
-                            ?>                       
-                            
+                                foreach($user_type_role->result() as $rows){
+                                    $user_type_id_PK = $rows->user_type_id;
+                                    $user_type_name = $rows->user_type_name;
+                                    if($user_type_id_PK==$user_type_id_FK)
+                                    {
+                                        echo ($user_type_name);
+                                        break; 
+                                    }
+                                }
+                              
+                            ?> 
                         </td>
                         <td>
                             <?php 
@@ -94,27 +99,31 @@
                                                 <tr>
                                                     <td>
                                                     <?php
-                                                        // if($parent == 0)
-                                                        // {
-                                                        //     echo " ";
-                                                        // }
-                                                        // else
-                                                        // {
-
-                                                        //     foreach ($role->result() as $rows)
-                                                        //     {
-                                                        //         if($rows->role_id==$parent)
-                                                        //         {
-                                                                    echo $role_id;
-                                                        //             break; 
-                                                        //         }
-                                                        //     }
-                                                        
-                                                        // }  
-                                                        ?>  
+                                                        foreach($user_type_role->result() as $rows){
+                                                            $role_id_PK = $rows->role_id;
+                                                            $role_name = $rows->role_name;
+                                                            if($role_id_PK==$role_id_FK)
+                                                            {
+                                                                echo ($role_name);
+                                                                break; 
+                                                            }
+                                                        }
+                                                    
+                                                    ?> 
                                                     </td>
                                                     <td>
-                                                        <?php echo $user_type_id; ?>
+                                                    <?php
+                                                        foreach($user_type_role->result() as $rows){
+                                                            $user_type_id_PK = $rows->user_type_id;
+                                                            $user_type_name = $rows->user_type_name;
+                                                            if($user_type_id_PK==$user_type_id_FK)
+                                                            {
+                                                                echo ($user_type_name);
+                                                                break; 
+                                                            }
+                                                        }
+                                                    
+                                                    ?> 
                                                     </td>
                                                 </tr>
                                             </table>
