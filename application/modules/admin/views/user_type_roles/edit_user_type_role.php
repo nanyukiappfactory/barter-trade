@@ -71,6 +71,6 @@
 		</div>
 		<input type="submit" name="submit" class="btn btn-success" value="Update">
         <a href="<?php echo site_url('user-type-roles/all-user-type-roles/'); ?>"
-                                        class="btn btn-secondary">Back</a>
+        class="btn btn-secondary">View</a>
 	</div>
 <?php echo form_close(); ?>

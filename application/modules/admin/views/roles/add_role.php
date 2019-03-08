@@ -35,7 +35,7 @@ if (!empty($validation_errors)) {
                             </div>
                             <div class="col-md-6 mb-3">
                                 <a href="<?php echo site_url('roles/all-roles/'); ?>"
-                                    class="btn btn-secondary">Back</a>
+                                    class="btn btn-secondary">View</a>
                                 <input type="submit" name="submit" class="btn btn-success" value="Submit">
                             </div>
                         </div>

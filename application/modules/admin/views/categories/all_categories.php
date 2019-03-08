@@ -1,7 +1,7 @@
 <div class="shadow-lg p-3 mb-5  mt-5 bg-white rounded">
     <div class="card shadow mb-4 mt-4">
         <div class="card-header py-3">
-                <?php echo anchor("categories/add-category/", "add category"); ?>
+                <?php echo anchor("categories/add-category/", "add category",array('class'=>"btn btn-secondary")); ?>
                 <table class="table table-sm">
                     <tr>
                         <th>#

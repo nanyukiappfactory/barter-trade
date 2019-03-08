@@ -6,10 +6,10 @@
         <span style="font-family: 'Signika', sans-serif;font-size:35px;">Admin</span>
     </a>
     <?php
-    echo form_open("users/search-user", array('class' => "form-control form-control-dark w-100 bg-white")); ?>
+    echo form_open("users/search-user", array('class' => "btn btn-secondary")); ?>
     <input type="search" placeholder="Search" name="search">
     <button name="Submit" type="submit">Submit</button>
-    <button class="basic"><?php echo anchor('users/close-search/',"close search");?></button>
+    <?php echo anchor('users/close-search/','<i class="far fa-times-circle"></i>',array('class'=>"btn btn-secondary"));?>
     <?php	echo form_close(); ?>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">

@@ -14,10 +14,11 @@ exit('No direct script access allowed');  ?>
 							<div class="col-md-6 mb-3">
 								<label for='user_type_name'>User Type Name: </label><input class="form-control" type="text" name="user_type_name">
 							</div>
-							
 								<input class="btn btn-dark" type="submit" value="Add" style="margin-left:20px;">
+							</div>
+							</div>
 							<?php echo form_close(); ?>
-						</div>
+						
 					</div>
 				</div>
 

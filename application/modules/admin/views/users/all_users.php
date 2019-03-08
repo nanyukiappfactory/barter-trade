@@ -4,7 +4,7 @@ exit('No direct script access allowed');  ?>
 	<div class="card shadow mb-4 mt-4">
 		<div class="card-header py-3">
 		<!-- <button type="button" class="btn btn-success">Add Partner</button> -->
-		<button class="basic"  ><?php echo anchor ("users/add-user/", "add user", array('style'=>"font-color:black;")); ?></button>
+		<?php echo anchor ("users/add-user/", "add user", array('class'=>"btn btn-secondary")); ?>
 		</div>
 		</div>		
 		<table class="table table-sm table-bordered table-responsive">

@@ -7,8 +7,7 @@
         <div class="card shadow mb-4 mt-4">
             <div class="card-header py-3">
                 <!-- <button type="button" class="btn btn-success">Add Partner</button> -->
-                <button
-                    class="basic"><?php echo anchor("user-types/add-user-type/", "add user type", array('style' => "font-color:black;")); ?></button>
+                <?php echo anchor("user-types/add-user-type/", "add user type", array('class' => "btn btn-secondary")); ?>
             </div>
         </div>
         <table class="table table-sm table-bordered">

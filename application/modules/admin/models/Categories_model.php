@@ -80,7 +80,7 @@ class Categories_model extends CI_Model
         $this->db->where("category_id", $id);
         $this->db->set("category_status", 0);
         if ($this->db->update("category")) {
-            $remain = $this->get_category();
+            $remain = $this->get_results();
             $this->session->set_flashdata("success", "You have deactivated" . $id);
             return $remain;
         } else {
@@ -95,7 +95,7 @@ class Categories_model extends CI_Model
         $this->db->where("category_id", $id);
         $this->db->set("category_status", 1);
         if ($this->db->update("category")) {
-            $remain = $this->get_category();
+            $remain = $this->get_results();
             $this->session->set_flashdata("success", "You have activated" . $id);
             return $remain;
         } else {
