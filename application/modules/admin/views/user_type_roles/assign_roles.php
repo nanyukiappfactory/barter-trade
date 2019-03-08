@@ -13,7 +13,7 @@
 					<optgroup  data-max-options="2">
 					<option value="" disabled selected>Select Role Name...
 						<?php
-							foreach ($user_type_role->result() as $new) {
+							foreach ($roles->result() as $new) {
 								$role_id = $new->role_id;
 								$role_name = $new->role_name;
 						?>
@@ -27,14 +27,15 @@
 					<optgroup  data-max-options="2">
 					<option value="" disabled selected>Select User Type Name...
 						<?php
-							foreach ($user_type_role->result() as $rows) {
+						if($user_types->result()!=null){
+							foreach ($user_types->result() as $rows) {
 								$user_type_id = $rows->user_type_id;
 								$user_type_name = $rows->user_type_name;
     					?>
 						<option value="<?php echo $user_type_id ?>">
 							<?php echo $user_type_name ?>
 						</option>
-						<?php }?>
+						<?php }}?>
 					</select>
 				</div>
 			</div>

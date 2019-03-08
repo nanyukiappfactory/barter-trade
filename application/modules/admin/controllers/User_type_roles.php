@@ -92,7 +92,9 @@ class User_type_roles extends MX_Controller
 
         $user_type_role=$this->User_type_roles_model->retrieve_roles_and_user_types();
         $data = array(
+            'roles' => $this->User_type_roles_model->get_roles(),
             'user_type_role' =>  $user_type_role,
+            'user_types' => $this->User_type_roles_model->get_user_types(),
             "validation_errors" => validation_errors(),
         );
 

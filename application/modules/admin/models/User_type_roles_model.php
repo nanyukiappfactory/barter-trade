@@ -132,16 +132,14 @@ class User_type_roles_model extends CI_Model
             return false;
         }
     }
-    public function retrieve_roles_and_user_types(){
+    public function retrieve_roles_and_user_types()
+    {
         $this->db->select('role.role_name, user_type.user_type_name,role.role_id,user_type.user_type_id AS user_type_PK_id,user_type_role.user_type_id');
         $this->db->from("role");
         $this->db->join("user_type_role","role.role_id=user_type_role.role_id");
         $this->db->join("user_type", "user_type_role.user_type_id=user_type.user_type_id");
         $this->db->where("user_type_role.deleted", 0);
         $query = $this->db->get();
-        if($query->num_rows() > 1){
-            return $query;
-        }
-        
+        return $query;
     }
 }
