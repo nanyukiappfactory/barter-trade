@@ -13,9 +13,9 @@
 					<optgroup  data-max-options="2">
 					<option value="" disabled selected>Select Role Name...
 						<?php
-							foreach ($user_type_role->result() as $rows) {
-								$role_id = $rows->role_id;
-								$role_name = $rows->role_name;
+							foreach ($user_type_role->result() as $row) {
+								$role_id = $row->role_id;
+								$role_name = $row->role_name;
 						?>
 					<option value="<?php echo $role_id ?>">
 							<?php echo $role_name ?>
