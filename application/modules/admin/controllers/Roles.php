@@ -24,14 +24,12 @@ class Roles extends admin
 
     public function index($order="role.role_name",$order_method="ASC")
     {
+        $search="roles/search-role";
+        $close="roles/close-search";
         $segment = 5;
         $table = 'role';
         $where = 'deleted = 0';      
-        $search_role=$this->session->userdata("search_user");
-        if (!empty($search_role) && $search_role != null) 
-        {
-            $where .= $search_role;
-        }
+        $search_role=$this->session->userdata("search_role");
         $config['base_url'] = site_url() . 'roles/all-roles/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -67,18 +65,37 @@ class Roles extends admin
         "order_method" => $order_method,
         "page" => $page,
         "links" => $this->pagination->create_links(),
-        //"search_role"=>$all_roles,
         "role" => $this->Roles_model->get_results(),
         );
         $data = array(
             "title" => "roles",
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/roles/all_roles", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
     }
 
+    public function execute_search($search_role=null)
+    {
+        $search_role = $this->input->post('search');
+        //var_dump($search_role);die();
+        if (!empty($search_role) && $search_role != null) {
+        $this->session->set_userdata("search_role",$search_role);
+            }           
+        redirect("roles/all-roles");
+    }
+    public function unset_search()
+        {
+        $this->session->unset_userdata('search_role');
+        
+        redirect("roles/all-roles");
+        }
+
     public function add_role()
     {
+        $search="roles/search-role";
+        $close="roles/close-search";
         //form validation
         $this->form_validation->set_rules("role_parent", 'role Parent', "required");
         $this->form_validation->set_rules("role_name", 'role Name', "required");
@@ -101,6 +118,8 @@ class Roles extends admin
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/Roles/add_role", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
@@ -116,6 +135,8 @@ class Roles extends admin
     //deactivate
     public function deactivate_role($id)
     {
+        $search="roles/search-role";
+        $close="roles/close-search";
         $load_deactivate = $this->Roles_model->deactivate_role($id);
         $v_data = array(
             "all_roles" => $load_deactivate,
@@ -124,6 +145,8 @@ class Roles extends admin
         $data = array(
 
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/Roles/all_roles", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
@@ -133,6 +156,8 @@ class Roles extends admin
     //activate
     public function activate_role($id)
     {
+        $search="roles/search-role";
+        $close="roles/close-search";
         $segment=5;
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         $load_activate = $this->Roles_model->activate_role($id);
@@ -144,6 +169,8 @@ class Roles extends admin
 
         $data = array(
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/Roles/all_roles", $v_data, true),
         );
 
@@ -154,7 +181,8 @@ class Roles extends admin
     //edit update
     public function edit_role($id)
     {
-        
+        $search="roles/search-role";
+        $close="roles/close-search";
         $this->form_validation->set_rules("role_parent", 'role Parent', "required");
         $this->form_validation->set_rules("role_name", 'role Name', "required");
         if ($this->form_validation->run())
@@ -183,6 +211,8 @@ class Roles extends admin
         $data = array(
 
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/Roles/edit_role", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);

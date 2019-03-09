@@ -34,10 +34,11 @@ class Categories_model extends CI_Model
     //get category from the db
     public function get_category($table, $where,$limit,$page,$order,$order_method)
     {
-        $where="deleted=0";
+        $search_category=$this->session->userdata("search_category");
         $this->db->select("*");
         $this->db->from($table);    
         $this->db->where($where);
+        $this->db->like('category_name', $search_category);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         $result= $this->db->get();

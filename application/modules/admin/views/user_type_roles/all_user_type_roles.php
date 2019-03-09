@@ -6,9 +6,9 @@
                     <tr>
                         <th>#
                         </th>
-                        <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/role_id/". $order_method."/".$page;?>">Role </a>   
+                        <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_role.role_id/". $order_method."/".$page;?>">Role </a>   
                         </th>
-                        <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_id/". $order_method."/".$page;?>">User Type </a>   
+                        <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_role.user_type_id/". $order_method."/".$page;?>">User Type </a>   
                         </th>
                         <th>Status
                         </th>

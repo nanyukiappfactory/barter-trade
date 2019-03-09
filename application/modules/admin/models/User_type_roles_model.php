@@ -45,13 +45,17 @@ class User_type_roles_model extends CI_Model
         $this->db->where("user_type_role_id", $user_type_role_id);
         return $this->db->get("user_type_role");
     }
-    public function get_user_type_role($table, $where,$limit,$page,$order,$order_method)
+    public function get_user_type_role($table=null, $where,$limit,$page,$order,$order_method)
     {
-        $table="user_type_role";
-        $where="deleted=0";
-        $this->db->select("*");
-        $this->db->from($table);    
+        $search_user_type_role = $this->session->userdata('search_user_type_role');
+        $this->db->select('role.role_name, user_type.user_type_name,role.role_id,user_type.user_type_id, user_type_role.*');
+        $this->db->from("role");
+        $this->db->join("user_type_role","role.role_id=user_type_role.role_id");
+        $this->db->join("user_type", "user_type_role.user_type_id=user_type.user_type_id");
+        $this->db->where("user_type_role.deleted", 0);
         $this->db->where($where);
+        $this->db->like("role.role_name",$search_user_type_role);
+        $this->db->or_like("user_type.user_type_name",$search_user_type_role);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         $result= $this->db->get();

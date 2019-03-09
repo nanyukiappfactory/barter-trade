@@ -90,6 +90,7 @@ $route['categories/deactivate-category/(:num)']= 'admin/categories/deactivate_ca
 $route['categories/delete-category'] ='admin/categories/delete_category';
 $route['categories/delete-category/(:num)'] ='admin/categories/delete_category/$1';
 $route['categories/search-category'] = 'admin/categories/execute_search';
+$route['categories/close-search'] = 'admin/categories/unset_search';
 
 $route['roles/add-role']='admin/roles/add_role';
 $route['roles/all-roles']='admin/roles/index';
@@ -105,6 +106,8 @@ $route['roles/deactivate-role/(:num)']= 'admin/roles/deactivate_role/$1';
 $route['roles/delete-role'] ='admin/roles/delete_role';
 $route['roles/delete-role/(:num)'] ='admin/roles/delete_role/$1';
 $route['roles/search-role'] = 'admin/roles/execute_search';
+$route['roles/close-search'] = 'admin/roles/unset_search';
+
 //user type routes
 $route['user-types/add-user-type']='admin/user_types/add_user_type';
 $route['user-types/all-user-types']='admin/user_types/index';
@@ -120,6 +123,7 @@ $route['user-types/deactivate-user-type/(:num)']= 'admin/user_types/deactivate_u
 $route['user-types/delete-user-type'] ='admin/user_types/delete_user_type';
 $route['user-types/delete-user-type/(:num)'] ='admin/user_types/delete_user_type/$1';
 $route['user-types/search-user-type'] = 'admin/user_types/execute_search';
+$route['user-types/close-search'] = 'admin/user_types/unset_search';
 
 //$route['user-types/all-user-types/user-type-name/(:any)/(:any)'] = 'admin/user_types/all_user_types/user_type_name/$1/$2';
 $route['user-type-roles/add-user-type-role']='admin/user_type_roles/add_user_type_role';
@@ -136,3 +140,4 @@ $route['user-type-roles/deactivate-user-type-role/(:num)']= 'admin/user_type_rol
 $route['user-type-roles/delete-user-type-role'] ='admin/user_type_roles/delete_user_type_role';
 $route['user-type-roles/delete-user-type-role/(:num)'] ='admin/user_type_roles/delete_user_type_role/$1';
 $route['user-type-roles/search-user-type-role'] = 'admin/user_type_roles/execute_search';
+$route['user-type-roles/close-search'] = 'admin/user_type_roles/unset_search';

@@ -23,10 +23,11 @@ class User_types_model extends CI_Model
     }
     public function get_user_type($table, $where,$limit,$page,  $order, $order_method)
     {
-        $where="deleted=0";
+        $search_user_type = $this->session->userdata('search_user_type');
         $this->db->select("*");
         $this->db->from($table);    
         $this->db->where($where);
+        $this->db->like("user_type_name", $search_user_type);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         $result= $this->db->get();
@@ -49,21 +50,15 @@ class User_types_model extends CI_Model
  }
     public function get_results()
     {
-        $search_term = $this->input->post('search');
-       
+        $search_user_type = $this->input->post('search');
         $this->db->select('*');
         $this->db->where("deleted",0);
         $this->db->from('user_type');
-        $this->db->like('user_type_name', $search_term);
-
+        $this->db->like('user_type_name', $search_user_type);
 // Execute the query.
         $query = $this->db->get();
-        
-
-
 // Return the results.
         return $query->result_array();
-        
     }
     public function delete($id){
         // Delete member data

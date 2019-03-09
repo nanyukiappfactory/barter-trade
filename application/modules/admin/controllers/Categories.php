@@ -32,13 +32,9 @@ class Categories extends admin
         $segment = 5;
         $table = 'category';
         $where = 'deleted = 0';
-        //$where="user.user_id > 0 AND user.deleted=0";  
-        // var_dump($search_user);die();
-        
-        $search_category=$this->session->userdata("search_user");
-        if (!empty($search_category) && $search_category != null) {
-            $where .= $search_category;
-            }
+        $search="categories/search-category";
+        $close="categories/close-search";
+        $search_category=$this->session->userdata("search_category");        
         $config['base_url'] = site_url() . 'categories/all-categories/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -60,46 +56,48 @@ class Categories extends admin
         $config['last_tagl_close'] = '</span></li>';
         $this->pagination->initialize($config);
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
-        $query = $this->Categories_model->get_category($table, $where, $config["per_page"], $page, $order, $order_method);      
-       
+        $query = $this->Categories_model->get_category($table, $where, $config["per_page"], $page, $order, $order_method); 
         if ($order_method == 'DESC') {
             $order_method = 'ASC';
         } else {
             $order_method = 'DESC';
         }
-      
        $v_data = array(
         "all_categories"=>$query,
         "order" => $order,
         "order_method" => $order_method,
         "page" => $page,
         "links" => $this->pagination->create_links(),
-        //"search_category"=>$all_categories,
-        "results"=>$this->Categories_model->get_results($search_category)
     );
         $data = array
        (
             "title" => "Categories",
+            "search"=>$search,
+            "close"=>$close,
+            "search_category"=>$search_category,
             "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
-
-        //end ya mwanzo
-        // $v_data = array(
-        //     "all_categories" => $this->Categories_model->get_category(),
-        // );
-
-        // $data = array(
-        //     "title" => $this->site_model->display_page_title(),
-        //     "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
-
-        // );
-        // $this->load->view("site/layouts/layout", $data);
-
     }
+    public function execute_search($search_category=null)
+    {
+        $search_category = $this->input->post('search');        
+        if (!empty($search_category) && $search_category != null) {
+        $this->session->set_userdata("search_category",$search_category);
+            }           
+        redirect("categories/all-categories");
+    }
+    public function unset_search()
+        {
+        $this->session->unset_userdata('search_category');
+        
+        redirect("categories/all-categories");
+        }
 
     public function add_category()
     {
+        $search="categories/search-category";
+        $close="categories/close-search";
         //form validation
         $this->form_validation->set_rules("category_parent", 'Category Parent', "required");
         $this->form_validation->set_rules("category_name", 'Category Name', "required");
@@ -136,26 +134,13 @@ class Categories extends admin
         // var_dump($v_data);die();
         $data = array(
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/categories/add_category", $v_data, true),
         );
 
         $this->load->view("site/layouts/layout", $data);
     }
-
-    public function execute_search()
-    {
-        // Retrieve the posted search term.
-        $search_term = $this->input->post('search');
-
-        $v_data = array("results" => $this->Categories_model->get_cat($search_term));
-
-        $data = array(
-            "title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("admin/execute_search", $v_data, true),
-        );
-        $this->load->view("site/layouts/layout", $data);
-    }
-
     public function delete_category($category_id)
     {
         $this->Categories_model->delete($category_id);
@@ -165,6 +150,8 @@ class Categories extends admin
     //deactivate
     public function deactivate_category($id)
     {
+        $search="categories/search-category";
+        $close="categories/close-search";
         $load_deactivate = $this->Categories_model->deactivate_category($id);
         $v_data = array(
             "all_categories" => $load_deactivate,
@@ -172,6 +159,8 @@ class Categories extends admin
 
         $data = array(
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
         );
 
@@ -182,6 +171,8 @@ class Categories extends admin
     //activate
     public function activate_category($id)
     {
+        $search="categories/search-category";
+        $close="categories/close-search";
         $load_activate = $this->Categories_model->activate_category($id);
         $v_data = array(
             "all_categories" => $load_activate,
@@ -189,6 +180,8 @@ class Categories extends admin
 
         $data = array(
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/Categories/all_categories", $v_data, true),
         );
 
@@ -199,6 +192,8 @@ class Categories extends admin
     //edit update
     public function edit_category($id)
     {
+        $search="categories/search-category";
+        $close="categories/close-search";
         $this->form_validation->set_rules("category_parent", 'Category Parent', "required");
         $this->form_validation->set_rules("category_name", 'Category Name', "required");
 
@@ -248,6 +243,8 @@ class Categories extends admin
         $data = array(
 
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/categories/edit_category", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);

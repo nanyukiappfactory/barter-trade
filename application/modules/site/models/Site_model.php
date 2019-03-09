@@ -24,8 +24,6 @@ class Site_model extends CI_Model{
   }
   public function get_count($table, $where, $limit = NULL)
   {
-    
-    $search_term=$this->session->userdata("search_term");
       if($limit != NULL)
       {
           $this->db->limit($limit);

@@ -38,12 +38,10 @@
 						<?php }}?>
 					</select>
 				</div>
-			</div>
 		</div>
-		<input type="submit" name="submit" class="btn btn-success" value="Submit">
 	</div>
 	<div class="col-md-6 mb-3">
-	<a href="<?php echo site_url('roles/all-roles/'); ?>"
+	<a href="<?php echo site_url('user-type-roles/all-user-type-roles/'); ?>"
 		class="btn btn-secondary">View</a>
 	<input type="submit" name="submit" class="btn btn-success" value="Submit">
     </div>

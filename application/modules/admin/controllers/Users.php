@@ -8,6 +8,7 @@ class Users extends Admin
 {
     public $upload_path;
     public $upload_location;
+   
     public function __construct()
     {
         parent::__construct();
@@ -20,23 +21,19 @@ class Users extends Admin
         $this->load->model("file_model");
         $this->load->library('session');
         $table = 'user';
+       
     }
     public function index($order = 'user.first_name', $order_method = 'ASC')
     {
         
         
         //Pagination
-        
+        $search="users/search-user";
+        $close="users/close-search";
         $segment = 5;
         $table = 'user';
         $where = 'deleted=0';
         $search_term=$this->session->userdata("search_term");
-        //var_dump($search_term);die();
-        // if (!empty($search_term) && $search_term != null) {
-        //     $where .= ' AND user.first_name LIKE"'.$search_term.'"';
-            
-        //     ;
-        // }
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -71,10 +68,13 @@ class Users extends Admin
         "order_method" => $order_method,
         "page" => $page,
         "links" => $this->pagination->create_links()
-    );
+        );
         $data = array
        (
             "title" => "Users",
+            "search"=>$search,
+            "close"=>$close,
+            "search_term"=>$search_term,
             "content" => $this->load->view("admin/users/all_users", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
@@ -95,9 +95,10 @@ class Users extends Admin
         
         redirect("users/all-users");
         }
-
     public function add_user()
     {
+        $search="users/search-user";
+        $close="users/close-search";
         //form validation
         $this->form_validation->set_rules("first_name", 'First Name', "required");
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
@@ -138,6 +139,8 @@ class Users extends Admin
         $data = array(
 
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/users/add_user", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
@@ -152,6 +155,8 @@ class Users extends Admin
 
     public function deactivate_user($id)
     {
+        $search="users/search-user";
+        $close="users/close-search";
         $load_deactivate = $this->Users_model->deactivate_user($id);
         $v_data = array(
             "all_users" => $load_deactivate,
@@ -159,6 +164,8 @@ class Users extends Admin
         $data = array(
 
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/users/all_users", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
@@ -167,6 +174,8 @@ class Users extends Admin
     //activate
     public function activate_user($id)
     {
+        $search="users/search-user";
+        $close="users/close-search";
         $load_activate = $this->Users_model->activate_user($id);
         $v_data = array(
             "all_users" => $load_activate,
@@ -174,6 +183,8 @@ class Users extends Admin
         $data = array(
 
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/users/all_users", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
@@ -181,6 +192,8 @@ class Users extends Admin
     }
     public function edit_user($id)
     {
+        $search="users/search-user";
+        $close="users/close-search";
         $this->form_validation->set_rules("first_name", 'First Name', "required");
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
@@ -239,6 +252,8 @@ class Users extends Admin
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
             "content" => $this->load->view("admin/users/edit_users", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
