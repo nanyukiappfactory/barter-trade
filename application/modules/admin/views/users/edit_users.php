@@ -12,9 +12,10 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 								<input class="form-control" type="text" name="first_name" value="<?php echo $first_name;?>">
 							</div>
 							<div class="col-md-6 mb-3">
-								<label for='user_type'>User Type: </label>
-								<input class="form-control" type="text" name="user_type" value="<?php echo $user_type;?>">
+								<label for='last_name'>Last Name: </label>
+								<input class="form-control" type="text" name="last_name" value="<?php echo $last_name;?>">
 							</div>
+							
 							<div class="col-md-6 mb-3">
 								<label for='phone_number'>Phone Number: </label>
 								<input class="form-control" type="text" name="phone_number" value="<?php echo $phone_number;?>">
