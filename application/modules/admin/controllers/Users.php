@@ -192,6 +192,21 @@ class Users extends Admin
     }
     public function edit_user($id)
     {
+        $users = $this->Users_model->get_single($id);
+
+        if ($users->num_rows() > 0) {
+            $row = $users->row();
+            $first_name = $row->first_name;
+            $last_name = $row->last_name;
+            $phone_number = $row->phone_number;
+            $username = $row->username;
+            $user_email = $row->user_email;
+            $password = $row->password;
+            //$location = $row->location;
+            $profile_icon = $row->profile_icon;
+
+        }
+        
         $search="users/search-user";
         $close="users/close-search";
         $this->form_validation->set_rules("first_name", 'First Name', "required");
@@ -225,20 +240,19 @@ class Users extends Admin
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
-        $users = $this->Users_model->get_single($id);
 
-        if ($users->num_rows() > 0) {
-            $row = $users->row();
-            $first_name = $row->first_name;
-            $last_name = $row->last_name;
-            $phone_number = $row->phone_number;
-            $username = $row->username;
-            $user_email = $row->user_email;
-            $password = $row->password;
-            //$location = $row->location;
-            $profile_icon = $row->profile_icon;
+        $error_check = $this->session->flashdata('error');
 
+        if(!empty($error_check) && $error_check != NULL)
+        {
+            $first_name = set_value("first_name");
+            $last_name = set_value("last_name");
+            $phone_number = set_value("phone_number");
+            $username = set_value("username");
+            $user_email = set_value("user_email");
+            $profile_icon = set_value("profile_icon");
         }
+        
         $v_data = array(
             "first_name" => $first_name,
             "last_name" => $last_name,
