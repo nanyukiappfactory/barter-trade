@@ -19,8 +19,8 @@ class Users_model extends CI_Model
                 "profile_thumb"=> $thumb_name,
                 "deleted"=>0,
                 "user_status"=>1,
-                "user_type"=>$user_type
-            );        
+                "user_type"=>$this->input->post("user_type"),
+            ); 
         if( $this->db->insert("user", $data))
         {
            return true;
@@ -45,6 +45,7 @@ class Users_model extends CI_Model
                 "profile_thumb"=> $thumb_name,
                 "deleted"=>0,
                 "user_status"=>1,
+                "user_type"=>$this->input->post("user_type"),
             );        
         if( $this->db->insert("user", $data)){
            return true;
@@ -79,7 +80,24 @@ class Users_model extends CI_Model
         $this->db->from($table);
         $this->db->where($where);
         return $this->db->count_all_results();
-    }   
+    }  
+    
+    public function get_user_type()
+    {
+        $trader="Trader";
+        $this->db->where('user_type_name',$trader);
+        $query = $this->db->get('user_type');
+        //var_dump($query->row());die();
+        if ($query->num_rows() > 0)
+        {
+            return ($query);
+        }
+        else
+        {
+            return false;
+        }
+    } 
+
     public function delete($id){
         // Delete member data
         $deleted = array(
@@ -160,7 +178,8 @@ class Users_model extends CI_Model
             "profile_icon"=> $file_name,
             "profile_thumb"=> $thumb_name,
             "deleted"=>0,
-            "modified_on"=>date("Y-m-d H:i:s")
+            "modified_on"=>date("Y-m-d H:i:s"),
+            "user_type"=>$this->input->post("user_type"),
         );  
         
         if("user.user_id>0"){

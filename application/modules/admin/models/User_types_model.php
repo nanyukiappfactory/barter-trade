@@ -66,9 +66,7 @@ class User_types_model extends CI_Model
         
         // Execute the query.
         $query = $this->db->get();
-        
-        // Return the results.
-        return $query->result_array();
+        return $query;
     }
 
     public function delete($id){

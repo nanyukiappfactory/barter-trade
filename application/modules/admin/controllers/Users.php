@@ -9,6 +9,7 @@ class Users extends Admin
     {
         parent::__construct();
         $this->load->model("Users_model");
+        $this->load->model("User_types_model");
         $this->load->model("site/site_model");
         $this->load->library('pagination');
         $this->upload_path = realpath(APPPATH . "../assets/uploads");
@@ -76,7 +77,6 @@ class Users extends Admin
             "content" => $this->load->view("admin/users/all_users", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
-
     }
 
     public function execute_search($search_term=null)
@@ -142,6 +142,7 @@ class Users extends Admin
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
+        $user_type=$this->Users_model->get_user_type();
         $v_data = array(
                 "validation_errors" => validation_errors(),
                 "first_name"=>$first_name,
@@ -149,7 +150,8 @@ class Users extends Admin
                 "phone_number"=>$phone_number,   
                 "user_email"=>$user_email,
                 "username"=>$username,
-                "password"=>$password
+                "password"=>$password,
+                "user_type_rows"=>$user_type
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),
@@ -271,6 +273,8 @@ class Users extends Admin
             $user_email = set_value("user_email");
             $profile_icon = set_value("profile_icon");
         }
+        $user_type_rows=$this->Users_model->get_user_type();
+        $user_types=$this->User_types_model->get_results();
         $v_data = array(
             "first_name" => $first_name,
             "last_name" => $last_name,
@@ -278,8 +282,8 @@ class Users extends Admin
             "username" => $username,
             "user_email" => $user_email,
             "password" => $password,
-            //"location" => $location,
-            //"user_type" => $user_type,
+            "user_types" =>$user_types,
+            "user_type_rows" => $user_type_rows
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),

@@ -6,6 +6,13 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 				<div class="row">
 					<div class="col-md-6">
 							<div class="col-md-6 mb-3">
+							<div>
+								<?php $row=$user_type_rows->row();
+								//echo json_encode();die();
+								if(isset($row)){
+								?>								
+								<input class="form-control" value="<?php echo $row->user_type_name; }?>" type="hidden" name="user_type">
+							</div>
 								<label for='first_name'>First Name: </label><input class="form-control" type="text" value="<?php echo $first_name;?>"  name="first_name">
 							</div>
 							<div class="col-md-6 mb-3">
