@@ -214,6 +214,14 @@ class User_types extends Admin
 
     public function edit_user_type($id)
     {
+        $user_types = $this->User_types_model->get_single($id);
+
+        if ($user_types->num_rows() > 0) {
+            $row = $user_types->row();
+            $user_type_name = $row->user_type_name;
+
+        }
+
         $search="user-types/search-user-type";
         $close="user-types/close-search";
         
@@ -233,13 +241,17 @@ class User_types extends Admin
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
-        $user_types = $this->User_types_model->get_single($id);
 
-        if ($user_types->num_rows() > 0) {
-            $row = $user_types->row();
-            $user_type_name = $row->user_type_name;
+        //TODO research more of Alvaro's method
+        //TODO delete or modify comment after full understanding
+        $error_check = $this->session->flashdata('error');
 
+        if(!empty($error_check) && $error_check != NULL)
+        {
+            $user_type_name = set_value("user_type_name");
         }
+        
+       
 
         $v_data = array(
             "user_type_name" => $user_type_name,
@@ -247,8 +259,8 @@ class User_types extends Admin
 
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
+            "search" => $search,
+            "close" => $close,
             "content" => $this->load->view("admin/user_types/edit_user_types", $v_data, true),
         );
 
