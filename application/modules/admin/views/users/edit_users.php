@@ -21,7 +21,7 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 							</div>
 							<div class="col-md-6 mb-3">
 								<label for='username'>Username: </label>
-								<input type="text" name="username" value="<?php echo $username;?>">
+								<input type="text" class="form-control" name="username" value="<?php echo $username;?>">
 							</div>
 							<div class="col-md-6 mb-3">
 								<label for='user_email'>Email: </label>

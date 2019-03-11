@@ -1,8 +1,4 @@
-<?php
-if (!defined('BASEPATH')) 
-{
-    exit('No direct script access allowed');
-}
+<?php if (!defined('BASEPATH')){ exit('No direct script access allowed');}
  require_once "./application/modules/admin/controllers/Admin.php";
 class Users extends Admin
 {
@@ -23,6 +19,7 @@ class Users extends Admin
         $table = 'user';
        
     }
+
     public function index($order = 'user.first_name', $order_method = 'ASC')
     {
         $search="users/search-user";
@@ -30,11 +27,11 @@ class Users extends Admin
         $segment = 5;
         $table = 'user';
         $where = 'user.deleted=0';
+        $search_term=$this->session->userdata("search_term");
         if (!empty($search_term) && $search_term != null) 
         {
-            $where .= $search_term;
+            $where .= ' AND (first_name LIKE "'.$search_term.'" OR user_email LIKE "'.$search_term.'" OR username LIKE "'.$search_term.'" OR phone_number LIKE "'.$search_term.'" OR last_name LIKE "'.$search_term.'")';
         }
-        $search_term=$this->session->userdata("search_term");
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -57,7 +54,6 @@ class Users extends Admin
         $this->pagination->initialize($config);
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         $query = $this->Users_model->get_user($table, $where, $config["per_page"], $page, $order, $order_method);      
-       
         if ($order_method == 'DESC')
         {
             $order_method = 'ASC';
@@ -72,8 +68,7 @@ class Users extends Admin
         "page" => $page,
         "links" => $this->pagination->create_links()
         );
-        $data = array
-       (
+        $data = array(
             "title" => "Users",
             "search"=>$search,
             "close"=>$close,
@@ -83,6 +78,7 @@ class Users extends Admin
         $this->load->view("site/layouts/layout", $data);
 
     }
+
     public function execute_search($search_term=null)
     {
         $search_term = $this->input->post('search');
@@ -92,11 +88,13 @@ class Users extends Admin
         }           
         redirect("users/all-users");
     }
+
     public function unset_search()
         {
             $this->session->unset_userdata('search_term');
             redirect("users/all-users");
         }
+
     public function add_user()
     {
         $search="users/search-user";
@@ -188,7 +186,7 @@ class Users extends Admin
         $this->load->view("site/layouts/layout", $data);
         redirect("users/all-users");
     }
-    //activate
+
     public function activate_user($id)
     {
         $search="users/search-user";
@@ -198,7 +196,6 @@ class Users extends Admin
             "all_users" => $load_activate,
         );
         $data = array(
-
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
             "close"=>$close,
@@ -222,7 +219,6 @@ class Users extends Admin
             $profile_icon = $row->profile_icon;
 
         }
-        
         $search="users/search-user";
         $close="users/close-search";
         $this->form_validation->set_rules("first_name", 'First Name', "required");
@@ -231,19 +227,20 @@ class Users extends Admin
         $this->form_validation->set_rules("username", 'Username', "required");
         $this->form_validation->set_rules("user_email", 'User Email', "required");
 
-        if ($this->form_validation->run()) {
+        if ($this->form_validation->run())
+        {
             $resize = array(
                 "width" => 2000,
                 "height" => 2000,
-            )
-            ;
+            );
             $upload_response = $this->file_model->upload_image($this->upload_path, "profile_icon", $resize);
             if ($upload_response['check'] == false) 
             {
                 $this->Users_model->add_user($upload_response);
             } 
             
-            else {
+            else 
+            {
 
                 if ($this->Users_model->edit_update_user($id, $upload_response)) 
                 {
@@ -255,7 +252,6 @@ class Users extends Admin
                     $this->session->set_flashdata('error', 'unable to add user. Try again!!');
                 }
             }
-
         } 
         else 
         {
@@ -264,7 +260,6 @@ class Users extends Admin
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
-
         $error_check = $this->session->flashdata('error');
 
         if(!empty($error_check) && $error_check != NULL)
@@ -276,7 +271,6 @@ class Users extends Admin
             $user_email = set_value("user_email");
             $profile_icon = set_value("profile_icon");
         }
-        
         $v_data = array(
             "first_name" => $first_name,
             "last_name" => $last_name,

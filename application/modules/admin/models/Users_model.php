@@ -1,6 +1,4 @@
-<?php
-if (!defined('BASEPATH')) 
-exit('No direct script access allowed'); 
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
 class Users_model extends CI_Model
 {
     public $table = "user";
@@ -58,15 +56,9 @@ class Users_model extends CI_Model
     }
     public function get_user($table, $where,$limit,$page,  $order, $order_method)
     {
-       $search_term=$this->session->userdata("search_term");
         $this->db->select("*");
         $this->db->from($table);    
-        $this->db->where($where);
-        $this->db->like('first_name', $search_term);
-        $this->db->or_like('user_email',$search_term);
-        $this->db->or_like('username',$search_term);
-        $this->db->or_like('phone_number',$search_term);
-        $this->db->or_like('last_name',$search_term);
+        $this->db->where($where);;
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         $result= $this->db->get();
@@ -90,7 +82,12 @@ class Users_model extends CI_Model
     }   
     public function delete($id){
         // Delete member data
-        $this->db->set("deleted", 1,"modified_on",date("Y-m-d H:i:s"),"deleted_on",date("Y-m-d H:i:s"));
+        $deleted = array(
+                "deleted" => 1,
+                "modified_on" => date("Y-m-d H:i:s"),
+                "deleted_on" => date("Y-m-d H:i:s")
+        );
+        $this->db->set($deleted);
         $this->db->where("user_id",$id);        
         if($this->db->update("user"))
         {
@@ -102,7 +99,6 @@ class Users_model extends CI_Model
             $this->session->set_flashdata("error","Unable to delete");
             return FALSE;
         }
-        
     }
     public function deactivate_user($id)
     {
@@ -110,11 +106,9 @@ class Users_model extends CI_Model
         $this->db->select('username');
         $this->db->from('user');
         $result = $this->db->get();
-        $username=$result->result_array();
-    //    var_dump($username);die();
-       
-       $this->db->set("user_status",0);
-      
+        $username=$result->result_array();       
+        $this->db->set("user_status",0);
+
         if($this->db->where("user_id",$id))
        {    
             $this->db->update("user");   
@@ -127,8 +121,8 @@ class Users_model extends CI_Model
         $this->session->set_flashdata("error","Unable to deactivate "); //echo implode($username);
         return FALSE;
        }
-    }    
-    //activate
+    }  
+
     public function activate_user($id)
     {
         $this->db->select('username');
@@ -149,6 +143,7 @@ class Users_model extends CI_Model
         return FALSE;
        }
     }
+
     public function edit_update_user($id,$upload_response)
     {
         $file_name = $upload_response['file_name'];
