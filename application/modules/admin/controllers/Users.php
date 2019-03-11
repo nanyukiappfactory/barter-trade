@@ -285,7 +285,7 @@ class Users extends Admin
             "user_email" => $user_email,
             "password" => $password,
             //"location" => $location,
-            "user_type" => $user_type,
+            //"user_type" => $user_type,
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),

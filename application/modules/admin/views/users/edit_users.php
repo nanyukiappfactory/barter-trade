@@ -6,7 +6,6 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 			<div class="card-header py-3">
 				<div class="row">
 					<div class="col-md-6">
-						<div class="form-row">
 							<div class="col-md-6 mb-3">
 								<label for='first_name'>First Name: </label>
 								<input class="form-control" type="text" name="first_name" value="<?php echo $first_name;?>">
@@ -26,9 +25,8 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 							</div>
 							<div class="col-md-6 mb-3">
 								<label for='user_email'>Email: </label>
-								<input type="email" name="user_email" value="<?php echo $user_email;?>">
+								<input class="form-control" ype="email" name="user_email" value="<?php echo $user_email;?>">
 							</div>
-
 							<div class="col-md-6 mb-3">
 								<label for='username'>Location: </label>
 								<!-- <//?php echo form_dropdown('location_id', $locations, '', 'class="form-control" name=location');?>  -->
@@ -46,4 +44,5 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 				</div>
 			</div>
 		</div>
+	</div>
 </div>
