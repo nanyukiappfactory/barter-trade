@@ -25,14 +25,15 @@ class Users extends Admin
     }
     public function index($order = 'user.first_name', $order_method = 'ASC')
     {
-        
-        
-        //Pagination
         $search="users/search-user";
         $close="users/close-search";
         $segment = 5;
         $table = 'user';
-        $where = 'deleted=0';
+        $where = 'user.deleted=0';
+        if (!empty($search_term) && $search_term != null) 
+        {
+            $where .= $search_term;
+        }
         $search_term=$this->session->userdata("search_term");
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
@@ -57,9 +58,11 @@ class Users extends Admin
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         $query = $this->Users_model->get_user($table, $where, $config["per_page"], $page, $order, $order_method);      
        
-        if ($order_method == 'DESC') {
+        if ($order_method == 'DESC')
+        {
             $order_method = 'ASC';
-        } else {
+        } else
+        {
             $order_method = 'DESC';
         }
        $v_data = array(
@@ -83,47 +86,53 @@ class Users extends Admin
     public function execute_search($search_term=null)
     {
         $search_term = $this->input->post('search');
-        //var_dump($search_term);die();
-        if (!empty($search_term) && $search_term != null) {
-        $this->session->set_userdata("search_term",$search_term);
-            }           
+        if (!empty($search_term) && $search_term != null) 
+        {
+            $this->session->set_userdata("search_term",$search_term);
+        }           
         redirect("users/all-users");
     }
     public function unset_search()
         {
-        $this->session->unset_userdata('search_term');
-        
-        redirect("users/all-users");
+            $this->session->unset_userdata('search_term');
+            redirect("users/all-users");
         }
     public function add_user()
     {
         $search="users/search-user";
         $close="users/close-search";
-        //form validation
+        $first_name = (empty(validation_errors())) ? $this->input->post("first_name") : set_value($this->input->post("first_name"));
+        $last_name = (empty(validation_errors())) ? $this->input->post("last_name") : set_value($this->input->post("last_name"));
+        $phone_number = (empty(validation_errors())) ? $this->input->post("phone_number") : set_value($this->input->post("phone_number"));
+        $user_email = (empty(validation_errors())) ? $this->input->post("user_email") : set_value($this->input->post("user_email"));
+        $username = (empty(validation_errors())) ? $this->input->post("username") : set_value($this->input->post("username"));
+        $password = (empty(validation_errors())) ? $this->input->post("password") : set_value($this->input->post("password"));
         $this->form_validation->set_rules("first_name", 'First Name', "required");
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
-        $this->form_validation->set_rules("username", 'Username', "required");
-        $this->form_validation->set_rules("user_email", 'User Email', "required");
+        $this->form_validation->set_rules("username", 'Username', "required|is_unique[user.username]");
+        $this->form_validation->set_rules("user_email", 'User Email', "required|is_unique[user.user_email]");
         $this->form_validation->set_rules("password", 'Password', "required");
         if ($this->form_validation->run()) 
         {
-
             $resize = array(
                 "width" => 2000,
                 "height" => 2000,
-            )
-            ;
+            );
             $upload_response = $this->file_model->upload_image($this->upload_path, "profile_icon", $resize);
-
-            if ($upload_response['check'] == false) {
-                $this->session->set_flashdata('error', $upload_response['message']);
-            } else {
-
-                if ($this->Users_model->add_user($upload_response)) {
+            if ($upload_response['check'] == false) 
+            {
+                $this->Users_model->add_user($upload_response);
+            } 
+            else
+            {
+                if ($this->Users_model->add_user($upload_response))
+                {
                     $this->session->set_flashdata('success', 'User Added successfully!!');
-                    redirect("users/all-users");
-                } else {
+                    redirect('users/all-users');
+                } 
+                else
+                {
                     $this->session->set_flashdata('error', 'unable to add user. Try again!!');
                 }
             }
@@ -135,15 +144,23 @@ class Users extends Admin
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
-        $v_data = array("validation_errors" => validation_errors());
+        $v_data = array(
+                "validation_errors" => validation_errors(),
+                "first_name"=>$first_name,
+                "last_name"=>$last_name, 
+                "phone_number"=>$phone_number,   
+                "user_email"=>$user_email,
+                "username"=>$username,
+                "password"=>$password
+        );
         $data = array(
-
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
             "close"=>$close,
             "content" => $this->load->view("admin/users/add_user", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
+        
     }
 
     public function delete_user($user_id)
@@ -193,7 +210,6 @@ class Users extends Admin
     public function edit_user($id)
     {
         $users = $this->Users_model->get_single($id);
-
         if ($users->num_rows() > 0) {
             $row = $users->row();
             $first_name = $row->first_name;
@@ -222,21 +238,29 @@ class Users extends Admin
             )
             ;
             $upload_response = $this->file_model->upload_image($this->upload_path, "profile_icon", $resize);
+            if ($upload_response['check'] == false) 
+            {
+                $this->Users_model->add_user($upload_response);
+            } 
+            
+            else {
 
-            if ($upload_response['check'] == false) {
-                $this->session->set_flashdata('error', $upload_response['message']);
-            } else {
-
-                if ($this->Users_model->edit_update_user($id, $upload_response)) {
+                if ($this->Users_model->edit_update_user($id, $upload_response)) 
+                {
                     $this->session->set_flashdata('success', 'User ,Added successfully!!');
                     redirect("users/all-users");
-                } else {
+                } 
+                else 
+                {
                     $this->session->set_flashdata('error', 'unable to add user. Try again!!');
                 }
             }
 
-        } else {
-            if (!empty(validation_errors())) {
+        } 
+        else 
+        {
+            if (!empty(validation_errors())) 
+            {
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
@@ -261,8 +285,7 @@ class Users extends Admin
             "user_email" => $user_email,
             "password" => $password,
             //"location" => $location,
-            "profile_icon" => $profile_icon,
-
+            "user_type" => $user_type,
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),

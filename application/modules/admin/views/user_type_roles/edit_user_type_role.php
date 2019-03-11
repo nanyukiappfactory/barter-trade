@@ -1,10 +1,5 @@
-<?php if (!defined('BASEPATH')) 
-{
-    exit('No direct script access allowed');
-} if (!empty($validation_errors)) {
-    echo $validation_errors;
-}
- echo form_open($this->uri->uri_string()); ?>
+<?php if (!defined('BASEPATH')) {exit('No direct script access allowed'); } 
+echo form_open_multipart($this->uri->uri_string()); ?>
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
 	<div class="row">
 		<div class="col-md-4 col-sm-12">

@@ -6,27 +6,54 @@ class Users_model extends CI_Model
     public $table = "user";
     public function add_user($upload_response)
     {
-        $file_name = $upload_response['file_name'];
-        $thumb_name = $upload_response['thumb_name'];
-        $data = array(
-            "first_name" => $this->input->post("first_name"),
-            "last_name" => $this->input->post("last_name"),
-            "phone_number" => $this->input->post("phone_number"),
-            "username" => $this->input->post("username"),
-            "user_email" => $this->input->post("user_email"),
-            "password" => md5($this->input->post("password")),
-            "profile_icon"=> $file_name,
-            "profile_thumb"=> $thumb_name,
-            "deleted"=>0,
-            "user_status"=>1,
-        );
-
-        
+        if(!$this->input->post("profile_icon"))
+        {
+            $file_name = "no_image.PNG";
+            $thumb_name = "6cb8392a0f015455b60834952307d7fe.PNG";
+            $data = array(
+                "first_name" => $this->input->post("first_name"),
+                "last_name" => $this->input->post("last_name"),
+                "phone_number" => $this->input->post("phone_number"),
+                "username" => $this->input->post("username"),
+                "user_email" => $this->input->post("user_email"),
+                "password" => md5($this->input->post("password")),
+                "profile_icon"=> $file_name,
+                "profile_thumb"=> $thumb_name,
+                "deleted"=>0,
+                "user_status"=>1,
+                "user_type"=>$user_type
+            );        
+        if( $this->db->insert("user", $data))
+        {
+           return true;
+        }
+        else
+        {
+           return false;
+        }
+        }
+        else
+        {
+            $file_name = $upload_response['file_name'];
+            $thumb_name = $upload_response['thumb_name'];
+            $data = array(
+                "first_name" => $this->input->post("first_name"),
+                "last_name" => $this->input->post("last_name"),
+                "phone_number" => $this->input->post("phone_number"),
+                "username" => $this->input->post("username"),
+                "user_email" => $this->input->post("user_email"),
+                "password" => md5($this->input->post("password")),
+                "profile_icon"=> $file_name,
+                "profile_thumb"=> $thumb_name,
+                "deleted"=>0,
+                "user_status"=>1,
+            );        
         if( $this->db->insert("user", $data)){
            return true;
         }
         else{
            return false;
+        }
         }
     }
     public function get_user($table, $where,$limit,$page,  $order, $order_method)

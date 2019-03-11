@@ -1,5 +1,5 @@
-<?php if (!defined('BASEPATH')) 
-exit('No direct script access allowed');  ?>
+<?php if (!defined('BASEPATH')) {exit('No direct script access allowed'); } 
+echo form_open_multipart($this->uri->uri_string()); ?>
 <div class="container">
 	<div class="shadow-lg p-3 mb-5 bg-white rounded">
 		<div class="card shadow mb-4 mt-4">
@@ -7,18 +7,13 @@ exit('No direct script access allowed');  ?>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-row">
-							<?php if (!empty($validation_errors)) 
-							{
-									echo $validation_errors;
-							}
-								echo form_open_multipart($this->uri->uri_string()); ?>
 							<div class="col-md-6 mb-3">
 								<label for='first_name'>First Name: </label>
 								<input class="form-control" type="text" name="first_name" value="<?php echo $first_name;?>">
 							</div>
 							<div class="col-md-6 mb-3">
-								<label for='last_name'>Last Name: </label>
-								<input class="form-control" type="text" name="last_name" value="<?php echo $last_name;?>">
+								<label for='user_type'>User Type: </label>
+								<input class="form-control" type="text" name="user_type" value="<?php echo $user_type;?>">
 							</div>
 							<div class="col-md-6 mb-3">
 								<label for='phone_number'>Phone Number: </label>
@@ -39,7 +34,7 @@ exit('No direct script access allowed');  ?>
 							</div>
 							<div class="form-group">
 								<label>Image</label>
-								<input type="file" id="profile_icon" name="profile_icon" <?php echo $last_name;?>>
+								<input type="file" id="profile_icon" name="profile_icon">
 							</div>
 							<div>
 							<input class="btn btn-dark" type="submit" value="Update" style="margin-left:20px;">

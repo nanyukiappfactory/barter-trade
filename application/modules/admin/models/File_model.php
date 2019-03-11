@@ -24,8 +24,9 @@ $this->load->library("upload", $config);
 if(!$this->upload->do_upload($field_name))
 {
 //If upload fail
+
 $response['check'] = FALSE;
-$response['message'] = $this->upload->display_errors();
+// $response['message'] = $this->upload->display_errors();
 }
  
 else
