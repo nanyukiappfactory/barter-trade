@@ -1,7 +1,4 @@
-<?php 
-	if (!defined('BASEPATH'))
-	exit('No direct script access allowed');
-?>
+<?php if (!defined('BASEPATH'))	exit('No direct script access allowed');?>
 
 <div class="container">
 	<div class="shadow-lg p-3 mb-5 bg-white rounded">
@@ -10,10 +7,6 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-row">
-							<?php if (!empty($validation_errors)) {
-   								 echo $validation_errors;
-								}
-							?>
 							<?php echo form_open_multipart($this->uri->uri_string()); ?>
 							<div class="col-md-6">
 								<label for='user_type_name'>User Type Name: </label>

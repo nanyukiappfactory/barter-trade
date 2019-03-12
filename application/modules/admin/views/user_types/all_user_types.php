@@ -1,7 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
-?>
+<?php if (!defined('BASEPATH')) {exit('No direct script access allowed');} ?>
     <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
 
         <div class="card shadow mb-4 mt-4">
