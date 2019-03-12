@@ -121,16 +121,10 @@ class Users_model extends CI_Model
 
     public function deactivate_user($id)
     {
-        $this->db->select('username');
-        $this->db->from('user');
-        $result = $this->db->get();
-        $username=$result->result_array();       
         $this->db->set("user_status",0);
-
-        if($this->db->where("user_id",$id))
-       {    
-            $this->db->update("user");   
-            $remain=$this->get_single($id);
+        $this->db->where("user_id",$id);
+        if($this->db->update("user"))
+        {
             $this->session->set_flashdata("success","Successfully deactivated");//implode($username));
             return $remain;
        }

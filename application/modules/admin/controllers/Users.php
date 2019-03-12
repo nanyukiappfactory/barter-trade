@@ -230,28 +230,15 @@ class Users extends Admin
         $this->load->view("site/layouts/layout", $data);
     }
 
-    public function activate_user($id)
+    public function activate_user()
     {
-        $load_activate = $this->Users_model->activate_user($id);
+        $this->Users_model->activate_user();
         redirect("users/all-users");
     }
 
-    public function deactivate_user($id)
+    public function deactivate_user()
     {
-        $search="users/search-user";
-        $close="users/close-search";
-        $load_deactivate = $this->Users_model->deactivate_user($id);
-        $v_data = array(
-            "all_users" => $load_deactivate,
-        );
-        $data = array(
-
-            "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
-            "content" => $this->load->view("admin/users/all_users", $v_data, true),
-        );
-        $this->load->view("site/layouts/layout", $data);
+        $this->Users_model->deactivate_user();
         redirect("users/all-users");
     }
 
