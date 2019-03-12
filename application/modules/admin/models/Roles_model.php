@@ -31,7 +31,6 @@ class Roles_model extends CI_Model
     //get role from the db
     public function get_role($table, $where,$limit,$page,$order,$order_method)
     {
-        $where="deleted=0";
         $this->db->select("*");
         $this->db->from($table);    
         $this->db->where($where);
