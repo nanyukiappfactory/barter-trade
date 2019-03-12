@@ -28,8 +28,12 @@ class Roles extends admin
         $close="roles/close-search";
         $segment = 5;
         $table = 'role';
-        $where = 'deleted = 0';      
+        $where = 'deleted = 0';
         $search_role=$this->session->userdata("search_role");
+        if (!empty($search_role) && $search_role != null) 
+        {
+            $where .= ' AND (role_name LIKE "'.$search_role.'" OR parent LIKE "'.$search_role.'")';
+        }  
         $config['base_url'] = site_url() . 'roles/all-roles/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -55,7 +59,8 @@ class Roles extends admin
         if ($order_method == 'DESC')
         {
             $order_method = 'ASC';
-        } else {
+        } else
+        {
             $order_method = 'DESC';
         }
       
@@ -79,7 +84,6 @@ class Roles extends admin
     public function execute_search($search_role=null)
     {
         $search_role = $this->input->post('search');
-        //var_dump($search_role);die();
         if (!empty($search_role) && $search_role != null) {
         $this->session->set_userdata("search_role",$search_role);
             }           

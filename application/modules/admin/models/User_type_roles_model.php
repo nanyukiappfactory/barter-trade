@@ -19,15 +19,16 @@ class User_type_roles_model extends CI_Model
             "user_type_id" => $this->input->post("user_type_name"),
         );
 
-        if ($this->db->insert("user_type_role", $data)) {
+        if ($this->db->insert("user_type_role", $data))
+        {
             return true;
-        } else {
+        } else
+        {
             return false;
         }
 
     }
     
-    //get users from the db
     public function get_roles()
     {
         $this->db->where("deleted", 0);
@@ -47,35 +48,28 @@ class User_type_roles_model extends CI_Model
     }
     public function get_user_type_role($table=null, $where,$limit,$page,$order,$order_method)
     {
-        $search_user_type_role = $this->session->userdata('search_user_type_role');
         $this->db->select('role.role_name, user_type.user_type_name,role.role_id,user_type.user_type_id, user_type_role.*');
         $this->db->from("role");
         $this->db->join("user_type_role","role.role_id=user_type_role.role_id");
         $this->db->join("user_type", "user_type_role.user_type_id=user_type.user_type_id");
         $this->db->where("user_type_role.deleted", 0);
         $this->db->where($where);
-        $this->db->like("role.role_name",$search_user_type_role);
-        $this->db->or_like("user_type.user_type_name",$search_user_type_role);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         $result= $this->db->get();
         return $result;
    
     }
+
     public function get_results()
     {
-       
         $this->db->where("user_type_role.deleted=0");
-// Execute the query.
         $query = $this->db->get("user_type_role");
-        
-        // var_dump($query);die();
-// Return the results.
         return $query;
     }
+
     public function delete($id)
     {
-        // Delete member data
         $this->db->set("deleted", 1, "modified_on", date("Y-m-d H:i:s"), "deleted_on", date("Y-m-d H:i:s"));
         $this->db->where("user_type_role_id", $id);
 
@@ -102,7 +96,6 @@ class User_type_roles_model extends CI_Model
         }
     }
 
-    //activate
     public function activate_user_type_role($id)
     {
         $this->db->where("user_type_role_id", $id);
@@ -120,14 +113,12 @@ class User_type_roles_model extends CI_Model
     public function edit_update_user_type_role($id)
     {
         $this->db->get("user_type_role");
-        //Capture data to be updated
         $data = array(
             "role_id" => $this->input->post("role"),
             "user_type_id" => $this->input->post("user_type"),
             "deleted" => 0,
             "modified_on" => date("Y-m-d H:i:s"),
         );
-
         if ($this->db->where("user_type_role_id", $id))
         {
             $this->db->update("user_type_role", $data);
@@ -136,6 +127,7 @@ class User_type_roles_model extends CI_Model
             return false;
         }
     }
+    
     public function retrieve_roles_and_user_types()
     {
         $this->db->select('role.role_name, user_type.user_type_name,role.role_id,user_type.user_type_id AS user_type_PK_id,user_type_role.user_type_id');

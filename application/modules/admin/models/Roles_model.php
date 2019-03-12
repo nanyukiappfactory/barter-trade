@@ -31,13 +31,10 @@ class Roles_model extends CI_Model
     //get role from the db
     public function get_role($table, $where,$limit,$page,$order,$order_method)
     {
-        $search_role=$this->session->userdata("search_role");
         $where="deleted=0";
         $this->db->select("*");
         $this->db->from($table);    
         $this->db->where($where);
-        $this->db->like('role_name', $search_role);
-        $this->db->or_like('parent', $search_role);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         $result= $this->db->get();

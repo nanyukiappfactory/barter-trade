@@ -55,6 +55,7 @@ class Users_model extends CI_Model
         }
         }
     }
+
     public function get_user($table, $where,$limit,$page,  $order, $order_method)
     {
         $this->db->select("*");
@@ -63,14 +64,15 @@ class Users_model extends CI_Model
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         $result= $this->db->get();
-       // var_dump($where);die();
         return $result;
     }
+
     public function get_single($user_id)
     {
         $this->db->where("user_id", $user_id);
         return $this->db->get("user");
     }
+
     public function get_count($table, $where, $limit = NULL)
     {
         if($limit != NULL)
@@ -87,7 +89,6 @@ class Users_model extends CI_Model
         $trader="Trader";
         $this->db->where('user_type_name',$trader);
         $query = $this->db->get('user_type');
-        //var_dump($query->row());die();
         if ($query->num_rows() > 0)
         {
             return ($query);
@@ -99,7 +100,6 @@ class Users_model extends CI_Model
     } 
 
     public function delete($id){
-        // Delete member data
         $deleted = array(
                 "deleted" => 1,
                 "modified_on" => date("Y-m-d H:i:s"),
@@ -118,9 +118,9 @@ class Users_model extends CI_Model
             return FALSE;
         }
     }
+
     public function deactivate_user($id)
     {
-        
         $this->db->select('username');
         $this->db->from('user');
         $result = $this->db->get();
@@ -168,7 +168,6 @@ class Users_model extends CI_Model
         $thumb_name = $upload_response['thumb_name'];
         $this->db->where("user_id",$id);
         $this->db->get("user");
-        //Capture data to be updated
         $data = array(
             "first_name" => $this->input->post("first_name"),
             "last_name" => $this->input->post("last_name"),
@@ -182,14 +181,16 @@ class Users_model extends CI_Model
             "user_type"=>$this->input->post("user_type"),
         );  
         
-        if("user.user_id>0"){
+        if("user.user_id>0")
+        {
         $this->db->where("user_id",$id);
         $this->db->update("user", $data);
             return true;
         }
-         else{
+        else
+        {
             return false;
-         }
+        }
     }
 
 }
