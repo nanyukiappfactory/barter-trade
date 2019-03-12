@@ -79,22 +79,6 @@ class Users extends Admin
         $this->load->view("site/layouts/layout", $data);
     }
 
-    public function execute_search($search_term=null)
-    {
-        $search_term = $this->input->post('search');
-        if (!empty($search_term) && $search_term != null) 
-        {
-            $this->session->set_userdata("search_term",$search_term);
-        }           
-        redirect("users/all-users");
-    }
-
-    public function unset_search()
-        {
-            $this->session->unset_userdata('search_term');
-            redirect("users/all-users");
-        }
-
     public function add_user()
     {
         $search="users/search-user";
@@ -160,50 +144,6 @@ class Users extends Admin
             "content" => $this->load->view("admin/users/add_user", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
-    }
-
-    public function delete_user($user_id)
-    {
-        $this->Users_model->delete($user_id);
-
-        redirect("users/all-users");
-    }
-
-    public function deactivate_user($id)
-    {
-        $search="users/search-user";
-        $close="users/close-search";
-        $load_deactivate = $this->Users_model->deactivate_user($id);
-        $v_data = array(
-            "all_users" => $load_deactivate,
-        );
-        $data = array(
-
-            "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
-            "content" => $this->load->view("admin/users/all_users", $v_data, true),
-        );
-        $this->load->view("site/layouts/layout", $data);
-        redirect("users/all-users");
-    }
-
-    public function activate_user($id)
-    {
-        $search="users/search-user";
-        $close="users/close-search";
-        $load_activate = $this->Users_model->activate_user($id);
-        $v_data = array(
-            "all_users" => $load_activate,
-        );
-        $data = array(
-            "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
-            "content" => $this->load->view("admin/users/all_users", $v_data, true),
-        );
-        $this->load->view("site/layouts/layout", $data);
-        redirect("users/all-users");
     }
 
     public function edit_user($id)
@@ -289,4 +229,52 @@ class Users extends Admin
         );
         $this->load->view("site/layouts/layout", $data);
     }
+
+    public function activate_user($id)
+    {
+        $load_activate = $this->Users_model->activate_user($id);
+        redirect("users/all-users");
+    }
+
+    public function deactivate_user($id)
+    {
+        $search="users/search-user";
+        $close="users/close-search";
+        $load_deactivate = $this->Users_model->deactivate_user($id);
+        $v_data = array(
+            "all_users" => $load_deactivate,
+        );
+        $data = array(
+
+            "title" => $this->site_model->display_page_title(),
+            "search"=>$search,
+            "close"=>$close,
+            "content" => $this->load->view("admin/users/all_users", $v_data, true),
+        );
+        $this->load->view("site/layouts/layout", $data);
+        redirect("users/all-users");
+    }
+
+    public function delete_user($user_id)
+    {
+        $this->Users_model->delete($user_id);
+
+        redirect("users/all-users");
+    }
+
+    public function execute_search($search_term=null)
+    {
+        $search_term = $this->input->post('search');
+        if (!empty($search_term) && $search_term != null) 
+        {
+            $this->session->set_userdata("search_term",$search_term);
+        }           
+        redirect("users/all-users");
+    }
+
+    public function unset_search()
+        {
+            $this->session->unset_userdata('search_term');
+            redirect("users/all-users");
+        }
 }

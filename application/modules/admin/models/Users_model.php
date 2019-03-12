@@ -143,23 +143,18 @@ class Users_model extends CI_Model
 
     public function activate_user($id)
     {
-        $this->db->select('username');
-        $this->db->from('user');
-        $result = $this->db->get();
-        $username=$result->result_array();
         $this->db->set("user_status",1);
-       if($this->db->where("user_id",$id))
-       {
-            $this->db->update("user");
-            $remain=$this->get_single($id);
-            $this->session->set_flashdata("success","Activated successfully "); //echo implode($username);
-            return $remain;
-       }
-       else 
-       {
-        $this->session->set_flashdata("error","Unable to activate "); //echo implode($username);
-        return FALSE;
-       }
+        $this->db->where("user_id",$id);
+        if($this->db->update("user"))
+        {
+            $this->session->set_flashdata("success","User activated successfully");
+            return TRUE;
+        }
+        else 
+        {
+            $this->session->set_flashdata("error","Unable to activate the user");
+            return FALSE;
+        }
     }
 
     public function edit_update_user($id,$upload_response)
