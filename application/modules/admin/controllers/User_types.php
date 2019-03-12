@@ -167,7 +167,7 @@ class User_types extends Admin
     public function delete_user_type($user_type_id)
     {
         $this->User_types_model->delete($user_type_id);
-        
+
         redirect("user-types/all-user-types");
 
     }// end delete user type function
