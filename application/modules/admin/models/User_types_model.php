@@ -71,9 +71,9 @@ class User_types_model extends CI_Model
         return $query;
     }
 
-    public function edit_update_user_type($id)
+    public function edit_update_user_type($user_type_id)
     {
-        $this->db->where("user_type_id",$id);
+        $this->db->where("user_type_id",$user_type_id);
         $this->db->get("user_type");
 
         //Capture data to be updated
@@ -85,7 +85,7 @@ class User_types_model extends CI_Model
 
         if("user_type.user_type_id>0")
         {
-            $this->db->where("user_type_id",$id);
+            $this->db->where("user_type_id",$user_type_id);
             $this->db->update("user_type", $data);
 
             return true;
@@ -96,10 +96,10 @@ class User_types_model extends CI_Model
          }
     }
 
-    public function delete($id){
+    public function delete($user_type_id){
          // Delete user types data
          $this->db->set("deleted",1 ,"modified_on",date("Y-m-d H:i:s"), "deleted_on", date("Y-m-d H:i:s"));
-         $this->db->where("user_type_id", $id, "deleted", 0);
+         $this->db->where("user_type_id", $user_type_id, "deleted", 0);
          $this->db->update("user_type");
 
          $this->session->set_flashdata("success","Deleted successfully ");
@@ -107,10 +107,10 @@ class User_types_model extends CI_Model
          return $this->db->get("user_type");
     }
 
-    public function deactivate_user_type($id)
+    public function deactivate_user_type($user_type_id)
     {
         // deactivate member data
-        $this->db->where("user_type_id",$id);
+        $this->db->where("user_type_id", $user_type_id);
         $this->db->set("user_type_status", 0);
 
         if($this->db->update("user_type"))
@@ -126,10 +126,10 @@ class User_types_model extends CI_Model
     }
 
     //activate
-    public function activate_user_type($id)
+    public function activate_user_type($user_type_id)
     {
         //activate member data
-        $this->db->where("user_type_id",$id);
+        $this->db->where("user_type_id",$user_type_id);
         $this->db->set("user_type_status", 1);
 
         if($this->db->update("user_type"))

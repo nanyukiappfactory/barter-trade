@@ -155,47 +155,14 @@ class User_types extends Admin
 
     public function deactivate_user_type($id)
     {
-        $search="user-types/search-user-type";
-        $close="user-types/close-search";
-
-        $load_deactivate = $this->User_types_model->deactivate_user_type($id);
-
-        $v_data = array(
-            "all_user_types" => $load_deactivate,
-        );
-
-        $data = array(
-            "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
-            "content" => $this->load->view("admin/user_types/all_user_types", $v_data, true),
-        );
-
-        $this->load->view("site/layouts/layout", $data);
+        $this->User_types_model->deactivate_user_type($id);
 
         redirect("user-types/all-user-types");
     }
 
     public function activate_user_type($id)
     {
-        $search="user-types/search-user-type";
-        $close="user-types/close-search";
-
-        $load_activate = $this->User_types_model->activate_user_type($id);
-
-        $v_data = array(
-            "all_user_types" => $load_activate,
-        );
-
-        $data = array(
-            "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
-            "content" => $this->load->view("admin/user_types/all_user_types", $v_data, true),
-        );
-
-        $this->load->view("site/layouts/layout", $data);
-
+        $this->User_types_model->activate_user_type($id);
         redirect("user-types/all-user-types");
     }
 
