@@ -24,7 +24,6 @@ class User_types_model extends CI_Model
     public function get_user_type($table, $where,$limit,$page,  $order, $order_method)
     {
         $search_user_type = $this->session->userdata('search_user_type');
-        
         $this->db->select("*");
         $this->db->from($table);    
         $this->db->where($where);

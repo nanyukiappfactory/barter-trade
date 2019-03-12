@@ -1,8 +1,4 @@
-<?php
-if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
-
+<?php if (!defined('BASEPATH')) { exit('No direct script access allowed');}
 class Categories_model extends CI_Model
 {
     
@@ -24,21 +20,19 @@ class Categories_model extends CI_Model
 
         );
 
-        if ($this->db->insert("category", $data)) {
+        if ($this->db->insert("category", $data)) 
+        {
             return true;
-        } else {
+        } else 
+        {
             return false;
         }
     }
-
-    //get category from the db
     public function get_category($table, $where,$limit,$page,$order,$order_method)
     {
-        $search_category=$this->session->userdata("search_category");
         $this->db->select("*");
         $this->db->from($table);    
         $this->db->where($where);
-        $this->db->like('category_name', $search_category);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         $result= $this->db->get();
@@ -46,13 +40,9 @@ class Categories_model extends CI_Model
     }
     public function get_results()
     {
-       
         $this->db->where("category.deleted=0");
-// Execute the query.
         $query = $this->db->get("category");
-// Return the results.
         return $query;
-        
     }
     
     public function get_single($category_id)
@@ -63,14 +53,14 @@ class Categories_model extends CI_Model
 
     public function delete($id)
     {
-        // Delete member data
         $this->db->set("deleted", 1, "modified_on", date("Y-m-d H:i:s"), "deleted_on", date("Y-m-d H:i:s"));
         $this->db->where("category_id", $id);
-
-        if ($this->db->update("category")) {
+        if ($this->db->update("category"))
+        {
             $this->session->set_flashdata("success", "You have deleted" . $id);
             return true;
-        } else {
+        } else 
+        {
             $this->session->set_flashdata("error", "Unable to delete" . $id);
             return false;
         }

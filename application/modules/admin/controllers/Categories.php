@@ -24,17 +24,19 @@ class Categories extends admin
         $this->load->library('pagination');
 
     }
-
     public function index($order="category.category_name",$order_method="ASC")
     {
-        //Pagination
-        
         $segment = 5;
         $table = 'category';
         $where = 'deleted = 0';
         $search="categories/search-category";
         $close="categories/close-search";
-        $search_category=$this->session->userdata("search_category");        
+        $search_category=$this->session->userdata("search_category"); 
+        $search_category=$this->session->userdata("search_term");
+        if (!empty($search_category) && $search_category != null) 
+        {
+            $where .= ' AND (category_name LIKE "'.$search_category.'")';
+        }       
         $config['base_url'] = site_url() . 'categories/all-categories/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -57,9 +59,11 @@ class Categories extends admin
         $this->pagination->initialize($config);
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         $query = $this->Categories_model->get_category($table, $where, $config["per_page"], $page, $order, $order_method); 
-        if ($order_method == 'DESC') {
+        if ($order_method == 'DESC')
+        {
             $order_method = 'ASC';
-        } else {
+        } else
+        {
             $order_method = 'DESC';
         }
        $v_data = array(
@@ -68,7 +72,7 @@ class Categories extends admin
         "order_method" => $order_method,
         "page" => $page,
         "links" => $this->pagination->create_links(),
-    );
+        );
         $data = array
        (
             "title" => "Categories",
@@ -79,6 +83,7 @@ class Categories extends admin
         );
         $this->load->view("site/layouts/layout", $data);
     }
+
     public function execute_search($search_category=null)
     {
         $search_category = $this->input->post('search');        
@@ -87,6 +92,7 @@ class Categories extends admin
             }           
         redirect("categories/all-categories");
     }
+
     public function unset_search()
         {
         $this->session->unset_userdata('search_category');
@@ -98,7 +104,6 @@ class Categories extends admin
     {
         $search="categories/search-category";
         $close="categories/close-search";
-        //form validation
         $this->form_validation->set_rules("category_parent", 'Category Parent', "required");
         $this->form_validation->set_rules("category_name", 'Category Name', "required");
 
@@ -107,7 +112,6 @@ class Categories extends admin
                 "width" => 2000,
                 "height" => 2000,
             );
-
             $upload_response = $this->file_model->upload_image($this->upload_path, "category_image", $resize);
 
             if ($upload_response['check'] == false) {
@@ -131,14 +135,12 @@ class Categories extends admin
         $v_data = array("validation_errors" => validation_errors(),
             "category" => $this->Categories_model->get_results()
         );
-        // var_dump($v_data);die();
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
             "close"=>$close,
             "content" => $this->load->view("admin/categories/add_category", $v_data, true),
         );
-
         $this->load->view("site/layouts/layout", $data);
     }
     public function delete_category($category_id)
@@ -147,7 +149,6 @@ class Categories extends admin
         redirect("categories/all-categories");
     }
 
-    //deactivate
     public function deactivate_category($id)
     {
         $search="categories/search-category";
@@ -168,7 +169,6 @@ class Categories extends admin
         redirect("categories/all-categories");
     }
 
-    //activate
     public function activate_category($id)
     {
         $search="categories/search-category";
@@ -189,7 +189,6 @@ class Categories extends admin
         redirect("categories/all-categories");
     }
 
-    //edit update
     public function edit_category($id)
     {
         $search="categories/search-category";
@@ -197,51 +196,53 @@ class Categories extends admin
         $this->form_validation->set_rules("category_parent", 'Category Parent', "required");
         $this->form_validation->set_rules("category_name", 'Category Name', "required");
 
-        if ($this->form_validation->run()) {
+        if ($this->form_validation->run())
+        {
             $resize = array(
                 "width" => 2000,
                 "height" => 2000,
             );
             $upload_response = $this->file_model->upload_image($this->upload_path, "category_image", $resize);
 
-            if ($upload_response['check'] == false) {
+            if ($upload_response['check'] == false)
+            {
                 $this->session->set_flashdata('error', $upload_response['message']);
-            } else {
+            } else
+            {
 
-                if ($this->Categories_model->edit_update_category($id, $upload_response)) {
+                if ($this->Categories_model->edit_update_category($id, $upload_response))
+                {
                     $this->session->set_flashdata('success', 'category ,Added successfully!!');
                     redirect("categories/all-categories");
-                } else {
+                } else
+                {
                     $this->session->set_flashdata('error', 'unable to add category. Try again!!');
                 }
             }
 
-        } else {
-            if (!empty(validation_errors())) {
+        }
+        else
+        {
+            if (!empty(validation_errors()))
+            {
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
 
         $category = $this->Categories_model->get_single($id);
-
-        if ($category->num_rows() > 0) {
+        if ($category->num_rows() > 0)
+        {
             $row = $category->row();
             $category_parent = $row->category_parent;
             $category_name = $row->category_name;
             $category_image = $row->category_image;
-
         }
-
         $v_data = array(
-
             "category" => $this->Categories_model->get_results(),
             "name"=>$category_name,
             "category_parent"=>$category_parent
-
         );
-
         $data = array(
-
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
             "close"=>$close,

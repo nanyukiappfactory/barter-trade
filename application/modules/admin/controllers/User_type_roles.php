@@ -20,7 +20,11 @@ class User_type_roles extends MX_Controller
         $where = 'user_type_role.deleted = 0'; 
         $search="user-type-roles/search-user-type-role";    
         $close="user-type-roles/close-search"; 
-        $search_user_type_role=$this->session->userdata("search_user_type_role");        
+        $search_user_type_role=$this->session->userdata("search_user_type_role");    
+        if (!empty($search_user_type_role) && $search_user_type_role != null) 
+        {
+            $where .= ' AND (role.role_name LIKE "'.$search_user_type_role.'" OR user_type.user_type_name "'.$search_user_type_role.'")';
+        }    
         $config['base_url'] = site_url() . 'user-type-roles/all-user-type-roles/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -46,7 +50,8 @@ class User_type_roles extends MX_Controller
         if ($order_method == 'DESC')
         {
             $order_method = 'ASC';
-        } else {
+        } else 
+        {
             $order_method = 'DESC';
         }
         $all_user_type_roles=$this->User_type_roles_model->get_single($id);
@@ -73,19 +78,20 @@ class User_type_roles extends MX_Controller
         );
         $this->load->view("site/layouts/layout", $data);
     }
+
     public function execute_search($search_user_type_role=null)
     {
         $search_user_type_role = $this->input->post('search');
-        //var_dump($search_user_type_role);die();
-        if (!empty($search_user_type_role) && $search_user_type_role != null) {
+        if (!empty($search_user_type_role) && $search_user_type_role != null)
+        {
         $this->session->set_userdata("search_user_type_role",$search_user_type_role);
-            }           
+        }           
         redirect("user-type-roles/all-user-type-roles");
     }
+
     public function unset_search()
         {
         $this->session->unset_userdata('search_user_type_role');
-        
         redirect("user-type-roles/all-user-type-roles");
         }
 
@@ -115,7 +121,6 @@ class User_type_roles extends MX_Controller
             "validation_errors" => validation_errors(),
         );
 
-        //pass data to view
         $v_data = array(
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
@@ -132,7 +137,6 @@ class User_type_roles extends MX_Controller
         redirect("user-type-roles/all-user-type-roles");
     }
     
-    //deactivate
     public function deactivate_user_type_role($id)
     {
         $search="user-type-roles/search-user-type-role";    
@@ -144,7 +148,6 @@ class User_type_roles extends MX_Controller
             "user_type_role" => $this->User_type_roles_model->retrieve_roles_and_user_types(),
         );
         $data = array(
-
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
             "close"=>$close,
@@ -154,7 +157,6 @@ class User_type_roles extends MX_Controller
         redirect("user-type-roles/all-user-type-roles");
     }
 
-    //activate
     public function activate_user_type_role($id)
     {
         $search="user-type-roles/search-user-type-role";    
@@ -167,41 +169,38 @@ class User_type_roles extends MX_Controller
             "user_type_role" => $this->User_type_roles_model->retrieve_roles_and_user_types(),
             "page"=>$page
         );
-
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
             "close"=>$close,
             "content" => $this->load->view("admin/user_type_roles/all_user_type_roles", $v_data, true),
         );
-
         $this->load->view("site/layouts/layout", $data);
         redirect("user-type-roles/all-user-type-roles");
     }
 
-    //edit update
     public function edit_user_type_role($id)
     {
         $search="user-type-roles/search-user-type-role";    
         $close="user-type-roles/close-search"; 
-        //echo "hello";
         $this->form_validation->set_rules("role", 'Role', "required");
         $this->form_validation->set_rules("user_type", 'User Type', "required");
         if ($this->form_validation->run())
         { 
             $single_user_type_role = $this->User_type_roles_model->edit_update_user_type_role($id);
 
-            if ($single_user_type_role== false) {
+            if ($single_user_type_role== false)
+            {
                 $this->session->set_flashdata("error. ", "unable to assign role . Try again!!");
-            } else {
+            } 
+            else 
+            {
                 $this->session->set_flashdata("success. ", "Assigned successfully!!");
             }
-    }
+        }
         $all_user_type_roles=$this->User_type_roles_model->get_single($id);
         $user_type_role=$this->User_type_roles_model->retrieve_roles_and_user_types();        
-        $v_data= array(
-            //"role_name_"=>$role_name,
-            //"user_type_name_"=>$user_type_name,                     
+        $v_data= array(                     
             'user_type_role' =>  $user_type_role,
             'all_user_type_roles'=>$all_user_type_roles,
             "validation_errors" => validation_errors(),
@@ -213,6 +212,5 @@ class User_type_roles extends MX_Controller
             "content" => $this->load->view("admin/user_type_roles/edit_user_type_role", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
-        
     }
 }
