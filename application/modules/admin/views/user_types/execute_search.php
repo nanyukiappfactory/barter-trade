@@ -1,6 +1,5 @@
-<?php if (!defined('BASEPATH')) 
-exit('No direct script access allowed');  ?>
-<?php
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');  ?>
+<?php	
 	// List up all results.
 	foreach ($results as $val)
 	{
