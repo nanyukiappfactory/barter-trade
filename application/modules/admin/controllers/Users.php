@@ -160,7 +160,6 @@ class Users extends Admin
             "content" => $this->load->view("admin/users/add_user", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
-        
     }
 
     public function delete_user($user_id)
@@ -206,6 +205,7 @@ class Users extends Admin
         $this->load->view("site/layouts/layout", $data);
         redirect("users/all-users");
     }
+
     public function edit_user($id)
     {
         $users = $this->Users_model->get_single($id);
@@ -219,7 +219,6 @@ class Users extends Admin
             $password = $row->password;
             //$location = $row->location;
             $profile_icon = $row->profile_icon;
-
         }
         $search="users/search-user";
         $close="users/close-search";
@@ -240,10 +239,8 @@ class Users extends Admin
             {
                 $this->Users_model->add_user($upload_response);
             } 
-            
             else 
             {
-
                 if ($this->Users_model->edit_update_user($id, $upload_response)) 
                 {
                     $this->session->set_flashdata('success', 'User ,Added successfully!!');
@@ -263,7 +260,6 @@ class Users extends Admin
             }
         }
         $error_check = $this->session->flashdata('error');
-
         if(!empty($error_check) && $error_check != NULL)
         {
             $first_name = set_value("first_name");
