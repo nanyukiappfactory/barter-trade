@@ -1,5 +1,5 @@
 <?php
-if (!defined('BASEPATH')){  exit('No direct script access allowed');    }
+if (!defined('BASEPATH')){  exit('No direct script access allowed'); }
 
 require_once "./application/modules/admin/controllers/Admin.php";
 
@@ -75,9 +75,8 @@ class User_types extends Admin
         "order_method" => $order_method,
         "page" => $page,
         "links" => $this->pagination->create_links(),
-        //"search_user"=>$all_user_types,
-        //"results"=>$this->User_types_model->get_results($search_user_type)
         );
+
         $data = array(
             "title" => "User Types",
             "search"=>$search,
@@ -86,7 +85,6 @@ class User_types extends Admin
         );
 
         $this->load->view("site/layouts/layout", $data);
-
     }//end index
 
     public function execute_search($search_user_type=null)
@@ -94,23 +92,21 @@ class User_types extends Admin
         //store the term user inputs from search bar
         $search_user_type = $this->input->post('search');
         //var_dump($search_user_type);die();
-        if (!empty($search_user_type) && $search_user_type != null) {
-
-        $this->session->set_userdata("search_user_type", $search_user_type);
-        
-            }
+        if (!empty($search_user_type) && $search_user_type != null) 
+        {
+        $this->session->set_userdata("search_user_type", $search_user_type);  
+        }
 
         redirect("user-types/all-user-types");
 
-    }//end execute search function
+    }
 
     public function unset_search()
     {
         $this->session->unset_userdata('search_user_type');
         
         redirect("user-types/all-user-types");
-
-    }//end unset search function
+    }
     
     public function add_user_type()
     {
@@ -118,18 +114,8 @@ class User_types extends Admin
         $search="user-types/search-user-type";
         $close="user-types/close-search";
 
-        //check if the user type name is unique:
-        // if($this->input->post('user_type_name') != $original_value) 
-        // {
-        //     $is_unique =  '|is_unique[user_type.user_type_name]';
-        // }
-        // else
-        // {
-        //     $is_unique =  '';
-        // }        
-             
-        $this->form_validation->set_rules("user_type_name", 'User Type Name', "required|is_unique[user_type.user_type_name]");
-
+        //$this->form_validation->set_rules("user_type_name", 'User Type Name', "required|is_unique[user_type.user_type_name]");
+        $this->form_validation->set_rules("user_type_name", 'User Type Name', "required");
         if ($this->form_validation->run()) 
         {
             if ($this->User_types_model->add_user_type()) 
@@ -150,27 +136,22 @@ class User_types extends Admin
             }
         }
 
-        $v_data = array("validation_errors" => validation_errors());
-
         $data = array(
-
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
             "close"=>$close,
-            "content" => $this->load->view("admin/user_types/add_user_type", $v_data, true),
+            "content" => $this->load->view("admin/user_types/add_user_type",array(), true),
         );
-
+        
         $this->load->view("site/layouts/layout", $data);
-
-    }//end add user type function
+    }
 
     public function delete_user_type($user_type_id)
     {
         $this->User_types_model->delete($user_type_id);
 
         redirect("user-types/all-user-types");
-
-    }// end delete user type function
+    }
 
     public function deactivate_user_type($id)
     {
@@ -184,7 +165,6 @@ class User_types extends Admin
         );
 
         $data = array(
-
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
             "close"=>$close,
@@ -194,9 +174,8 @@ class User_types extends Admin
         $this->load->view("site/layouts/layout", $data);
 
         redirect("user-types/all-user-types");
-    }//end deactivate user type function
+    }
 
-    
     public function activate_user_type($id)
     {
         $search="user-types/search-user-type";
@@ -209,7 +188,6 @@ class User_types extends Admin
         );
 
         $data = array(
-
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
             "close"=>$close,
@@ -219,17 +197,16 @@ class User_types extends Admin
         $this->load->view("site/layouts/layout", $data);
 
         redirect("user-types/all-user-types");
-
-    }//end function activate user type
+    }
 
     public function edit_user_type($id)
     {
         $user_types = $this->User_types_model->get_single($id);
 
-        if ($user_types->num_rows() > 0) {
+        if ($user_types->num_rows() > 0) 
+        {
             $row = $user_types->row();
             $user_type_name = $row->user_type_name;
-
         }
 
         $search="user-types/search-user-type";
@@ -237,17 +214,22 @@ class User_types extends Admin
         
         $this->form_validation->set_rules("user_type_name", 'User Type Name', "required");
        
-        if ($this->form_validation->run()) {
-
-            if ($this->User_types_model->edit_update_user_type($id)) {
+        if ($this->form_validation->run()) 
+        {
+            if ($this->User_types_model->edit_update_user_type($id)) 
+            {
                 $this->session->set_flashdata('success', 'user type updated successfully!!');
                 redirect("user-types/all-user-types");
-            } else {
+            }
+            else 
+            {
                 $this->session->set_flashdata('error', 'unable to edit user type. Try again!!');
             }
-
-        } else {
-            if (!empty(validation_errors())) {
+        } 
+        else 
+        {
+            if (!empty(validation_errors())) 
+            {
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
@@ -261,8 +243,6 @@ class User_types extends Admin
             $user_type_name = set_value("user_type_name");
         }
         
-       
-
         $v_data = array(
             "user_type_name" => $user_type_name,
         );
@@ -275,7 +255,5 @@ class User_types extends Admin
         );
 
         $this->load->view("site/layouts/layout", $data);
-
-    }// end edit user type function
-
-}//class ends here
+    }
+}
