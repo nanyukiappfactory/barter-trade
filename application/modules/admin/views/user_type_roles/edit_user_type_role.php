@@ -8,29 +8,32 @@ echo form_open_multipart($this->uri->uri_string()); ?>
                     <option value="" disabled selected><?php 
                     if($all_user_type_roles->result()>0)
                     {
-                        foreach($all_user_type_roles->result() as $row){
+                        foreach($all_user_type_roles->result() as $row)
+                        {
                             $role_id_FK=$row->role_id;
-                            foreach($user_type_role->result() as $rows){
+                            foreach($user_type_role->result() as $rows)
+                            {
                                 $role_id_PK=$rows->role_id;
                                 $role_name=$rows->role_name;
+
                                 if($role_id_PK=$role_id_FK)
                                 {   
                                    echo $role_name; 
                                    break;
-                                }
-                                
+                                }                                
                             }  
                         }
                     }
                     
-							foreach ($user_type_role->result() as $rows) {
-								$role_id = $rows->role_id;
-								$role_name = $rows->role_name;
+                    foreach ($user_type_role->result() as $rows) 
+                    {
+						$role_id = $rows->role_id;
+						$role_name = $rows->role_name;
 						?>
 					<option value="<?php echo $role_id ?>">
 							<?php echo $role_name ?>
 					</option>
-						<?php }?>
+			<?php   } ?>
 				</select>
 					<br>
 				<select class="selectpicker form-control pl-5" data-style="btn-outline-primary" name="user_type">					
@@ -38,9 +41,11 @@ echo form_open_multipart($this->uri->uri_string()); ?>
                     <?php
                      if($all_user_type_roles->result()>0)
                      {
-                         foreach($all_user_type_roles->result() as $row){
+                         foreach($all_user_type_roles->result() as $row)
+                         {
                              $user_type_id_FK=$row->user_type_id;
-                             foreach($user_type_role->result() as $rows){
+                             foreach($user_type_role->result() as $rows)
+                             {
                                  $user_type_id_PK = $rows->user_type_id;
                                  $user_type_name = $rows->user_type_name;
                                  if($user_type_id_PK==$user_type_id_FK)
