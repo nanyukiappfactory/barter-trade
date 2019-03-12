@@ -70,11 +70,8 @@ $route['users/all-users/(:num)'] ='admin/users/index/$1';
 $route['users/edit-user'] ='admin/users/edit_user';
 $route['users/edit-user/(:num)'] ='admin/users/edit_user/$1';
 $route['users/activate-user'] = 'admin/users/activate_user';
-$route['users/activate-user/(:num)'] = 'admin/users/activate_user/$1';
 $route['users/deactivate-user']= 'admin/users/deactivate_user';
-$route['users/deactivate-user/(:num)']= 'admin/users/deactivate_user/$1';
 $route['users/delete-user'] ='admin/users/delete_user';
-$route['users/delete-user/(:num)'] ='admin/users/delete_user/$1';
 $route['users/search-user'] = 'admin/users/execute_search';
 $route['users/close-search'] = 'admin/users/unset_search';
 
