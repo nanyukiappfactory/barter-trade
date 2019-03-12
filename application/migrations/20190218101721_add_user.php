@@ -48,6 +48,11 @@ class Migration_Add_user extends CI_Migration {
                             'constraint' => '100',
                             
                         ),
+                        'user_type' => array(
+                            'type' => 'VARCHAR',
+                            'constraint' => '100',
+                            
+                        ),
                         'user_status' => array(
                             'type' => 'TINYINT',
                             'constraint' => '1',
