@@ -10,10 +10,10 @@ class Admin extends MX_Controller
             parent::__construct();
             $this->load->model("auth/auth_model");
             $this->load->library('session');
-            if(!$this->auth_model->validate_session())
-            {
-               redirect('admin/login');
-            }
+            // if(!$this->auth_model->validate_session())
+            // {
+            //    redirect('admin/login');
+            // }
         }
         public function index()
         {
