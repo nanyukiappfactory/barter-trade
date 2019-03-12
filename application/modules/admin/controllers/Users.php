@@ -146,9 +146,9 @@ class Users extends Admin
         $this->load->view("site/layouts/layout", $data);
     }
 
-    public function edit_user($id)
+    public function edit_user($user_id)
     {
-        $users = $this->Users_model->get_single($id);
+        $users = $this->Users_model->get_single($user_id);
         if ($users->num_rows() > 0) {
             $row = $users->row();
             $first_name = $row->first_name;
@@ -181,7 +181,7 @@ class Users extends Admin
             } 
             else 
             {
-                if ($this->Users_model->edit_update_user($id, $upload_response)) 
+                if ($this->Users_model->edit_update_user($user_id, $upload_response)) 
                 {
                     $this->session->set_flashdata('success', 'User ,Added successfully!!');
                     redirect("users/all-users");
@@ -230,22 +230,22 @@ class Users extends Admin
         $this->load->view("site/layouts/layout", $data);
     }
 
-    public function activate_user()
-    {
-        $this->Users_model->activate_user();
-        redirect("users/all-users");
-    }
-
-    public function deactivate_user()
-    {
-        $this->Users_model->deactivate_user();
-        redirect("users/all-users");
-    }
-
     public function delete_user($user_id)
     {
         $this->Users_model->delete($user_id);
 
+        redirect("users/all-users");
+    }
+    
+    public function activate_user($user_id)
+    {
+        $this->Users_model->activate_user($user_id);
+        redirect("users/all-users");
+    }
+
+    public function deactivate_user($user_id)
+    {
+        $this->Users_model->deactivate_user($user_id);
         redirect("users/all-users");
     }
 

@@ -99,14 +99,14 @@ class Users_model extends CI_Model
         }
     } 
 
-    public function delete($id){
+    public function delete($user_id){
         $deleted = array(
                 "deleted" => 1,
                 "modified_on" => date("Y-m-d H:i:s"),
                 "deleted_on" => date("Y-m-d H:i:s")
         );
         $this->db->set($deleted);
-        $this->db->where("user_id",$id);        
+        $this->db->where("user_id",$user_id);        
         if($this->db->update("user"))
         {
             $this->session->set_flashdata("success","Deleted successfully ");
@@ -119,10 +119,10 @@ class Users_model extends CI_Model
         }
     }
 
-    public function deactivate_user($id)
+    public function deactivate_user($user_id)
     {
         $this->db->set("user_status",0);
-        $this->db->where("user_id",$id);
+        $this->db->where("user_id",$user_id);
         if($this->db->update("user"))
         {
             $this->session->set_flashdata("success","Successfully deactivated");//implode($username));
@@ -135,10 +135,10 @@ class Users_model extends CI_Model
        }
     }  
 
-    public function activate_user($id)
+    public function activate_user($user_id)
     {
         $this->db->set("user_status",1);
-        $this->db->where("user_id",$id);
+        $this->db->where("user_id",$user_id);
         if($this->db->update("user"))
         {
             $this->session->set_flashdata("success","User activated successfully");
@@ -151,11 +151,11 @@ class Users_model extends CI_Model
         }
     }
 
-    public function edit_update_user($id,$upload_response)
+    public function edit_update_user($user_id,$upload_response)
     {
         $file_name = $upload_response['file_name'];
         $thumb_name = $upload_response['thumb_name'];
-        $this->db->where("user_id",$id);
+        $this->db->where("user_id",$user_id);
         $this->db->get("user");
         $data = array(
             "first_name" => $this->input->post("first_name"),
@@ -172,7 +172,7 @@ class Users_model extends CI_Model
         
         if("user.user_id>0")
         {
-        $this->db->where("user_id",$id);
+        $this->db->where("user_id",$user_id);
         $this->db->update("user", $data);
             return true;
         }
