@@ -158,7 +158,6 @@ class Users extends Admin
             $username = $row->username;
             $user_email = $row->user_email;
             $password = $row->password;
-            //$location = $row->location;
             $profile_icon = $row->profile_icon;
         }
         $search="users/search-user";
