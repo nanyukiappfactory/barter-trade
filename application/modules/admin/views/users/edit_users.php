@@ -6,27 +6,36 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 			<div class="card-header py-3">
 				<div class="row">
 					<div class="col-md-6">
-							<div class="col-md-6 mb-3">
-							<select class="selectpicker form-control" data-style="btn-outline-primary"  name="user_type">
-                    			<option value="" disabled selected>
-								<optgroup  data-max-options="2">
-								<option value="" disabled selected>
-									<?php
-									$row=$user_type_rows->row();
-									if(isset($row))
+						<div class="col-md-6 mb-3">
+							<select class="selectpicker form-control pl-5" data-style="btn-outline-primary"  name="role">
+								<option value="" disabled selected><?php 
+								if($users->result()>0)
+								{
+									foreach($users->result() as $row)
 									{
-										echo $row->user_type_name;
+										$user_type_id_FK=$row->user_type_id;
+										foreach($user_type->result() as $rows)
+										{
+											$user_type_id_PK=$rows->user_type_id;
+											$user_type_name=$rows->user_type_name;
+
+											if($user_type_id_PK=$user_type_id_FK)
+											{   
+											echo $user_type_name; 
+											break;
+											}                                
+										}  
 									}
-									if($user_types->result()!=null){
-										foreach ($user_types->result() as $rows) {
-											$user_type_name = $rows->user_type_name;
-									?>
-									<option value="<?php echo $user_type_name ?>">
-										<?php echo $user_type_name ?>
-									</option>
-									<?php }}?>
+									foreach ($user_type->result() as $rows) {
+										$user_type_id = $rows->user_type_id;
+										$user_type_name = $rows->user_type_name;
+								?>
+								<option value="<?php echo $user_type_id ?>">
+									<?php echo $user_type_name ?>
+								</option>
+							<?php } }?>
 							</select>
-							</div>
+						</div>
 							<div class="col-md-6 mb-3">
 								<label for='first_name'>First Name: </label>
 								<input class="form-control" type="text" name="first_name" value="<?php echo $first_name;?>">

@@ -4,23 +4,21 @@ class Users_model extends CI_Model
     public $table = "user";
     public function add_user($upload_response)
     {
-        if(!$this->input->post("profile_icon"))
-        {
-            $file_name = "no_image.PNG";
-            $thumb_name = "6cb8392a0f015455b60834952307d7fe.PNG";
-            $data = array(
-                "first_name" => $this->input->post("first_name"),
-                "last_name" => $this->input->post("last_name"),
-                "phone_number" => $this->input->post("phone_number"),
-                "username" => $this->input->post("username"),
-                "user_email" => $this->input->post("user_email"),
-                "password" => md5($this->input->post("password")),
-                "profile_icon"=> $file_name,
-                "profile_thumb"=> $thumb_name,
-                "deleted"=>0,
-                "user_status"=>1,
-                "user_type"=>$this->input->post("user_type"),
-            ); 
+        $file_name = $upload_response['file_name'];
+        $thumb_name = $upload_response['thumb_name'];
+        $data = array(
+            "first_name" => $this->input->post("first_name"),
+            "last_name" => $this->input->post("last_name"),
+            "phone_number" => $this->input->post("phone_number"),
+            "username" => $this->input->post("username"),
+            "user_email" => $this->input->post("user_email"),
+            "password" => md5($this->input->post("password")),
+            "profile_icon"=> $file_name,
+            "profile_thumb"=> $thumb_name,
+            "deleted"=>0,
+            "user_status"=>1,
+            "user_type_id"=>$this->input->post("user_type"),
+        ); 
         if( $this->db->insert("user", $data))
         {
            return true;
@@ -28,31 +26,6 @@ class Users_model extends CI_Model
         else
         {
            return false;
-        }
-        }
-        else
-        {
-            $file_name = $upload_response['file_name'];
-            $thumb_name = $upload_response['thumb_name'];
-            $data = array(
-                "first_name" => $this->input->post("first_name"),
-                "last_name" => $this->input->post("last_name"),
-                "phone_number" => $this->input->post("phone_number"),
-                "username" => $this->input->post("username"),
-                "user_email" => $this->input->post("user_email"),
-                "password" => md5($this->input->post("password")),
-                "profile_icon"=> $file_name,
-                "profile_thumb"=> $thumb_name,
-                "deleted"=>0,
-                "user_status"=>1,
-                "user_type"=>$this->input->post("user_type"),
-            );        
-        if( $this->db->insert("user", $data)){
-           return true;
-        }
-        else{
-           return false;
-        }
         }
     }
 
@@ -84,6 +57,7 @@ class Users_model extends CI_Model
         return $this->db->count_all_results();
     }  
     
+<<<<<<< HEAD
     public function get_user_type()
     {
         $trader="Trader";
@@ -98,6 +72,23 @@ class Users_model extends CI_Model
             throw new Exception("no user types in database!!");
         }
     } 
+=======
+    // public function get_user_type()
+    // {
+    //     $trader="Trader";
+    //     $this->db->where('user_type_name',$trader);
+    //     $query = $this->db->get('user_type');
+        
+    //     if($query->num_rows() > 0)
+    //     {
+    //             return ($query);        
+    //      }
+    //     else
+    //     {
+    //         throw new exception("You do not have a user type");
+    //     }
+    // } 
+>>>>>>> df2fe889f9f6553988b6c9f7b10214b98087d787
 
     public function delete($user_id){
         $deleted = array(
@@ -109,12 +100,12 @@ class Users_model extends CI_Model
         $this->db->where("user_id",$user_id);        
         if($this->db->update("user"))
         {
-            $this->session->set_flashdata("success","Deleted successfully ");
+            $this->session->set_flashdata("success","User deleted successfully ");
             return TRUE;
         }
         else
         {
-            $this->session->set_flashdata("error","Unable to delete");
+            $this->session->set_flashdata("error","Unable to delete user");
             return FALSE;
         }
     }
@@ -125,12 +116,12 @@ class Users_model extends CI_Model
         $this->db->where("user_id",$user_id);
         if($this->db->update("user"))
         {
-            $this->session->set_flashdata("success","Successfully deactivated");//implode($username));
+            $this->session->set_flashdata("success","Successfully deactivated a user");//implode($username));
             return $remain;
        }
        else 
        {
-        $this->session->set_flashdata("error","Unable to deactivate "); //echo implode($username);
+        $this->session->set_flashdata("error","Unable to deactivate a user"); //echo implode($username);
         return FALSE;
        }
     }  
@@ -155,6 +146,7 @@ class Users_model extends CI_Model
     {
         $file_name = $upload_response['file_name'];
         $thumb_name = $upload_response['thumb_name'];
+        //$this->db->select("user_type.user")
         $this->db->where("user_id",$user_id);
         $this->db->get("user");
         $data = array(
@@ -167,7 +159,7 @@ class Users_model extends CI_Model
             "profile_thumb"=> $thumb_name,
             "deleted"=>0,
             "modified_on"=>date("Y-m-d H:i:s"),
-            "user_type"=>$this->input->post("user_type"),
+            "user_type_id"=>$this->input->post("user_type"),
         );  
         
         if("user.user_id>0")

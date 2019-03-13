@@ -49,8 +49,8 @@ class Migration_Add_user extends CI_Migration {
                             
                         ),
                         'user_type' => array(
-                            'type' => 'VARCHAR',
-                            'constraint' => '100',
+                            'type' => 'INT',
+                            'constraint' => '11',
                             
                         ),
                         'user_status' => array(
