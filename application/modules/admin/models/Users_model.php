@@ -89,21 +89,22 @@ class Users_model extends CI_Model
         $trader="Trader";
         $this->db->where('user_type_name',$trader);
         $query = $this->db->get('user_type');
+        var_dump($query);die();
         if ($query->num_rows() < 1)
         {
             throw new exception("You do not have a user type");
         }
-        elseif($query->num_rows() > 0)
+        if($query->num_rows() > 0)
         {
-        try
-        {
-            return ($query);
-        }
-        
-        catch(Exception $e) 
-        {
-            echo 'Please add a user type first';
-          }
+            try
+            {
+                return ($query);
+            }
+            
+            catch(Exception $e) 
+            {
+                echo $e->getMessage();
+            }
         }
     } 
 
