@@ -154,6 +154,7 @@ class Users extends Admin
             "close"=>$close,
             "content" => $this->load->view("admin/users/add_user", $v_data, true),
         );
+        
         $this->load->view("site/layouts/layout", $data);
     }
 
