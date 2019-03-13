@@ -126,11 +126,16 @@ class Users extends Admin
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
-        // if(!empty($this->Users_model->get_user_type()))
-        // {
-        //     $user_type=$this->Users_model->get_user_type();
-        // }
+        try
+        {
         $user_type=$this->Users_model->get_user_type();
+        }
+        catch(exception $e)
+        {
+            echo "Please add a user type first.";
+            redirect("user-types/add-user-type");
+            die();
+        }
         //var_dump( $user_type);die();
         $v_data = array(
                 "first_name"=>$first_name,
