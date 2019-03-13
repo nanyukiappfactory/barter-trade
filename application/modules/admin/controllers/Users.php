@@ -78,7 +78,6 @@ class Users extends Admin
         );
         $this->load->view("site/layouts/layout", $data);
     }
-
     public function add_user()
     {
         $search="users/search-user";
@@ -93,16 +92,11 @@ class Users extends Admin
             $password = set_value("password");
             $profile_icon = set_value("profile_icon");
         }
-        // $first_name = (empty(validation_errors())) ? $this->input->post("first_name") : set_value($this->input->post("first_name"));
-        // $last_name = (empty(validation_errors())) ? $this->input->post("last_name") : set_value($this->input->post("last_name"));
-        // $phone_number = (empty(validation_errors())) ? $this->input->post("phone_number") : set_value($this->input->post("phone_number"));
-        // $user_email = (empty(validation_errors())) ? $this->input->post("user_email") : set_value($this->input->post("user_email"));
-        // $username = (empty(validation_errors())) ? $this->input->post("username") : set_value($this->input->post("username"));
-        // $password = (empty(validation_errors())) ? $this->input->post("password") : set_value($this->input->post("password"));
-        
         $this->form_validation->set_rules("first_name", 'First Name', "required");
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
+        // $this->form_validation->set_rules("username", 'Username', "required|callback_check");
+        // $this->form_validation->set_rules("user_email", 'User Email', "required|callback_check");
         $this->form_validation->set_rules("username", 'Username', "required|is_unique[user.username]");
         $this->form_validation->set_rules("user_email", 'User Email', "required|is_unique[user.user_email]");
         $this->form_validation->set_rules("password", 'Password', "required");
@@ -126,7 +120,6 @@ class Users extends Admin
                 if ($this->Users_model->add_user($upload_response))
                 {
                     $this->session->set_flashdata('success', 'User Added successfully!!');
-                    redirect('users/all-users');
                 } 
             }
         } 

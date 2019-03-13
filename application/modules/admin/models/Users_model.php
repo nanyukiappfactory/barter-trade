@@ -54,28 +54,15 @@ class Users_model extends CI_Model
         }
         $this->db->from($table);
         $this->db->where($where);
+        var_dump( $where);die();
         return $this->db->count_all_results();
     }  
-    
-    // public function get_user_type()
-    // {
-    //     $trader="Trader";
-    //     $this->db->where('user_type_name',$trader);
-    //     $query = $this->db->get('user_type');
-        
-    //     if($query->num_rows() > 0)
-    //     {
-    //             return ($query);        
-    //      }
-    //     else
-    //     {
-    //         throw new exception("You do not have a user type");
-    //     }
-    // } 
 
     public function delete($user_id){
         $deleted = array(
                 "deleted" => 1,
+                "username"=>"deleted",
+                "user_email"=>"deleted",
                 "modified_on" => date("Y-m-d H:i:s"),
                 "deleted_on" => date("Y-m-d H:i:s")
         );
