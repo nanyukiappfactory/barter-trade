@@ -8,7 +8,6 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 							<div class="col-md-6 mb-3">
 							<div>
 								<?php $row=$user_type_rows->row();
-								//echo json_encode();die();
 								if(isset($row)){
 								?>								
 								<input class="form-control" value="<?php echo $row->user_type_name; }?>" type="hidden" name="user_type">

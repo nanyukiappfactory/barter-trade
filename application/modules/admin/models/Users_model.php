@@ -4,7 +4,7 @@ class Users_model extends CI_Model
     public $table = "user";
     public function add_user($upload_response)
     {
-        if(!$this->input->post("profile_icon"))
+        if(($this->input->post("profile_icon"))==null)
         {
             $file_name = "no_image.PNG";
             $thumb_name = "6cb8392a0f015455b60834952307d7fe.PNG";
