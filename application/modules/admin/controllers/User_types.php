@@ -108,6 +108,22 @@ class User_types extends Admin
         redirect("user-types/all-user-types");
     }
     
+    public function is_field_unique($field_to_check){
+
+        $where = array("user_type_name" => $field_to_check, "deleted" =>0);
+        $query = $this->db->get_where("user_type", $where); 
+
+        if ($query->num_rows() > 0 )
+        {
+            $this->form_validation->set_message("is_field_unique", "that {field} already exists");
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+
     public function add_user_type()
     {
         //form validation
@@ -115,12 +131,12 @@ class User_types extends Admin
         $close="user-types/close-search";
 
         //$this->form_validation->set_rules("user_type_name", 'User Type Name', "required|is_unique[user_type.user_type_name]");
-        $this->form_validation->set_rules("user_type_name", 'User Type Name', "required");
-        if ($this->form_validation->run()) 
+        $this->form_validation->set_rules("user_type_name", "user type", "required|callback_is_field_unique");
+        if ($this->form_validation->run($this)) 
         {
             if ($this->User_types_model->add_user_type()) 
             {
-                $this->session->set_flashdata('success', 'User Added successfully!!');
+                $this->session->set_flashdata('success', 'user type added successfully!!');
                 redirect("user-types/all-user-types");
             } 
             else 

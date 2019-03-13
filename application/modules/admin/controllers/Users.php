@@ -139,17 +139,6 @@ class Users extends Admin
         }
         try
         {
-<<<<<<< HEAD
-            $user_type=$this->Users_model->get_user_type();
-
-        }catch(Exception $e){
-            //echo "ocha error: ".$e->getMessage();
-            echo "no user types please create user types first!!";
-            //die();
-        }
-       
-        
-=======
         $user_type=$this->User_types_model->get_results();
         }
         catch(Exception $e)
@@ -157,7 +146,6 @@ class Users extends Admin
             echo("Please add a user type first.");
             redirect("user-types/add-user-type");die();
         }
->>>>>>> df2fe889f9f6553988b6c9f7b10214b98087d787
         $v_data = array(
                 "first_name"=>$first_name,
                 "last_name"=>$last_name, 
