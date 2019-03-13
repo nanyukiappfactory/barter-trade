@@ -115,6 +115,11 @@ class Users extends Admin
             $upload_response = $this->file_model->upload_image($this->upload_path, "profile_icon", $resize);
             if ($upload_response['check'] == false) 
             { 
+                $upload_response=array(
+                    "file_name" => "no_image.PNG",
+                    "thumb_name" => "6cb8392a0f015455b60834952307d7fe.PNG",
+                    );
+                $this->Users_model->add_user($upload_response);
             } 
             else
             {
@@ -190,7 +195,11 @@ class Users extends Admin
             $upload_response = $this->file_model->upload_image($this->upload_path, "profile_icon", $resize);
             if ($upload_response['check'] == false) 
             {
-                //$this->Users_model->add_user($upload_response);
+                $upload_response=array(
+                "file_name" => "no_image.PNG",
+                "thumb_name" => "6cb8392a0f015455b60834952307d7fe.PNG",
+                );
+            $this->Users_model->edit_update_user($user_id, $upload_response);
             } 
             else 
             {

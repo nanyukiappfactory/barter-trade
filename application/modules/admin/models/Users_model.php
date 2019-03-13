@@ -4,21 +4,21 @@ class Users_model extends CI_Model
     public $table = "user";
     public function add_user($upload_response)
     {
-            $file_name = $upload_response['file_name'];
-            $thumb_name = $upload_response['thumb_name'];
-            $data = array(
-                "first_name" => $this->input->post("first_name"),
-                "last_name" => $this->input->post("last_name"),
-                "phone_number" => $this->input->post("phone_number"),
-                "username" => $this->input->post("username"),
-                "user_email" => $this->input->post("user_email"),
-                "password" => md5($this->input->post("password")),
-                "profile_icon"=> $file_name,
-                "profile_thumb"=> $thumb_name,
-                "deleted"=>0,
-                "user_status"=>1,
-                "user_type"=>$this->input->post("user_type"),
-            ); 
+        $file_name = $upload_response['file_name'];
+        $thumb_name = $upload_response['thumb_name'];
+        $data = array(
+            "first_name" => $this->input->post("first_name"),
+            "last_name" => $this->input->post("last_name"),
+            "phone_number" => $this->input->post("phone_number"),
+            "username" => $this->input->post("username"),
+            "user_email" => $this->input->post("user_email"),
+            "password" => md5($this->input->post("password")),
+            "profile_icon"=> $file_name,
+            "profile_thumb"=> $thumb_name,
+            "deleted"=>0,
+            "user_status"=>1,
+            "user_type"=>$this->input->post("user_type"),
+        ); 
         if( $this->db->insert("user", $data))
         {
            return true;
@@ -27,7 +27,6 @@ class Users_model extends CI_Model
         {
            return false;
         }
-        
     }
 
     public function get_user($table, $where,$limit,$page,  $order, $order_method)
@@ -84,12 +83,12 @@ class Users_model extends CI_Model
         $this->db->where("user_id",$user_id);        
         if($this->db->update("user"))
         {
-            $this->session->set_flashdata("success","Deleted successfully ");
+            $this->session->set_flashdata("success","User deleted successfully ");
             return TRUE;
         }
         else
         {
-            $this->session->set_flashdata("error","Unable to delete");
+            $this->session->set_flashdata("error","Unable to delete user");
             return FALSE;
         }
     }
@@ -100,12 +99,12 @@ class Users_model extends CI_Model
         $this->db->where("user_id",$user_id);
         if($this->db->update("user"))
         {
-            $this->session->set_flashdata("success","Successfully deactivated");//implode($username));
+            $this->session->set_flashdata("success","Successfully deactivated a user");//implode($username));
             return $remain;
        }
        else 
        {
-        $this->session->set_flashdata("error","Unable to deactivate "); //echo implode($username);
+        $this->session->set_flashdata("error","Unable to deactivate a user"); //echo implode($username);
         return FALSE;
        }
     }  
