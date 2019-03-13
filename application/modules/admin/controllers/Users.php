@@ -141,11 +141,10 @@ class Users extends Admin
         {
         $user_type=$this->User_types_model->get_results();
         }
-        catch(exception $e)
+        catch(Exception $e)
         {
-            echo "Please add a user type first.";
-            redirect("user-types/add-user-type");
-            die();
+            echo("Please add a user type first.");
+            redirect("user-types/add-user-type");die();
         }
         $v_data = array(
                 "first_name"=>$first_name,
