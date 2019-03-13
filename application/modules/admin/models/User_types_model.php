@@ -59,14 +59,9 @@ class User_types_model extends CI_Model
 
     public function get_results()
     {
-        $search_user_type = $this->input->post('search');
-
         $this->db->select('*');
         $this->db->where("deleted",0);
         $this->db->from('user_type');
-        $this->db->like('user_type_name', $search_user_type);
-
-        // Execute the query.
         $query = $this->db->get();
         return $query;
     }

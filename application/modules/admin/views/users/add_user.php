@@ -6,17 +6,34 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 				<div class="row">
 					<div class="col-md-6">
 							<div class="col-md-6 mb-3">
-							<div>
-								<?php $row=$user_type_rows->row();
+							<!-- <div>
+								<//?php $row=$user_type->row();
 								if(isset($row)){
 								?>								
-								<input class="form-control" value="<?php echo $row->user_type_name; }?>" type="hidden" name="user_type">
-							</div>
+								<input class="form-control" value="<//?php echo $row->user_type_name; }?>" type="hidden" name="user_type">
+							</div> -->
 								<label for='first_name'>First Name: </label><input class="form-control" type="text" value="<?php echo $first_name;?>"  name="first_name">
 							</div>
 							<div class="col-md-6 mb-3">
 								<label for='last_name'>Last Name: </label>
 								<input class="form-control" value="<?php echo $last_name;?>" type="text" name="last_name">
+							</div>
+							<div class="col-md-6 mb-3">
+							<select class="selectpicker form-control" data-style="btn-outline-primary"  name="user_type">
+                    			<option value="" disabled selected>
+								<optgroup  data-max-options="2">
+								<option value="" disabled selected>Select user type
+									<?php
+									if($user_type->result()!=null){
+										foreach ($user_type->result() as $rows) {
+											$user_type_id = $rows->user_type_id;
+											$user_type_name = $rows->user_type_name;
+									?>
+									<option value="<?php echo $user_type_id ?>">
+										<?php echo $user_type_name ?>
+									</option>
+									<?php }}?>
+							</select>
 							</div>
 							<div class="col-md-6 mb-3">
 								<label for='phone_number'>Phone Number: </label>
@@ -45,6 +62,8 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 							</div>
 								<input class="btn btn-dark" type="submit" value="Add" style="margin-left:20px;">
 							<?php echo form_close(); ?>
+							<a href="<?php echo site_url('users/all-users/'); ?>"
+							class="btn btn-secondary">View</a>
 							</div>
 						</div>
 					</div>

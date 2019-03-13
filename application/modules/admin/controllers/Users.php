@@ -139,14 +139,14 @@ class Users extends Admin
         }
         try
         {
-        $user_type=$this->Users_model->get_user_type();
+        $user_type=$this->User_types_model->get_results();
         }
         catch(exception $e)
         {
             echo "Please add a user type first.";
             redirect("user-types/add-user-type");
             die();
-        }       
+        }
         $v_data = array(
                 "first_name"=>$first_name,
                 "last_name"=>$last_name, 
@@ -154,7 +154,7 @@ class Users extends Admin
                 "user_email"=>$user_email,
                 "username"=>$username,
                 "password"=>$password,
-                "user_type_rows"=>$user_type
+                "user_type"=>$user_type
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),
@@ -231,8 +231,7 @@ class Users extends Admin
             $user_email = set_value("user_email");
             $profile_icon = set_value("profile_icon");
         }
-        $user_type_rows=$this->Users_model->get_user_type();
-        $user_types=$this->User_types_model->get_results();
+        $user_type=$this->User_types_model->get_results();
         $v_data = array(
             "first_name" => $first_name,
             "last_name" => $last_name,
@@ -240,8 +239,8 @@ class Users extends Admin
             "username" => $username,
             "user_email" => $user_email,
             "password" => $password,
-            "user_types" =>$user_types,
-            "user_type_rows" => $user_type_rows
+            "users" =>$users,
+            "user_type" => $user_type
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),

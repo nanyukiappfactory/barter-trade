@@ -17,7 +17,7 @@ class Users_model extends CI_Model
             "profile_thumb"=> $thumb_name,
             "deleted"=>0,
             "user_status"=>1,
-            "user_type"=>$this->input->post("user_type"),
+            "user_type_id"=>$this->input->post("user_type"),
         ); 
         if( $this->db->insert("user", $data))
         {
@@ -57,21 +57,21 @@ class Users_model extends CI_Model
         return $this->db->count_all_results();
     }  
     
-    public function get_user_type()
-    {
-        $trader="Trader";
-        $this->db->where('user_type_name',$trader);
-        $query = $this->db->get('user_type');
+    // public function get_user_type()
+    // {
+    //     $trader="Trader";
+    //     $this->db->where('user_type_name',$trader);
+    //     $query = $this->db->get('user_type');
         
-        if($query->num_rows() > 0)
-        {
-                return ($query);        
-         }
-        else
-        {
-            throw new exception("You do not have a user type");
-        }
-    } 
+    //     if($query->num_rows() > 0)
+    //     {
+    //             return ($query);        
+    //      }
+    //     else
+    //     {
+    //         throw new exception("You do not have a user type");
+    //     }
+    // } 
 
     public function delete($user_id){
         $deleted = array(
@@ -129,6 +129,7 @@ class Users_model extends CI_Model
     {
         $file_name = $upload_response['file_name'];
         $thumb_name = $upload_response['thumb_name'];
+        //$this->db->select("user_type.user")
         $this->db->where("user_id",$user_id);
         $this->db->get("user");
         $data = array(
@@ -141,7 +142,7 @@ class Users_model extends CI_Model
             "profile_thumb"=> $thumb_name,
             "deleted"=>0,
             "modified_on"=>date("Y-m-d H:i:s"),
-            "user_type"=>$this->input->post("user_type"),
+            "user_type_id"=>$this->input->post("user_type"),
         );  
         
         if("user.user_id>0")
