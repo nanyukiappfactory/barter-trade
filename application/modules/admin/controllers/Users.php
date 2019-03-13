@@ -126,7 +126,17 @@ class Users extends Admin
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
-        $user_type=$this->Users_model->get_user_type();
+        try
+        {
+            $user_type=$this->Users_model->get_user_type();
+
+        }catch(Exception $e){
+            //echo "ocha error: ".$e->getMessage();
+            echo "no user types please create user types first!!";
+            //die();
+        }
+       
+        
         $v_data = array(
                 "first_name"=>$first_name,
                 "last_name"=>$last_name, 
@@ -142,6 +152,7 @@ class Users extends Admin
             "close"=>$close,
             "content" => $this->load->view("admin/users/add_user", $v_data, true),
         );
+        
         $this->load->view("site/layouts/layout", $data);
     }
 

@@ -95,7 +95,7 @@ class Users_model extends CI_Model
         }
         else
         {
-            return false;
+            throw new Exception("no user types in database!!");
         }
     } 
 
