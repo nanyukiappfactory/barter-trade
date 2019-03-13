@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')){ exit('No direct script access allowed');}
- require_once "./application/modules/admin/controllers/Admin.php";
+require_once "./application/modules/admin/controllers/Admin.php";
 class Users extends Admin
 {
     public $upload_path;
@@ -83,21 +83,22 @@ class Users extends Admin
     {
         $search="users/search-user";
         $close="users/close-search";
-        // if((empty(validation_errors())))
-        // {
-        //     $first_name = set_value("first_name");
-        //     $last_name = set_value("last_name");
-        //     $phone_number = set_value("phone_number");
-        //     $username = set_value("username");
-        //     $user_email = set_value("user_email");
-        //     $password = set_value("password");
-        // }
-        $first_name = (empty(validation_errors())) ? $this->input->post("first_name") : set_value($this->input->post("first_name"));
-        $last_name = (empty(validation_errors())) ? $this->input->post("last_name") : set_value($this->input->post("last_name"));
-        $phone_number = (empty(validation_errors())) ? $this->input->post("phone_number") : set_value($this->input->post("phone_number"));
-        $user_email = (empty(validation_errors())) ? $this->input->post("user_email") : set_value($this->input->post("user_email"));
-        $username = (empty(validation_errors())) ? $this->input->post("username") : set_value($this->input->post("username"));
-        $password = (empty(validation_errors())) ? $this->input->post("password") : set_value($this->input->post("password"));
+        if((empty(validation_errors())))
+        {
+            $first_name = set_value("first_name");
+            $last_name = set_value("last_name");
+            $phone_number = set_value("phone_number");
+            $username = set_value("username");
+            $user_email = set_value("user_email");
+            $password = set_value("password");
+            $profile_icon = set_value("profile_icon");
+        }
+        // $first_name = (empty(validation_errors())) ? $this->input->post("first_name") : set_value($this->input->post("first_name"));
+        // $last_name = (empty(validation_errors())) ? $this->input->post("last_name") : set_value($this->input->post("last_name"));
+        // $phone_number = (empty(validation_errors())) ? $this->input->post("phone_number") : set_value($this->input->post("phone_number"));
+        // $user_email = (empty(validation_errors())) ? $this->input->post("user_email") : set_value($this->input->post("user_email"));
+        // $username = (empty(validation_errors())) ? $this->input->post("username") : set_value($this->input->post("username"));
+        // $password = (empty(validation_errors())) ? $this->input->post("password") : set_value($this->input->post("password"));
         
         $this->form_validation->set_rules("first_name", 'First Name', "required");
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
@@ -114,10 +115,6 @@ class Users extends Admin
             $upload_response = $this->file_model->upload_image($this->upload_path, "profile_icon", $resize);
             if ($upload_response['check'] == false) 
             { 
-                $file_name = "no_image.PNG";
-                $thumb_name = "6cb8392a0f015455b60834952307d7fe.PNG";
-                $upload_response = $this->file_model->upload_image($this->upload_path,  $file_name, $thumb_name);
-                $this->Users_model->add_user($upload_response);
             } 
             else
             {
