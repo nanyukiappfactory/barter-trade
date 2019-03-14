@@ -80,7 +80,7 @@ class Users extends Admin
         );
         $this->load->view("site/layouts/layout", $data);
     }
-    
+
     public function add_user()
     {
         $search="users/search-user";
@@ -96,6 +96,7 @@ class Users extends Admin
             $password = set_value("password");
             $profile_icon = set_value("profile_icon");
         }
+        //var_dump($user_types);die();
         $this->form_validation->set_rules("first_name", 'First Name', "required");
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
@@ -180,6 +181,8 @@ class Users extends Admin
             $user_email = $row->user_email;
             $password = $row->password;
             $profile_icon = $row->profile_icon;
+            $profile_thumb = $row->profile_thumb;
+            $user_types =$row->user_type_id;
         }
         $search="users/search-user";
         $close="users/close-search";
@@ -189,7 +192,8 @@ class Users extends Admin
         $this->form_validation->set_rules("user_type", 'User Type', "required");
         $this->form_validation->set_rules("username", 'Username', "required");
         $this->form_validation->set_rules("user_email", 'User Email', "required");
-
+        $this->form_validation->set_rules("profile_icon", ' ', " ");
+        
         if ($this->form_validation->run())
         {
             
@@ -201,9 +205,9 @@ class Users extends Admin
             if ($upload_response['check'] == false) 
             {
                 $upload_response=array(
-                "file_name" => "no_image.PNG",
-                "thumb_name" => "6cb8392a0f015455b60834952307d7fe.PNG",
-                );
+                    "file_name" =>  $profile_icon ,
+                    "thumb_name" => $profile_thumb,
+                    );
             $this->Users_model->edit_update_user($user_id, $upload_response);
             $this->session->set_flashdata('success', 'User Updated successfully!!');
             redirect("users/all-users");
@@ -237,8 +241,10 @@ class Users extends Admin
             $phone_number = set_value("phone_number");
             $username = set_value("username");
             $user_email = set_value("user_email");
-            $profile_icon = set_value("profile_icon");
+            $user_types = set_value("user_type");
+            $profile_icon = set_value($profile_icon);
         }
+        var_dump($user_types);die();
         $user_type=$this->User_types_model->get_results();
         $v_data = array(
             "first_name" => $first_name,
@@ -248,8 +254,11 @@ class Users extends Admin
             "user_email" => $user_email,
             "password" => $password,
             "users" =>$users,
+            "profile_icon" => $profile_icon,
+            "user_types"=>$user_types,
             "user_type" => $user_type
         );
+        //var_dump($$v_data);die();
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,

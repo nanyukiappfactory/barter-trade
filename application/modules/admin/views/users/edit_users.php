@@ -69,7 +69,7 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 							</div>
 							<div class="form-group">
 								<label>Image</label>
-								<input type="file" id="profile_icon" name="profile_icon">
+								<input type="file" id="profile_icon" value="<?php echo	$profile_icon;?>" name="profile_icon">
 							</div>
 							<div>
 							<input class="btn btn-dark" type="submit" value="Update" style="margin-left:20px;">
@@ -81,4 +81,5 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 			</div>
 		</div>
 	</div>
+
 </div>

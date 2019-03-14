@@ -29,25 +29,21 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 									if($user_type_id==$user_types)
 									{
 								?>
-								<option value="<?php echo $user_types;?>">
-								<?php echo $user_type_name;?></option>
+								<option value="<?php echo $user_types;?>"><?php echo $user_type_name;?></option>
 									<?php
 									break;
 									}
 								}?>
 								<?php
-									if($user_type->result()!=null)
-									{
-										foreach ($user_type->result() as $rows) 
-										{
+									if($user_type->result()!=null){
+										foreach ($user_type->result() as $rows) {
 											$user_type_id = $rows->user_type_id;
 											$user_type_name = $rows->user_type_name;
 									?>
 									<option value="<?php echo $user_type_id; ?>">
 										<?php echo $user_type_name; ?>
 									</option>
-								<?php 	}
-									}?>
+									<?php }}?>
 							</select>
 							</div>
 							<div class="col-md-6 mb-3">
