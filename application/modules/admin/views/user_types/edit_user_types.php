@@ -10,7 +10,7 @@
 							<?php echo form_open_multipart($this->uri->uri_string()); ?>
 							<div class="col-md-6">
 								<label for='user_type_name'>User Type Name: </label>
-								<input class="form-control" type="text" name="user_type_name" value="<?php echo set_value('user_type_name'); ?>">
+								<input class="form-control" type="text" name="user_type_name" value="<?php echo $user_type_name; ?>">
 							</div>
 							
 							<div>
