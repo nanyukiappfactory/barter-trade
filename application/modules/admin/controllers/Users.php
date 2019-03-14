@@ -80,6 +80,36 @@ class Users extends Admin
         );
         $this->load->view("site/layouts/layout", $data);
     }
+    public function username_exists($username_exists)
+    {
+        $where = array("username" => $username_exists, "deleted" =>0);
+        $query = $this->db->get_where("user", $where); 
+
+        if ($query->num_rows() > 0 )
+        {
+            $this->form_validation->set_message("username_exists", "that {field} already exists");
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+    public function user_email_exists($user_email_exists)
+    {
+        $where = array("user_email" => $user_email_exists, "deleted" =>0);
+        $query = $this->db->get_where("user", $where); 
+
+        if ($query->num_rows() > 0 )
+        {
+            $this->form_validation->set_message("user_email_exists ", "that {field} already exists");
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
 
     public function add_user()
     {
@@ -100,10 +130,10 @@ class Users extends Admin
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
         $this->form_validation->set_rules("user_type", 'User Type', "required");
-        $this->form_validation->set_rules("username", 'Username', "required|is_unique[user.username]");
-        $this->form_validation->set_rules("user_email", 'User Email', "required|is_unique[user.user_email]");
+        $this->form_validation->set_rules("username", 'Username', "required|callback_username_exists");
+        $this->form_validation->set_rules("user_email", 'User Email', "required|callback_user_email_exists");
         $this->form_validation->set_rules("password", 'Password', "required");
-        if ($this->form_validation->run()) 
+        if ($this->form_validation->run($this)) 
         {
             $resize = array(
                 "width" => 2000,
@@ -191,11 +221,10 @@ class Users extends Admin
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
         $this->form_validation->set_rules("user_type", 'User Type', "required");
-        $this->form_validation->set_rules("username", 'Username', "required|is_unique[user.username]");
-        $this->form_validation->set_rules("user_email", 'User Email', "required|is_unique[user.user_email]");
+        $this->form_validation->set_rules("username", 'User Name', "required|callback_username_exists");
+        $this->form_validation->set_rules("user_email", 'User Email', "required|callback_user_email_exists");
         $this->form_validation->set_rules("profile_icon", ' ', " ");
-        
-        if ($this->form_validation->run())
+        if ($this->form_validation->run($this))
         {
             
             $resize = array(
