@@ -57,21 +57,6 @@ class Users_model extends CI_Model
         var_dump( $where);die();
         return $this->db->count_all_results();
     } 
-    // public function get_user_type()
-    // {
-    //     $trader="Trader";
-    //     $this->db->where('user_type_name',$trader);
-    //     $query = $this->db->get('user_type');
-        
-    //     if($query->num_rows() > 0)
-    //     {
-    //             return ($query);        
-    //      }
-    //     else
-    //     {
-    //         throw new exception("You do not have a user type");
-    //     }
-    // } 
     public function delete($user_id){
         $deleted = array(
                 "deleted" => 1,
@@ -130,7 +115,6 @@ class Users_model extends CI_Model
     {
         $file_name = $upload_response['file_name'];
         $thumb_name = $upload_response['thumb_name'];
-        //$this->db->select("user_type.user")
         $this->db->where("user_id",$user_id);
         $this->db->get("user");
         $data = array(
