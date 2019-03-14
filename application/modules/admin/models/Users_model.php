@@ -60,8 +60,8 @@ class Users_model extends CI_Model
     public function delete($user_id){
         $deleted = array(
                 "deleted" => 1,
-                "username"=>"deleted",
-                "user_email"=>"deleted",
+                // "username"=>"deleted",
+                // "user_email"=>"deleted",
                 "modified_on" => date("Y-m-d H:i:s"),
                 "deleted_on" => date("Y-m-d H:i:s")
         );

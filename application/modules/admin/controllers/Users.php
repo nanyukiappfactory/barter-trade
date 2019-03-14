@@ -85,7 +85,7 @@ class Users extends Admin
         $where = array("username" => $username_exists, "deleted" =>0);
         $query = $this->db->get_where("user", $where); 
 
-        if ($query->num_rows() > 0 )
+        if ($query->num_rows() > 0 && !($query->row()))
         {
             $this->form_validation->set_message("username_exists", "that {field} already exists");
             return FALSE;
@@ -99,10 +99,9 @@ class Users extends Admin
     {
         $where = array("user_email" => $user_email_exists, "deleted" =>0);
         $query = $this->db->get_where("user", $where); 
-
-        if ($query->num_rows() > 0 )
+        if ($query->num_rows() > 0 && !($query->row()))
         {
-            $this->form_validation->set_message("user_email_exists ", "that {field} already exists");
+            $this->form_validation->set_message("user_email_exists", "that {field} already exists");
             return FALSE;
         }
         else
