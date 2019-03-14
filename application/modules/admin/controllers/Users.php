@@ -33,6 +33,7 @@ class Users extends Admin
         {
             $where .= ' AND (first_name LIKE "'.$search_term.'" OR user_email LIKE "'.$search_term.'" OR username LIKE "'.$search_term.'" OR phone_number LIKE "'.$search_term.'" OR last_name LIKE "'.$search_term.'")';
         }
+        //var_dump($where);die();
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -58,7 +59,8 @@ class Users extends Admin
         if ($order_method == 'DESC')
         {
             $order_method = 'ASC';
-        } else
+        } 
+        else
         {
             $order_method = 'DESC';
         }
@@ -78,6 +80,7 @@ class Users extends Admin
         );
         $this->load->view("site/layouts/layout", $data);
     }
+    
     public function add_user()
     {
         $search="users/search-user";
@@ -89,14 +92,13 @@ class Users extends Admin
             $phone_number = set_value("phone_number");
             $username = set_value("username");
             $user_email = set_value("user_email");
+            $user_types = set_value("user_type");
             $password = set_value("password");
             $profile_icon = set_value("profile_icon");
         }
         $this->form_validation->set_rules("first_name", 'First Name', "required");
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
-        // $this->form_validation->set_rules("username", 'Username', "required|callback_check");
-        // $this->form_validation->set_rules("user_email", 'User Email', "required|callback_check");
         $this->form_validation->set_rules("user_type", 'User Type', "required");
         $this->form_validation->set_rules("username", 'Username', "required|is_unique[user.username]");
         $this->form_validation->set_rules("user_email", 'User Email', "required|is_unique[user.user_email]");
@@ -116,12 +118,16 @@ class Users extends Admin
                     );
                     
                 $this->Users_model->add_user($upload_response);
+                $this->session->set_flashdata('success', 'User Added successfully!!');
+                redirect("users/all-users");
+                
             } 
             else
             {
                 if ($this->Users_model->add_user($upload_response))
                 {
                     $this->session->set_flashdata('success', 'User Added successfully!!');
+                    redirect("users/all-users");
                 } 
             }
         } 
@@ -131,6 +137,7 @@ class Users extends Admin
             {
                 $this->session->set_flashdata('error', validation_errors());
             }
+           
         }
         try
         {
@@ -148,6 +155,7 @@ class Users extends Admin
                 "user_email"=>$user_email,
                 "username"=>$username,
                 "password"=>$password,
+                "user_types"=>$user_types,
                 "user_type"=>$user_type
         );
         $data = array(
@@ -184,6 +192,7 @@ class Users extends Admin
 
         if ($this->form_validation->run())
         {
+            
             $resize = array(
                 "width" => 2000,
                 "height" => 2000,
@@ -196,6 +205,8 @@ class Users extends Admin
                 "thumb_name" => "6cb8392a0f015455b60834952307d7fe.PNG",
                 );
             $this->Users_model->edit_update_user($user_id, $upload_response);
+            $this->session->set_flashdata('success', 'User Updated successfully!!');
+            redirect("users/all-users");
             } 
             else 
             {
@@ -216,6 +227,7 @@ class Users extends Admin
             {
                 $this->session->set_flashdata('error', validation_errors());
             }
+           
         }
         $error_check = $this->session->flashdata('error');
         if(!empty($error_check) && $error_check != NULL)

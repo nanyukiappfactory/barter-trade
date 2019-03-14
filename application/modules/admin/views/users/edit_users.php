@@ -7,8 +7,10 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="col-md-6 mb-3">
-							<select class="selectpicker form-control pl-5" data-style="btn-outline-primary"  name="role">
-								<option value="" disabled selected><?php 
+						<label>User Type</label>
+							<select class="selectpicker form-control pl-5" data-style="btn-outline-primary"  name="user_type">
+							<optgroup  data-max-options="2">
+								<option <?php 
 								if($users->result()>0)
 								{
 									foreach($users->result() as $row)
@@ -20,7 +22,10 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 											$user_type_name=$rows->user_type_name;
 
 											if($user_type_id_PK=$user_type_id_FK)
-											{   
+											{ ?>
+												value="<?php echo $user_type_id_PK ?>" > 
+											
+										<?php 
 											echo $user_type_name; 
 											break;
 											}                                
@@ -30,6 +35,7 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 										$user_type_id = $rows->user_type_id;
 										$user_type_name = $rows->user_type_name;
 								?>
+								</option>
 								<option value="<?php echo $user_type_id ?>">
 									<?php echo $user_type_name ?>
 								</option>
