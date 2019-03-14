@@ -21,11 +21,12 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 											$user_type_id_PK=$rows->user_type_id;
 											$user_type_name=$rows->user_type_name;
 
-											if($user_type_id_PK=$user_type_id_FK)
+											if($user_type_id_PK==$user_types)
 											{ ?>
-												value="<?php echo $user_type_id_PK ?>" > 
+												value="<?php echo $user_types ?>" > 
 											
 										<?php 
+
 											echo $user_type_name; 
 											break;
 											}                                

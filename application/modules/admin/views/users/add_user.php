@@ -22,28 +22,38 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 							<label> User Type</label>
 							<select class="selectpicker form-control" data-style="btn-outline-primary"  name="user_type">
 							<!-- <optgroup  data-max-options="2"> -->
-								<?php foreach($user_type as $row)
+								<!-- <//?php foreach($user_type as $row)
 								{
 									$user_type_id=$row->user_type_id;
 									$user_type_name=$row->user_type_name;
 									if($user_type_id==$user_types)
 									{
-								?>
-								<option value="<?php echo $user_types;?>"><?php echo $user_type_name;?></option>
-									<?php
+								?> -->
+									<!-- <//?php
 									break;
 									}
-								}?>
+								}?> -->
 								<?php
 									if($user_type->result()!=null){
 										foreach ($user_type->result() as $rows) {
 											$user_type_id = $rows->user_type_id;
 											$user_type_name = $rows->user_type_name;
-									?>
+									if($user_type_id==$user_types)
+									{?>
+									<option value="<?php echo $user_types;?>"><?php echo $user_type_name;?></option>
+									<?php }}}?>
+									<?php
+									if($user_type->result()!=null)
+									{
+										foreach ($user_type->result() as $rows)
+										{
+											$user_type_id = $rows->user_type_id;
+											$user_type_name = $rows->user_type_name;?>
 									<option value="<?php echo $user_type_id; ?>">
 										<?php echo $user_type_name; ?>
+										<?php }}?>
 									</option>
-									<?php }}?>
+									
 							</select>
 							</div>
 							<div class="col-md-6 mb-3">

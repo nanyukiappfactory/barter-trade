@@ -96,7 +96,6 @@ class Users extends Admin
             $password = set_value("password");
             $profile_icon = set_value("profile_icon");
         }
-        //var_dump($user_types);die();
         $this->form_validation->set_rules("first_name", 'First Name', "required");
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
@@ -159,6 +158,8 @@ class Users extends Admin
                 "user_types"=>$user_types,
                 "user_type"=>$user_type
         );
+        
+        //var_dump($v_data);die();
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
@@ -244,7 +245,7 @@ class Users extends Admin
             $user_types = set_value("user_type");
             $profile_icon = set_value($profile_icon);
         }
-        var_dump($user_types);die();
+        //var_dump($user_types);die();
         $user_type=$this->User_types_model->get_results();
         $v_data = array(
             "first_name" => $first_name,
