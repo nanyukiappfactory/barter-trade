@@ -56,13 +56,13 @@ if ($check == 0) {
                     class="btn btn-warning"><?php echo anchor("user-types/edit-user-type/" . $id, '<i class="fas fa-edit"></i>'); ?></button>
                 <?php
 if ($check == 0) {
-                echo anchor("user-types/activate-user-type/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
+                echo anchor("user-types/activate-user-type/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('are you sure to activate user type?')", "class" => "btn btn-success"));
 
             } else {
-                echo anchor("user-types/deactivate-user-type/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger", 'data-toggle' => 'modal'));
+                echo anchor("user-types/deactivate-user-type/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate user type?')", "class" => "btn btn-danger", 'data-toggle' => 'modal'));
             }
             ?>
-                <button class="btn btn-danger" data-toggle='modal' onclick="return confirm('Are you sure to delete?')">
+                <button class="btn btn-danger" data-toggle='modal' onclick="return confirm('are you sure to delete user type?')">
                     <?php echo anchor("user-types/delete-user-type/" . $id, "<i class='fas fa-trash-alt'></i>"); ?></button>
 
             </td> <!-- Button trigger modal -->

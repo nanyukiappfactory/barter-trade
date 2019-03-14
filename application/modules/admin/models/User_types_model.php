@@ -110,12 +110,12 @@ class User_types_model extends CI_Model
 
         if($this->db->update("user_type"))
         {
-            $this->session->set_flashdata("success","activated successfully ");
+            $this->session->set_flashdata("success","user type deactivated successfully ");
             return $this->db->get("user_type");
         }
         else
         {
-            $this->session->set_flashdata("error","Unable to activate");
+            $this->session->set_flashdata("error","Unable to deactivate user type");
             return FALSE;
         }
     }
@@ -129,12 +129,12 @@ class User_types_model extends CI_Model
 
         if($this->db->update("user_type"))
         {
-            $this->session->set_flashdata("success","activated successfully ");
+            $this->session->set_flashdata("success","user type activated successfully");
             return $this->db->get("user_type");
         }
         else
         {
-            $this->session->set_flashdata("error","Unable to activate");
+            $this->session->set_flashdata("error","unable to activate user type");
             return FALSE;
         }
     }
