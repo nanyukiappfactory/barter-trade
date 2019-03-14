@@ -191,8 +191,8 @@ class Users extends Admin
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
         $this->form_validation->set_rules("user_type", 'User Type', "required");
-        $this->form_validation->set_rules("username", 'Username', "required");
-        $this->form_validation->set_rules("user_email", 'User Email', "required");
+        $this->form_validation->set_rules("username", 'Username', "required|is_unique[user.username]");
+        $this->form_validation->set_rules("user_email", 'User Email', "required|is_unique[user.user_email]");
         $this->form_validation->set_rules("profile_icon", ' ', " ");
         
         if ($this->form_validation->run())
