@@ -195,9 +195,9 @@ class User_types extends Admin
         $search="user-types/search-user-type";
         $close="user-types/close-search";
         
-        $this->form_validation->set_rules("user_type_name", 'User Type Name', "required");
+        $this->form_validation->set_rules("user_type_name", 'User Type Name', "required|callback_is_field_unique");
        
-        if ($this->form_validation->run()) 
+        if ($this->form_validation->run($this)) 
         {
             if ($this->User_types_model->edit_update_user_type($id)) 
             {
