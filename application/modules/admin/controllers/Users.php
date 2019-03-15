@@ -4,6 +4,7 @@ class Users extends Admin
 {
     public $upload_path;
     public $upload_location;
+    public $g_user_id;
    
     public function __construct()
     {
@@ -201,13 +202,12 @@ class Users extends Admin
     }
     public function user_email_is_unique($user_email_is_unique)
     {
-        $where = array(
-            "user_email" => $user_email_is_unique, 
-            "deleted" =>0
-        );
+        $user_id = ($this->g_user_id);
+        $where = "user_id !=".$user_id;
+        $where .= ' AND (user_email="'.$user_email_is_unique.'" AND deleted=0)';
         $query = $this->db->get_where("user", $where);
         $result =$query->num_rows();
-        if ($result > 0 && $result["user_email"]==$user_email_is_unique)
+        if ($result > 0 )
         {
             $this->form_validation->set_message("user_email_is_unique", "that {field} already exists");
             return FALSE;
@@ -217,15 +217,14 @@ class Users extends Admin
             return TRUE;
         }
     }
-    public function username_is_unique($username_is_unique, $user_id)
+    public function username_is_unique($username_is_unique)
     {
-        $where = array(
-            "username" => $username_is_unique, 
-            "deleted" =>0
-        );
+        $user_id = ($this->g_user_id);
+        $where = "user_id !=".$user_id;
+        $where .= ' AND (username="'.$username_is_unique.'" AND deleted=0)';
         $query = $this->db->get_where("user", $where);
         $result =$query->num_rows();
-        if ($result > 0 && $result["username"]==$username_is_unique )
+        if ($result > 0 )
         {
             $this->form_validation->set_message("username_is_unique", "that {field} already exists");
             return FALSE;
@@ -238,6 +237,7 @@ class Users extends Admin
 
     public function edit_user($user_id)
     {
+        $this->g_user_id = $user_id;
         $users = $this->Users_model->get_single($user_id);
         if ($users->num_rows() > 0) {
             $row = $users->row();
