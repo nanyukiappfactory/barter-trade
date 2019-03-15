@@ -200,12 +200,12 @@ class Users extends Admin
         
         $this->load->view("site/layouts/layout", $data);
     }
-
     public function user_email_is_unique($user_email_is_unique)
     {
         $where = array("user_email" => $user_email_is_unique, "deleted" =>0);
         $query = $this->db->get_where("user", $where);
-        if ($query->num_rows() > 1)
+        $result =$query->num_rows();
+        if ($result > 0 && $result["user_email"]==!$user_email_is_unique)
         {
             $this->form_validation->set_message("user_email_is_unique", "that {field} already exists");
             return FALSE;
@@ -219,7 +219,9 @@ class Users extends Admin
     {
         $where = array("username" => $username_is_unique, "deleted" =>0);
         $query = $this->db->get_where("user", $where);
-        if ($query->num_rows() > 1)
+        //$username = $query->row();
+        $result =$query->num_rows();
+        if ( $result > 0 && $result["username"] !== $username_is_unique)
         {
             $this->form_validation->set_message("username_is_unique", "that {field} already exists");
             return FALSE;
