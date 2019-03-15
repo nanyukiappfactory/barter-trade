@@ -1,5 +1,3 @@
-<?php if (!defined('BASEPATH')) {exit('No direct script access allowed'); } 
-echo form_open_multipart($this->uri->uri_string()); ?>
 <div class="container">
 	<div class="shadow-lg p-3 mb-5 bg-white rounded">
 		<div class="card shadow mb-4 mt-4">
@@ -66,7 +64,6 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 							</div>
 							<div class="col-md-6 mb-3">
 								<label for='username'>Location: </label>
-								<!-- <//?php echo form_dropdown('location_id', $locations, '', 'class="form-control" name=location');?>  -->
 							</div>
 							<div class="form-group">
 								<label>Image</label>

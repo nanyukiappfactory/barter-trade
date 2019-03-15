@@ -33,7 +33,6 @@ class Users extends Admin
         {
             $where .= ' AND (first_name LIKE "'.$search_term.'" OR user_email LIKE "'.$search_term.'" OR username LIKE "'.$search_term.'" OR phone_number LIKE "'.$search_term.'" OR last_name LIKE "'.$search_term.'")';
         }
-        //var_dump($where);die();
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -65,11 +64,11 @@ class Users extends Admin
             $order_method = 'DESC';
         }
        $v_data = array(
-        "all_users"=>$query,
-        "order" => $order,
-        "order_method" => $order_method,
-        "page" => $page,
-        "links" => $this->pagination->create_links()
+            "all_users"=>$query,
+            "order" => $order,
+            "order_method" => $order_method,
+            "page" => $page,
+            "links" => $this->pagination->create_links()
         );
         $data = array(
             "title" => "Users",
@@ -83,10 +82,8 @@ class Users extends Admin
     public function username_exists($username_exists)
     {
         $where = array("username" => $username_exists, "deleted" =>0);
-        $query = $this->db->get_where("user", $where); 
-        // $username=$query->row();
-        // var_dump($username_exists);die();
-        if ($query->num_rows() > 0)//&& $username_exists!== $username->username)
+        $query = $this->db->get_where("user", $where);
+        if ($query->num_rows() > 0)
         {
             $this->form_validation->set_message("username_exists", "that {field} already exists");
             return FALSE;
@@ -99,7 +96,10 @@ class Users extends Admin
     
     public function user_email_exists($user_email_exists)
     {
-        $where = array("user_email" => $user_email_exists, "deleted" =>0);
+        $where = array(
+            "user_email" => $user_email_exists,
+            "deleted" =>0
+        );
         $query = $this->db->get_where("user", $where);
         if ($query->num_rows() > 0)
         {
@@ -190,7 +190,6 @@ class Users extends Admin
                 "user_type"=>$user_type
         );
         
-        //var_dump($v_data);die();
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
@@ -202,10 +201,13 @@ class Users extends Admin
     }
     public function user_email_is_unique($user_email_is_unique)
     {
-        $where = array("user_email" => $user_email_is_unique, "deleted" =>0);
+        $where = array(
+            "user_email" => $user_email_is_unique, 
+            "deleted" =>0
+        );
         $query = $this->db->get_where("user", $where);
         $result =$query->num_rows();
-        if ($result > 0 && $result["user_email"]==!$user_email_is_unique)
+        if ($result > 0 && $result["user_email"]==$user_email_is_unique)
         {
             $this->form_validation->set_message("user_email_is_unique", "that {field} already exists");
             return FALSE;
@@ -215,13 +217,15 @@ class Users extends Admin
             return TRUE;
         }
     }
-    public function username_is_unique($username_is_unique)
+    public function username_is_unique($username_is_unique, $user_id)
     {
-        $where = array("username" => $username_is_unique, "deleted" =>0);
+        $where = array(
+            "username" => $username_is_unique, 
+            "deleted" =>0
+        );
         $query = $this->db->get_where("user", $where);
-        //$username = $query->row();
         $result =$query->num_rows();
-        if ( $result > 0 && $result["username"] !== $username_is_unique)
+        if ($result > 0 && $result["username"]==$username_is_unique )
         {
             $this->form_validation->set_message("username_is_unique", "that {field} already exists");
             return FALSE;
@@ -253,7 +257,7 @@ class Users extends Admin
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
         $this->form_validation->set_rules("user_type", 'User Type', "required");
-        $this->form_validation->set_rules("username", 'User Name', "required|callback_username_is_unique");
+        $this->form_validation->set_rules("username", 'User Name', 'required|callback_username_is_unique');
         $this->form_validation->set_rules("user_email", 'User Email', "required|callback_user_email_is_unique");
         $this->form_validation->set_rules("profile_icon", ' ', " ");
         if ($this->form_validation->run($this))
@@ -269,7 +273,7 @@ class Users extends Admin
                 $upload_response=array(
                     "file_name" =>  $profile_icon ,
                     "thumb_name" => $profile_thumb,
-                    );
+                );
             $this->Users_model->edit_update_user($user_id, $upload_response);
             $this->session->set_flashdata('success', 'User Updated successfully!!');
             redirect("users/all-users");
@@ -306,7 +310,6 @@ class Users extends Admin
             $user_types = set_value("user_type");
             $profile_icon = set_value($profile_icon);
         }
-        //var_dump($user_types);die();
         $user_type=$this->User_types_model->get_results();
         $v_data = array(
             "first_name" => $first_name,
@@ -320,7 +323,6 @@ class Users extends Admin
             "user_types"=>$user_types,
             "user_type" => $user_type
         );
-        //var_dump($$v_data);die();
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,

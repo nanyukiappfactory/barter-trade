@@ -1,10 +1,9 @@
-<?php if (!defined('BASEPATH')) {exit('No direct script access allowed'); } ?>
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
 	<div class="card shadow mb-4 mt-4">
 		<div class="card-header py-3">
 		<?php echo anchor ("users/add-user/", "add user", array('class'=>"btn btn-secondary")); ?>
 		</div>
-		</div>		
+	</div>		
 		<table class="table table-sm table-bordered table-responsive">
 			<tr>
 				<th>Count
@@ -27,11 +26,11 @@
 				</th>
 			</tr>
 			<?php
-            if($all_users->num_rows() > 0){
+			if($all_users->num_rows() > 0)
+			{
                 $count=$page;
-                foreach($all_users->result()
-                 as $row){
-                    {
+                foreach($all_users->result() as $row)
+				 {
                         $count++;
                         $id=$row->user_id;
                         $first_name=$row->first_name;
@@ -42,7 +41,7 @@
 						$profile_icon=$row->profile_icon;
 						$profile_thumb=$row->profile_thumb;
 						$check=$row->user_status;
-                        ?>
+            ?>
 			<tr>
 				<td>
 					<?php echo $count;?>
@@ -64,7 +63,8 @@
 					<?php echo $user_email;?>
 				</td>
 				<td>
-					<?php if($check==0)
+					<?php 
+					if($check==0)
 					{
 						echo "<button class='badge badge-danger' data-toggle='modal'> deactivated</button>";
 					}
@@ -78,7 +78,8 @@
 					<a href="#modalLoginAvatar<?php echo $id?>"  class="btn btn-primary" data-toggle="modal" data-target="#modalLoginAvatar<?php echo $id?>"><i class="fas fa-eye"></i></a>
 					<button class="btn btn-warning"><?php echo anchor("users/edit-user/".$id,'<i class="fas fa-edit"></i>');?></button>
 						<?php
-						if($check==0){
+						if($check==0)
+						{
 							echo anchor("users/activate-user/".$id,'<i class="far fa-thumbs-up"></i>', array("onclick"=>"return confirm('Are you sure to activate?')", "class"=>"btn btn-success"));
 						
 						}
@@ -117,14 +118,13 @@
 											</div>	
 								</div>
 								<div class="modal-footer">
-									<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
 									<button type="button" class="btn btn-primary"data-dismiss="modal">Close</button>
 								</div>
 							</div>
 						</div>
 					</div>
-				</tr><?php }}} ?>
+				</tr><?php }} ?>
 		</table>
 		<?php echo $links;?>
-	</div>
+</div>
 
