@@ -135,7 +135,11 @@ class Users extends Admin
         $this->form_validation->set_rules("username", 'Username', "required|callback_username_exists");
         $this->form_validation->set_rules("user_email", 'User Email', "required|callback_user_email_exists");
         $this->form_validation->set_rules("password", 'Password', "required");
-        if ($this->form_validation->run($this)) 
+        if ($this->form_validation->run($this) == FALSE) 
+        {
+             $this->session->set_flashdata('error', validation_errors());
+        }
+        else
         {
             $resize = array(
                 "width" => 2000,
@@ -162,15 +166,8 @@ class Users extends Admin
                     redirect("users/all-users");
                 } 
             }
+            unset($this->form_validation);
         } 
-        else 
-        {
-            if (!empty(validation_errors()))
-            {
-                $this->session->set_flashdata('error', validation_errors());
-            }
-           
-        }
         try
         {
         $user_type=$this->User_types_model->get_results();
@@ -260,9 +257,13 @@ class Users extends Admin
         $this->form_validation->set_rules("username", 'User Name', 'required|callback_username_is_unique');
         $this->form_validation->set_rules("user_email", 'User Email', "required|callback_user_email_is_unique");
         $this->form_validation->set_rules("profile_icon", ' ', " ");
-        if ($this->form_validation->run($this))
+        if ($this->form_validation->run($this) == FALSE)
         {
-            
+            $this->session->set_flashdata('error', validation_errors());
+        }
+        else
+        
+        {
             $resize = array(
                 "width" => 2000,
                 "height" => 2000,
@@ -290,15 +291,7 @@ class Users extends Admin
                     $this->session->set_flashdata('error', 'unable to update user. Try again!!');
                 }
             }
-        } 
-        else 
-        {
-            if (!empty(validation_errors())) 
-            {
-                $this->session->set_flashdata('error', validation_errors());
-
-            }
-           
+            unset($this->form_validation);
         }
         $error_check = $this->session->flashdata('error');
         if(!empty($error_check) && $error_check != NULL)

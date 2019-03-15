@@ -27,6 +27,10 @@
             </div>
         <?php
         }
+        else
+        {
+          unset($this->form_validation);
+        }
         if(!empty($success))
         {
           ?>
@@ -35,12 +39,7 @@
                   ?>
               </div>
               <?php
-        }
-        else
-        {
-          unset($this->form_validation);
-        }
-              ?>
+        } ?>
       <?php echo $content;?>
       </div>
 </main>
