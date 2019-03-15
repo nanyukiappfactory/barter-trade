@@ -84,8 +84,9 @@ class Users extends Admin
     {
         $where = array("username" => $username_exists, "deleted" =>0);
         $query = $this->db->get_where("user", $where); 
-
-        if ($query->num_rows() > 0 && !($query->row()))
+        // $username=$query->row();
+        // var_dump($username_exists);die();
+        if ($query->num_rows() > 0)//&& $username_exists!== $username->username)
         {
             $this->form_validation->set_message("username_exists", "that {field} already exists");
             return FALSE;
@@ -95,11 +96,12 @@ class Users extends Admin
             return TRUE;
         }
     }
+    
     public function user_email_exists($user_email_exists)
     {
         $where = array("user_email" => $user_email_exists, "deleted" =>0);
-        $query = $this->db->get_where("user", $where); 
-        if ($query->num_rows() > 0 && !($query->row()))
+        $query = $this->db->get_where("user", $where);
+        if ($query->num_rows() > 0)
         {
             $this->form_validation->set_message("user_email_exists", "that {field} already exists");
             return FALSE;
@@ -199,6 +201,35 @@ class Users extends Admin
         $this->load->view("site/layouts/layout", $data);
     }
 
+    public function user_email_is_unique($user_email_is_unique)
+    {
+        $where = array("user_email" => $user_email_is_unique, "deleted" =>0);
+        $query = $this->db->get_where("user", $where);
+        if ($query->num_rows() > 1)
+        {
+            $this->form_validation->set_message("user_email_is_unique", "that {field} already exists");
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+    public function username_is_unique($username_is_unique)
+    {
+        $where = array("username" => $username_is_unique, "deleted" =>0);
+        $query = $this->db->get_where("user", $where);
+        if ($query->num_rows() > 1)
+        {
+            $this->form_validation->set_message("username_is_unique", "that {field} already exists");
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+
     public function edit_user($user_id)
     {
         $users = $this->Users_model->get_single($user_id);
@@ -220,8 +251,8 @@ class Users extends Admin
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
         $this->form_validation->set_rules("user_type", 'User Type', "required");
-        $this->form_validation->set_rules("username", 'User Name', "required|callback_username_exists");
-        $this->form_validation->set_rules("user_email", 'User Email', "required|callback_user_email_exists");
+        $this->form_validation->set_rules("username", 'User Name', "required|callback_username_is_unique");
+        $this->form_validation->set_rules("user_email", 'User Email', "required|callback_user_email_is_unique");
         $this->form_validation->set_rules("profile_icon", ' ', " ");
         if ($this->form_validation->run($this))
         {
