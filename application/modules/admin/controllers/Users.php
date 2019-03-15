@@ -296,6 +296,7 @@ class Users extends Admin
             if (!empty(validation_errors())) 
             {
                 $this->session->set_flashdata('error', validation_errors());
+
             }
            
         }

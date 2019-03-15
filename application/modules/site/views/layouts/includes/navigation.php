@@ -6,8 +6,6 @@
         <span style="font-family: 'Signika', sans-serif;font-size:35px;">Admin</span>
     </a>
     <?php
-    // if (isset($search_term)) 
-    // {
     echo form_open($search, array('class' => "btn btn-secondary")); ?>
     <input type="search" placeholder="Search" name="search">
     <button name="Submit" type="submit">Submit</button>    

@@ -144,14 +144,10 @@ class User_types extends Admin
                 $this->session->set_flashdata('error', 'unable to add user_type. Try again!!');
             }
         } 
-        else 
-        {
-            if (!empty(validation_errors()))
+        if (!empty(validation_errors()))
             {
                 $this->session->set_flashdata('error', validation_errors());
             }
-        }
-
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
@@ -209,14 +205,11 @@ class User_types extends Admin
                 $this->session->set_flashdata('error', 'unable to edit user type. Try again!!');
             }
         } 
-        else 
-        {
             if (!empty(validation_errors())) 
             {
                 $this->session->set_flashdata('error', validation_errors());
             }
-        }
-
+       
         //TODO research more of Alvaro's method
         //TODO delete or modify comment after full understanding
         $error_check = $this->session->flashdata('error');
