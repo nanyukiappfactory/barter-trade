@@ -1,3 +1,5 @@
+<?php
+echo form_open_multipart($this->uri->uri_string()); ?>
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
 		<div class="card shadow mb-4 mt-4">
 			<div class="card-header py-3">
