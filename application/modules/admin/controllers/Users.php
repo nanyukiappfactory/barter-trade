@@ -5,7 +5,6 @@ class Users extends Admin
     public $upload_path;
     public $upload_location;
     public $g_user_id;
-   
     public function __construct()
     {
         parent::__construct();
@@ -23,17 +22,33 @@ class Users extends Admin
     }
 
     public function index($order = 'user.first_name', $order_method = 'ASC')
-    {
-        $search="users/search-user";
+    { 
+        $where = 'user.deleted=0';
+        $first_name=$this->session->userdata("first_name");
+        $last_name=$this->session->userdata("last_name");
+        if(!empty($first_name) && !empty($last_name))
+        {
+            $where .= 'AND (first_name="'.$first_name.'" AND (last_name="'.$last_name.'")'; 
+            
+        }
+        elseif(!empty($first_name) && $first_name != null)
+        {
+            //var_dump($last_name);die();
+            $where .= ' AND (first_name="'.$first_name.'")';  
+           
+        }
+        elseif((!empty($last_name) && $last_name != null))
+        {
+            $where .= ' AND (last_name="'.$last_name.'")'; 
+        }
+        else
+        { 
+            $where = 'user.deleted=0';
+        }
+       
         $close="users/close-search";
         $segment = 5;
         $table = 'user';
-        $where = 'user.deleted=0';
-        $search_term=$this->session->userdata("search_term");
-        if (!empty($search_term) && $search_term != null) 
-        {
-            $where .= ' AND (first_name LIKE "'.$search_term.'" OR user_email LIKE "'.$search_term.'" OR username LIKE "'.$search_term.'" OR phone_number LIKE "'.$search_term.'" OR last_name LIKE "'.$search_term.'")';
-        }
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -69,13 +84,11 @@ class Users extends Admin
             "order" => $order,
             "order_method" => $order_method,
             "page" => $page,
+            "close"=>$close,
             "links" => $this->pagination->create_links()
         );
         $data = array(
             "title" => "Users",
-            "search"=>$search,
-            "close"=>$close,
-            "search_term"=>$search_term,
             "content" => $this->load->view("admin/users/all_users", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
@@ -345,19 +358,24 @@ class Users extends Admin
         redirect("users/all-users");
     }
 
-    public function execute_search($search_term=null)
+    public function execute_search($first_name=null,$last_name=null)
     {
-        $search_term = $this->input->post('search');
-        if (!empty($search_term) && $search_term != null) 
+        $first_name = $this->input->post('first_name');
+        $last_name = $this->input->post('last_name');
+        if (!empty($first_name) && $first_name != null) 
         {
-            $this->session->set_userdata("search_term",$search_term);
-        }           
+            $this->session->set_userdata("first_name",$first_name);
+        }  
+        elseif(!empty($last_name) && $last_name != null)  
+        {
+            $this->session->set_userdata("last_name",$last_name);
+        } 
         redirect("users/all-users");
     }
 
-    public function unset_search()
-        {
-            $this->session->unset_userdata('search_term');
-            redirect("users/all-users");
-        }
+    // public function unset_search()
+    //     {
+    //         $this->session->unset_userdata('search_term');
+    //         redirect("users/all-users");
+    //     }
 }

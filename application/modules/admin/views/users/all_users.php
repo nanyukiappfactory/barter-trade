@@ -1,7 +1,47 @@
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
 	<div class="card shadow mb-4 mt-4">
 		<div class="card-header py-3">
-		<?php echo anchor ("users/add-user/", "add user", array('class'=>"btn btn-secondary")); ?>
+		
+			<div class="form-row">
+				<div class="col-md-6 mb-3">
+					<?php echo anchor ("users/add-user/", "add user", array('class'=>"btn btn-secondary")). " "; ?>
+				</div>
+				<div class="col-md-6 mb-3" >
+					<i class="fas fa-search btn btn-secondary" id="search_icon"></i>
+					<!-- <//?php echo anchor($close,'<i class="far fa-times-circle"></i>',array('class'=>"btn btn-secondary"));?> -->
+				</div>
+			</div>
+			<?php
+			echo form_open("users/search-user"); ?>
+			<div class="form-row">
+				<div id="search_items" name="search_parameters" class="form-group search" style="display:none">
+					<input placeholder="Enter First Name" id="first_name" name="first_name">
+					<input placeholder="Enter Last Name" id="last_name" name="last_name">
+					<input placeholder="Enter Email" id="email" name="user_email">
+					<input placeholder="Enter Phone No." id="phone_number" name="phone_number">
+					<button name="Submit" type="submit" style="display:block">Submit</button>   
+				</div>   
+			<?php
+			echo form_close(); ?>
+			
+			</div>
+				
+					<script>
+						document.getElementById("search_icon").addEventListener("click", execute_search);
+						function execute_search()
+						{
+							if(document.getElementById("search_icon").clicked==true)
+							{
+								document.getElementById("search_items").style.dislay="none";
+							}
+							else
+							{
+								document.getElementById("search_items").style.display="block";
+							}
+						}
+					</script>
+				
+			</div>
 		</div>
 	</div>		
 	<table class="table table-sm table-bordered table-responsive">
