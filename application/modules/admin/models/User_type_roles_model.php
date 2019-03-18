@@ -4,7 +4,9 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class User_type_roles_model extends CI_Model
+require_once "./application/modules/admin/controllers/Admin.php";
+
+class User_type_roles_model extends Admin
 {
     public function __construct()
     {

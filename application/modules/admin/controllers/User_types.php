@@ -69,12 +69,12 @@ class User_types extends Admin
             $order_method = 'DESC';
         }
       
-       $v_data = array(
-        "all_user_types"=>$query,
-        "order" => $order,
-        "order_method" => $order_method,
-        "page" => $page,
-        "links" => $this->pagination->create_links(),
+        $v_data = array(
+            "all_user_types"=>$query,
+            "order" => $order,
+            "order_method" => $order_method,
+            "page" => $page,
+            "links" => $this->pagination->create_links(),
         );
 
         $data = array(
@@ -98,7 +98,6 @@ class User_types extends Admin
         }
 
         redirect("user-types/all-user-types");
-
     }
 
     public function unset_search()
