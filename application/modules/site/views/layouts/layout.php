@@ -18,22 +18,28 @@
     $success=$this->session->flashdata("success");?>
   <div class="container">
           <?php
-          if(!empty($error)){
-              ?>
-              <div class="alert alert-danger">
-                  <?php echo $error;?>
-              </div>
-          
-          <?php
-          }
-        if(!empty($success)){
-              ?>
+        if(!empty($error))
+        {
+        ?>
+            <div class="alert alert-danger">
+                <?php echo $error;
+                ?>
+            </div>
+        <?php
+        }
+        else
+        {
+          unset($this->form_validation);
+        }
+        if(!empty($success))
+        {
+          ?>
               <div class="alert alert-success">
-                  <?php echo $success;?>
+                  <?php echo $success;
+                  ?>
               </div>
               <?php
-          }
-        ?>
+        } ?>
       <?php echo $content;?>
       </div>
 </main>

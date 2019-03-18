@@ -46,22 +46,9 @@ class Users_model extends CI_Model
         return $this->db->get("user");
     }
 
-    public function get_count($table, $where, $limit = NULL)
-    {
-        if($limit != NULL)
-        {
-            $this->db->limit($limit);
-        }
-        $this->db->from($table);
-        $this->db->where($where);
-        var_dump( $where);die();
-        return $this->db->count_all_results();
-    } 
     public function delete($user_id){
         $deleted = array(
                 "deleted" => 1,
-                // "username"=>"deleted",
-                // "user_email"=>"deleted",
                 "modified_on" => date("Y-m-d H:i:s"),
                 "deleted_on" => date("Y-m-d H:i:s")
         );
