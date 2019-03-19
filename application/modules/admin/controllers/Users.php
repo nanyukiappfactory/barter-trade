@@ -24,15 +24,11 @@ class Users extends Admin
     public function index($order = 'user.first_name', $order_method = 'ASC')
     { 
         $where = 'user.deleted=0';
-
         if($this->session->userdata("user_search_params"))
         {
             $search_param = $this->session->userdata("user_search_params");
             $where .= $search_param;
         }
-
-        // echo $where;die();
-
         $segment = 5;
         $table = 'user';
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
@@ -308,7 +304,6 @@ class Users extends Admin
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
             "content" => $this->load->view("admin/users/edit_users", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
@@ -360,7 +355,6 @@ class Users extends Admin
         {
             $where .= ' AND (phone_number="'.$phone_number.'")';
         }
-        
         $this->session->set_userdata("user_search_params", $where);
 
         redirect("users/all-users");

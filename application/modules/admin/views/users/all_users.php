@@ -3,7 +3,7 @@
 		<div class="form-row">
 			<?php echo anchor ("users/add-user/", "add user", array('class'=>"btn btn-primary col-md-2 mb-2")). " "; ?>
 			<button class="fas fa-search btn btn-secondary col-md-2 mb-2" id="search_icon" name="search_icon" style="display:block" ></button>
-			<?php echo anchor("users/close-search",'<i class="far fa-times-circle "></i>',array('class'=>"btn btn-info col-md-2 mb-2"));?>
+			<?php echo anchor("users/close-search",'close search session',array('class'=>"btn btn-info col-md-2 mb-2"));?>
 		</div>
 	</div>
 	<?php
