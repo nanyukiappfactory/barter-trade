@@ -31,20 +31,19 @@ class Users extends Admin
             $where .= 'AND (first_name="'.$first_name.'" AND (last_name="'.$last_name.'")'; 
             
         }
-        elseif(!empty($first_name) && $first_name != null)
+        if(!empty($first_name) && $first_name != null)
         {
-            //var_dump($last_name);die();
             $where .= ' AND (first_name="'.$first_name.'")';  
            
         }
-        elseif((!empty($last_name) && $last_name != null))
+        if((!empty($last_name) && $last_name != null))
         {
             $where .= ' AND (last_name="'.$last_name.'")'; 
         }
-        else
-        { 
-            $where = 'user.deleted=0';
-        }
+        // else
+        // { 
+        //     $where = 'user.deleted=0';
+        // }
        
         $close="users/close-search";
         $segment = 5;
