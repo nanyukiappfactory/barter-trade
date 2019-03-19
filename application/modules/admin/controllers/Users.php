@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')){ exit('No direct script access allowed');}
+<?php if(!defined('BASEPATH')){ exit('No direct script access allowed');}
 require_once "./application/modules/admin/controllers/Admin.php";
 class Users extends Admin
 {
@@ -18,7 +18,6 @@ class Users extends Admin
         $this->load->model("file_model");
         $this->load->library('session');
         $table = 'user';
-       
     }
 
     public function index($order = 'user.first_name', $order_method = 'ASC')
@@ -69,8 +68,7 @@ class Users extends Admin
         }
         if(!empty($first_name) && $first_name != null)
         {
-            $where .= ' AND (first_name="'.$first_name.'")';  
-           
+            $where .= ' AND (first_name="'.$first_name.'")';
         }
         if((!empty($last_name) && $last_name != null))
         {
@@ -109,7 +107,7 @@ class Users extends Admin
         $this->pagination->initialize($config);
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         $query = $this->Users_model->get_user($table, $where, $config["per_page"], $page, $order, $order_method);      
-        if ($order_method == 'DESC')
+        if($order_method == 'DESC')
         {
             $order_method = 'ASC';
         } 
@@ -131,11 +129,12 @@ class Users extends Admin
         );
         $this->load->view("site/layouts/layout", $data);
     }
+
     public function username_exists($username_exists)
     {
         $where = array("username" => $username_exists, "deleted" =>0);
         $query = $this->db->get_where("user", $where);
-        if ($query->num_rows() > 0)
+        if($query->num_rows() > 0)
         {
             $this->form_validation->set_message("username_exists", "that {field} already exists");
             return FALSE;
@@ -153,7 +152,7 @@ class Users extends Admin
             "deleted" =>0
         );
         $query = $this->db->get_where("user", $where);
-        if ($query->num_rows() > 0)
+        if($query->num_rows() > 0)
         {
             $this->form_validation->set_message("user_email_exists", "that {field} already exists");
             return FALSE;
@@ -186,7 +185,7 @@ class Users extends Admin
         $this->form_validation->set_rules("username", 'Username', "required|callback_username_exists");
         $this->form_validation->set_rules("user_email", 'User Email', "required|callback_user_email_exists");
         $this->form_validation->set_rules("password", 'Password', "required");
-        if ($this->form_validation->run($this) == FALSE) 
+        if($this->form_validation->run($this) == FALSE) 
         {
              $this->session->set_flashdata('error', validation_errors());
         }
@@ -197,13 +196,12 @@ class Users extends Admin
                 "height" => 2000,
             );
             $upload_response = $this->file_model->upload_image($this->upload_path, "profile_icon", $resize);
-            if ($upload_response['check'] == false) 
+            if($upload_response['check'] == false) 
             { 
                 $upload_response=array(
                     "file_name" => "no_image.PNG",
                     "thumb_name" => "6cb8392a0f015455b60834952307d7fe.PNG",
                     );
-                    
                 $this->Users_model->add_user($upload_response);
                 $this->session->set_flashdata('success', 'User Added successfully!!');
                 redirect("users/all-users");
@@ -211,7 +209,7 @@ class Users extends Admin
             } 
             else
             {
-                if ($this->Users_model->add_user($upload_response))
+                if($this->Users_model->add_user($upload_response))
                 {
                     $this->session->set_flashdata('success', 'User Added successfully!!');
                     redirect("users/all-users");
@@ -238,14 +236,12 @@ class Users extends Admin
                 "user_types"=>$user_types,
                 "user_type"=>$user_type
         );
-        
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
             "close"=>$close,
             "content" => $this->load->view("admin/users/add_user", $v_data, true),
         );
-        
         $this->load->view("site/layouts/layout", $data);
     }
     public function user_email_is_unique($user_email_is_unique)
@@ -255,7 +251,7 @@ class Users extends Admin
         $where .= ' AND (user_email="'.$user_email_is_unique.'" AND deleted=0)';
         $query = $this->db->get_where("user", $where);
         $result =$query->num_rows();
-        if ($result > 0 )
+        if($result > 0)
         {
             $this->form_validation->set_message("user_email_is_unique", "that {field} already exists");
             return FALSE;
@@ -272,7 +268,7 @@ class Users extends Admin
         $where .= ' AND (username="'.$username_is_unique.'" AND deleted=0)';
         $query = $this->db->get_where("user", $where);
         $result =$query->num_rows();
-        if ($result > 0 )
+        if($result > 0 )
         {
             $this->form_validation->set_message("username_is_unique", "that {field} already exists");
             return FALSE;
@@ -287,7 +283,7 @@ class Users extends Admin
     {
         $this->g_user_id = $user_id;
         $users = $this->Users_model->get_single($user_id);
-        if ($users->num_rows() > 0) {
+        if($users->num_rows() > 0) {
             $row = $users->row();
             $first_name = $row->first_name;
             $last_name = $row->last_name;
@@ -308,19 +304,18 @@ class Users extends Admin
         $this->form_validation->set_rules("username", 'User Name', 'required|callback_username_is_unique');
         $this->form_validation->set_rules("user_email", 'User Email', "required|callback_user_email_is_unique");
         $this->form_validation->set_rules("profile_icon", ' ', " ");
-        if ($this->form_validation->run($this) == FALSE)
+        if($this->form_validation->run($this) == FALSE)
         {
             $this->session->set_flashdata('error', validation_errors());
         }
         else
-        
         {
             $resize = array(
                 "width" => 2000,
                 "height" => 2000,
             );
             $upload_response = $this->file_model->upload_image($this->upload_path, "profile_icon", $resize);
-            if ($upload_response['check'] == false) 
+            if($upload_response['check'] == false) 
             {
                 $upload_response=array(
                     "file_name" =>  $profile_icon ,
@@ -332,7 +327,7 @@ class Users extends Admin
             } 
             else 
             {
-                if ($this->Users_model->edit_update_user($user_id, $upload_response)) 
+                if($this->Users_model->edit_update_user($user_id, $upload_response)) 
                 {
                     $this->session->set_flashdata('success', 'User Updated successfully!!');
                     redirect("users/all-users");
@@ -342,7 +337,7 @@ class Users extends Admin
                     $this->session->set_flashdata('error', 'unable to update user. Try again!!');
                 }
             }
-            unset($this->form_validation);
+        unset($this->form_validation);
         }
         $error_check = $this->session->flashdata('error');
         if(!empty($error_check) && $error_check != NULL)
@@ -402,7 +397,7 @@ class Users extends Admin
         $last_name = $this->input->post('last_name');
         $user_email = $this->input->post('user_email');
         $phone_number = $this->input->post('phone_number');
-        if (!empty($first_name) && $first_name != null) 
+        if(!empty($first_name) && $first_name != null) 
         {
             $this->session->set_userdata("first_name",$first_name);
         }  
@@ -422,11 +417,11 @@ class Users extends Admin
     }
 
     public function unset_search()
-        {
-            $this->session->unset_userdata('first_name');
-            $this->session->unset_userdata('last_name');
-            $this->session->unset_userdata('user_email');
-            $this->session->unset_userdata('phone_number');
-            redirect("users/all-users");
-        }
+    {
+        $this->session->unset_userdata('first_name');
+        $this->session->unset_userdata('last_name');
+        $this->session->unset_userdata('user_email');
+        $this->session->unset_userdata('phone_number');
+        redirect("users/all-users");
+    }
 }

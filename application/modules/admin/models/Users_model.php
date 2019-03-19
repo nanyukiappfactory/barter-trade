@@ -48,9 +48,9 @@ class Users_model extends CI_Model
 
     public function delete($user_id){
         $deleted = array(
-                "deleted" => 1,
-                "modified_on" => date("Y-m-d H:i:s"),
-                "deleted_on" => date("Y-m-d H:i:s")
+            "deleted" => 1,
+            "modified_on" => date("Y-m-d H:i:s"),
+            "deleted_on" => date("Y-m-d H:i:s")
         );
         $this->db->set($deleted);
         $this->db->where("user_id",$user_id);        
@@ -72,13 +72,13 @@ class Users_model extends CI_Model
         $this->db->where("user_id",$user_id);
         if($this->db->update("user"))
         {
-            $this->session->set_flashdata("success","Successfully deactivated a user");//implode($username));
+            $this->session->set_flashdata("success","Successfully deactivated a user");
             return $remain;
-       }
+        }
        else 
        {
-        $this->session->set_flashdata("error","Unable to deactivate a user"); //echo implode($username);
-        return FALSE;
+            $this->session->set_flashdata("error","Unable to deactivate a user");
+            return FALSE;
        }
     }  
 
@@ -115,12 +115,11 @@ class Users_model extends CI_Model
             "deleted"=>0,
             "modified_on"=>date("Y-m-d H:i:s"),
             "user_type_id"=>$this->input->post("user_type"),
-        );  
-        
+        ); 
         if("user.user_id>0")
         {
-        $this->db->where("user_id",$user_id);
-        $this->db->update("user", $data);
+            $this->db->where("user_id",$user_id);
+            $this->db->update("user", $data);
             return true;
         }
         else
@@ -128,5 +127,4 @@ class Users_model extends CI_Model
             return false;
         }
     }
-
 }
