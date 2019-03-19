@@ -3,13 +3,10 @@
 		<div class="card-header py-3">
 		
 			<div class="form-row">
-				<div class="col-md-6 mb-3">
-					<?php echo anchor ("users/add-user/", "add user", array('class'=>"btn btn-secondary")). " "; ?>
-				</div>
-				<div class="col-md-6 mb-3" >
-					<i class="fas fa-search btn btn-secondary" id="search_icon"></i>
-					<!-- <//?php echo anchor($close,'<i class="far fa-times-circle"></i>',array('class'=>"btn btn-secondary"));?> -->
-				</div>
+					<?php echo anchor ("users/add-user/", "add user", array('class'=>"btn btn-primary col-md-2 mb-2")). " "; ?>
+					<button class="fas fa-search btn btn-secondary col-md-2 mb-2" id="search_icon" name="search_icon" style="display:block" ></button>
+					<?php echo anchor("users/close-search",'<i class="far fa-times-circle "></i>',array('class'=>"btn btn-info col-md-2 mb-2"));?>
+					</div>
 			</div>
 			<?php
 			echo form_open("users/search-user"); ?>
@@ -19,24 +16,25 @@
 					<input placeholder="Enter Last Name" id="last_name" name="last_name">
 					<input placeholder="Enter Email" id="email" name="user_email">
 					<input placeholder="Enter Phone No." id="phone_number" name="phone_number">
-					<button name="Submit" type="submit" style="display:block">Submit</button>   
-				</div>   
+					<button class ="col-md-2 mb-2 btn btn-secondary" name="Submit" type="submit">Submit</button>   
+				</div> 
+			</div>  
 			<?php
 			echo form_close(); ?>
 			
-			</div>
+			
 				
 					<script>
 						document.getElementById("search_icon").addEventListener("click", execute_search);
 						function execute_search()
 						{
-							if(document.getElementById("search_icon").clicked==true)
+							if(document.getElementById("search_icon").clicked!=true)
 							{
-								document.getElementById("search_items").style.dislay="none";
+								document.getElementById("search_items").style.display="block";
 							}
 							else
 							{
-								document.getElementById("search_items").style.display="block";
+								//document.getElementById("close_search").innerHTMl=
 							}
 						}
 					</script>

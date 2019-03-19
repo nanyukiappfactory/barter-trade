@@ -26,11 +26,46 @@ class Users extends Admin
         $where = 'user.deleted=0';
         $first_name=$this->session->userdata("first_name");
         $last_name=$this->session->userdata("last_name");
+        $user_email=$this->session->userdata("user_email");
+        $phone_number=$this->session->userdata("phone_number");
+        if(!empty($first_name) && !empty($last_name) && !empty($user_email) && !empty($phone_number))
+        {
+            $where .= ' AND (first_name="'.$first_name.'")';
+            $where .= ' AND (last_name="'.$last_name.'")';
+            $where .= ' AND (user_email="'.$user_email.'")';
+            $where .= ' AND (phone_number="'.$phone_number.'")';
+        }
+        if(!empty($first_name) && !empty($last_name) && !empty($user_email))
+        {
+            $where .= ' AND (first_name="'.$first_name.'")';
+            $where .= ' AND (last_name="'.$last_name.'")';
+            $where .= ' AND (user_email="'.$user_email.'")';
+        }
+        if(!empty($first_name) && !empty($last_name) && !empty($phone_number))
+        {
+            $where .= ' AND (first_name="'.$first_name.'")';
+            $where .= ' AND (last_name="'.$last_name.'")';
+            $where .= ' AND (phone_number="'.$phone_number.'")';
+        }
+        if(!empty($first_name) && !empty($phone_number))
+        {
+            $where .= ' AND (first_name="'.$first_name.'")';
+            $where .= ' AND (phone_number="'.$phone_number.'")';
+        }
+        if(!empty($user_email) && !empty($phone_number))
+        {
+            $where .= ' AND (user_email="'.$user_email.'")';
+            $where .= ' AND (phone_number="'.$phone_number.'")';
+        }
+        if(!empty($last_name) && !empty($user_email))
+        {
+            $where .= ' AND (last_name="'.$last_name.'")';
+            $where .= ' AND (user_email="'.$user_email.'")';
+        }
         if(!empty($first_name) && !empty($last_name))
         {
             $where .= ' AND (first_name="'.$first_name.'")';
             $where .= ' AND (last_name="'.$last_name.'")';
-            
         }
         if(!empty($first_name) && $first_name != null)
         {
@@ -41,11 +76,14 @@ class Users extends Admin
         {
             $where .= ' AND (last_name="'.$last_name.'")'; 
         }
-        // else
-        // { 
-        //     $where = 'user.deleted=0';
-        // }
-       
+        if((!empty($user_email) && $user_email != null))
+        {
+            $where .= ' AND (user_email="'.$user_email.'")'; 
+        }
+        if((!empty($phone_number) && $phone_number != null))
+        {
+            $where .= ' AND (phone_number="'.$phone_number.'")'; 
+        }
         $close="users/close-search";
         $segment = 5;
         $table = 'user';
@@ -362,6 +400,8 @@ class Users extends Admin
     {
         $first_name = $this->input->post('first_name');
         $last_name = $this->input->post('last_name');
+        $user_email = $this->input->post('user_email');
+        $phone_number = $this->input->post('phone_number');
         if (!empty($first_name) && $first_name != null) 
         {
             $this->session->set_userdata("first_name",$first_name);
@@ -370,12 +410,23 @@ class Users extends Admin
         {
             $this->session->set_userdata("last_name",$last_name);
         } 
+        if(!empty($user_email) && $user_email != null)  
+        {
+            $this->session->set_userdata("user_email",$user_email);
+        } 
+       if(!empty($phone_number) && $phone_number != null)  
+        {
+            $this->session->set_userdata("phone_number",$phone_number);
+        } 
         redirect("users/all-users");
     }
 
-    // public function unset_search()
-    //     {
-    //         $this->session->unset_userdata('search_term');
-    //         redirect("users/all-users");
-    //     }
+    public function unset_search()
+        {
+            $this->session->unset_userdata('first_name');
+            $this->session->unset_userdata('last_name');
+            $this->session->unset_userdata('user_email');
+            $this->session->unset_userdata('phone_number');
+            redirect("users/all-users");
+        }
 }
