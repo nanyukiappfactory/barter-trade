@@ -5,6 +5,7 @@ class Users extends Admin
     public $upload_path;
     public $upload_location;
     public $g_user_id;
+    public $where;
     public function __construct()
     {
         parent::__construct();
@@ -23,66 +24,15 @@ class Users extends Admin
     public function index($order = 'user.first_name', $order_method = 'ASC')
     { 
         $where = 'user.deleted=0';
-        $first_name=$this->session->userdata("first_name");
-        $last_name=$this->session->userdata("last_name");
-        $user_email=$this->session->userdata("user_email");
-        $phone_number=$this->session->userdata("phone_number");
-        if(!empty($first_name) && !empty($last_name) && !empty($user_email) && !empty($phone_number))
+
+        if($this->session->userdata("user_search_params"))
         {
-            $where .= ' AND (first_name="'.$first_name.'")';
-            $where .= ' AND (last_name="'.$last_name.'")';
-            $where .= ' AND (user_email="'.$user_email.'")';
-            $where .= ' AND (phone_number="'.$phone_number.'")';
+            $search_param = $this->session->userdata("user_search_params");
+            $where .= $search_param;
         }
-        if(!empty($first_name) && !empty($last_name) && !empty($user_email))
-        {
-            $where .= ' AND (first_name="'.$first_name.'")';
-            $where .= ' AND (last_name="'.$last_name.'")';
-            $where .= ' AND (user_email="'.$user_email.'")';
-        }
-        if(!empty($first_name) && !empty($last_name) && !empty($phone_number))
-        {
-            $where .= ' AND (first_name="'.$first_name.'")';
-            $where .= ' AND (last_name="'.$last_name.'")';
-            $where .= ' AND (phone_number="'.$phone_number.'")';
-        }
-        if(!empty($first_name) && !empty($phone_number))
-        {
-            $where .= ' AND (first_name="'.$first_name.'")';
-            $where .= ' AND (phone_number="'.$phone_number.'")';
-        }
-        if(!empty($user_email) && !empty($phone_number))
-        {
-            $where .= ' AND (user_email="'.$user_email.'")';
-            $where .= ' AND (phone_number="'.$phone_number.'")';
-        }
-        if(!empty($last_name) && !empty($user_email))
-        {
-            $where .= ' AND (last_name="'.$last_name.'")';
-            $where .= ' AND (user_email="'.$user_email.'")';
-        }
-        if(!empty($first_name) && !empty($last_name))
-        {
-            $where .= ' AND (first_name="'.$first_name.'")';
-            $where .= ' AND (last_name="'.$last_name.'")';
-        }
-        if(!empty($first_name) && $first_name != null)
-        {
-            $where .= ' AND (first_name="'.$first_name.'")';
-        }
-        if((!empty($last_name) && $last_name != null))
-        {
-            $where .= ' AND (last_name="'.$last_name.'")'; 
-        }
-        if((!empty($user_email) && $user_email != null))
-        {
-            $where .= ' AND (user_email="'.$user_email.'")'; 
-        }
-        if((!empty($phone_number) && $phone_number != null))
-        {
-            $where .= ' AND (phone_number="'.$phone_number.'")'; 
-        }
-        $close="users/close-search";
+
+        // echo $where;die();
+
         $segment = 5;
         $table = 'user';
         $config['base_url'] = site_url() . 'users/all-users/' . $order . '/' . $order_method;
@@ -120,7 +70,6 @@ class Users extends Admin
             "order" => $order,
             "order_method" => $order_method,
             "page" => $page,
-            "close"=>$close,
             "links" => $this->pagination->create_links()
         );
         $data = array(
@@ -165,8 +114,6 @@ class Users extends Admin
 
     public function add_user()
     {
-        $search="users/search-user";
-        $close="users/close-search";
         if((empty(validation_errors())))
         {
             $first_name = set_value("first_name");
@@ -238,8 +185,6 @@ class Users extends Admin
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
             "content" => $this->load->view("admin/users/add_user", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
@@ -295,8 +240,6 @@ class Users extends Admin
             $profile_thumb = $row->profile_thumb;
             $user_types =$row->user_type_id;
         }
-        $search="users/search-user";
-        $close="users/close-search";
         $this->form_validation->set_rules("first_name", 'First Name', "required");
         $this->form_validation->set_rules("last_name", 'Last Name', "required");
         $this->form_validation->set_rules("phone_number", 'Phone Number', "required|numeric");
@@ -366,7 +309,6 @@ class Users extends Admin
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search"=>$search,
-            "close"=>$close,
             "content" => $this->load->view("admin/users/edit_users", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
@@ -391,37 +333,43 @@ class Users extends Admin
         redirect("users/all-users");
     }
 
-    public function execute_search($first_name=null,$last_name=null)
+    public function execute_search()
     {
+        $where = '';
         $first_name = $this->input->post('first_name');
         $last_name = $this->input->post('last_name');
         $user_email = $this->input->post('user_email');
         $phone_number = $this->input->post('phone_number');
-        if(!empty($first_name) && $first_name != null) 
+
+        if(!empty($first_name))
         {
-            $this->session->set_userdata("first_name",$first_name);
-        }  
-        if(!empty($last_name) && $last_name != null)  
+            $where .= ' AND (first_name="'.$first_name.'")';
+        }
+
+        if(!empty($last_name))
         {
-            $this->session->set_userdata("last_name",$last_name);
-        } 
-        if(!empty($user_email) && $user_email != null)  
+            $where .= ' AND (last_name="'.$last_name.'")';
+        }
+
+        if(!empty($user_email))
         {
-            $this->session->set_userdata("user_email",$user_email);
-        } 
-       if(!empty($phone_number) && $phone_number != null)  
+            $where .= ' AND (user_email="'.$user_email.'")';
+        }
+
+        if(!empty($phone_number))
         {
-            $this->session->set_userdata("phone_number",$phone_number);
-        } 
+            $where .= ' AND (phone_number="'.$phone_number.'")';
+        }
+        
+        $this->session->set_userdata("user_search_params", $where);
+
         redirect("users/all-users");
     }
 
     public function unset_search()
     {
-        $this->session->unset_userdata('first_name');
-        $this->session->unset_userdata('last_name');
-        $this->session->unset_userdata('user_email');
-        $this->session->unset_userdata('phone_number');
+        $this->session->unset_userdata('user_search_params');
+        
         redirect("users/all-users");
     }
 }

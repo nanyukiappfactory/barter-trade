@@ -10,7 +10,7 @@
 	echo form_open("users/search-user"); ?>
 	<div class="form-row">
 		<div id="search_items" name="search_parameters" class="form-group search" style="display:none">
-			<input placeholder="Enter First Name" id="first_name" name="first_name">
+			<input placeholder="Enter User Name" id="first_name" name="first_name">
 			<input placeholder="Enter Last Name" id="last_name" name="last_name">
 			<input placeholder="Enter Email" id="email" name="user_email">
 			<input placeholder="Enter Phone No." id="phone_number" name="phone_number">
