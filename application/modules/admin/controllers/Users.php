@@ -28,7 +28,8 @@ class Users extends Admin
         $last_name=$this->session->userdata("last_name");
         if(!empty($first_name) && !empty($last_name))
         {
-            $where .= 'AND (first_name="'.$first_name.'" AND (last_name="'.$last_name.'")'; 
+            $where .= ' AND (first_name="'.$first_name.'")';
+            $where .= ' AND (last_name="'.$last_name.'")';
             
         }
         if(!empty($first_name) && $first_name != null)
@@ -365,7 +366,7 @@ class Users extends Admin
         {
             $this->session->set_userdata("first_name",$first_name);
         }  
-        elseif(!empty($last_name) && $last_name != null)  
+        if(!empty($last_name) && $last_name != null)  
         {
             $this->session->set_userdata("last_name",$last_name);
         } 
