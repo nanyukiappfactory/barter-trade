@@ -94,10 +94,11 @@ class User_types extends Admin
         //var_dump($search_user_type);die();
         if (!empty($search_user_type) && $search_user_type != null) 
         {
-        $this->session->set_userdata("search_user_type", $search_user_type);  
-        }
-
-        redirect("user-types/all-user-types");
+        $this->session->set_userdata("search_user_type", $search_user_type); 
+        redirect("user-types/all-user-types"); 
+        }else if($search_user_type == null){
+            redirect("user-types/all-user-types"); 
+        }      
     }
 
     public function unset_search()
