@@ -1,3 +1,82 @@
+<?php 
+	$result = '';
+	if($all_users->num_rows() > 0)
+	{
+		$count=$page;
+		foreach($all_users->result() as $row)
+		{ 
+			$count++;
+			$id=$row->user_id;
+			$first_name=$row->first_name;
+			$last_name=$row->last_name;
+			$phone_number=$row->phone_number;
+			$username=$row->username;
+			$user_email=$row->user_email;
+			$profile_icon=$row->profile_icon;
+			$profile_thumb=$row->profile_thumb;
+			$check=$row->user_status;
+
+			$model_data = array(
+				"id" => $id,
+				"first_name" => $first_name,
+				"last_name" => $last_name,
+				"phone_number" => $phone_number,
+				"username" => $username,
+				"user_email" => $user_email,
+				"profile_icon" => $profile_icon,
+				"profile_thumb" => $profile_thumb,
+				"check" => $check,					
+			);
+			if($check==0)
+			{
+				$status = anchor("users/activate-user/".$id,'<i class="far fa-thumbs-up"></i>', array("onclick"=>"return confirm('Are you sure to activate?')", "class"=>"btn btn-success"));
+			}
+			else
+			{
+				$status = anchor("users/deactivate-user/".$id,'<i class="far fa-thumbs-down"></i>', array("onclick"=>"return confirm('Are you sure to deactivate?')","class"=>"btn btn-danger", 'data-toggle'=>'modal'));
+			}
+			if($check==0)
+			{
+				$status_activation= "<button class='badge badge-danger' data-toggle='modal'>deactivated</button>";
+			}
+			else
+			{
+				$status_activation="<button class= 'badge badge-success' data-toggle='modal'>active</button>";
+			}
+			
+			$result .= '<tr>
+				<td>'.$count.'</td>
+				<td><img class="thumbnail" style="height: 100px; width: 100px;" src="'.base_url().'assets/uploads/'. $row->profile_thumb.'" /></td>
+				<td>'.$first_name.'</td>
+				<td>'.$last_name.'</td>
+				<td>'.$phone_number.'</td>
+				<td>'. $username.'</td>
+				<td>'.$user_email.'</td>
+				<td>'.$status_activation.'</td>
+			';
+
+			$edit_url = "users/edit-user/". $id;
+			$delete_url = "users/delete-user/".$id;
+
+			$edit_icon = '<i class="fas fa-edit"></i>';
+			$delete_icon = '<i class="fas fa-trash-alt"></i>';
+
+			$delete_sms = 'Are you sure to delete?';
+			$result .='
+				<td>
+					<a href="#modalLoginAvatar'.$id.'" class="btn btn-primary" data-toggle="modal" data-target="#modalLoginAvatar'.$id.'">
+						<i class="fas fa-eye"></i>
+					</a>
+					<button class="btn btn-warning">' . anchor($edit_url, $edit_icon) . '</button>' . $status . 
+					'<button class="btn btn-danger" data-toggle="modal" onclick="return confirm(' . $delete_sms . ')">' .anchor($delete_url, $delete_icon) . 
+					'</button>
+				</td> 
+			</tr>
+			';
+			$this->load->view("admin/users/view_user", $model_data);
+		}
+	}		
+?>		
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
 	<div class="card-header py-3">
 		<div class="form-row">
@@ -33,97 +112,16 @@
 	<tr>
 		<th>Count</th>
 		<th>Image</th>
-		<th><a href="<?php echo site_url()."users/all-users/first_name/". $order_method."/".$page;?>">First Name</a></th>
+		<th><a href="<?php echo site_url()."users/all-users/first_name/". $order_method."/".$page;?>">FirstName</a></th>
 		<th><a href="<?php echo site_url()."users/all-users/last_name/". $order_method."/".$page;?>">Last Name</a></th>
 		<th><a href="<?php echo site_url()."users/all-users/phone_number/". $order_method."/".$page;?>">Phone Number</a></th>
-		<th><a href="<?php echo site_url()."users/all-users/username/". $order_method."/".$page;?>">Username</a></th>
+		<th><a href="<?php echo site_url()."users/all-users/username/".$order_method."/".$page;?>">Username</a></th>
 		<th><a href="<?php echo site_url()."users/all-users/user_email/". $order_method."/".$page;?>">Email</a></th>
 		<th><a href="<?php echo site_url()."users/all-users/user_status/". $order_method."/".$page;?>">Status</a></th>
 		<th>Actions</th>
 	</tr>
-	<?php
-	if($all_users->num_rows() > 0)
-	{
-		$count=$page;
-		foreach($all_users->result() as $row)
-		{ 
-				$count++;
-				$id=$row->user_id;
-				$first_name=$row->first_name;
-				$last_name=$row->last_name;
-				$phone_number=$row->phone_number;
-				$username=$row->username;
-				$user_email=$row->user_email;
-				$profile_icon=$row->profile_icon;
-				$profile_thumb=$row->profile_thumb;
-				$check=$row->user_status;
-	?>
-	<tr>
-		<td><?php echo $count;?></td>
-		<td><img class="thumbnail" style="height: 100px; width: 100px;" src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->profile_thumb; ?>" /></td>
-		<td><?php echo $first_name;?></td>
-		<td><?php echo $last_name;?></td>
-		<td><?php echo $phone_number;?></td>
-		<td><?php echo $username;?></td>
-		<td><?php echo $user_email;?></td>
-		<td>
-			<?php
-			if($check==0)
-			{
-				echo "<button class='badge badge-danger' data-toggle='modal'>deactivated</button>";
-			}
-			else
-			{
-				echo "<button class= 'badge badge-success' data-toggle='modal'>active</button>";
-			}
-			?>
-		</td>
-		<td>
-			<a href="#modalLoginAvatar<?php echo $id?>" class="btn btn-primary" data-toggle="modal" data-target="#modalLoginAvatar<?php echo $id?>"><i class="fas fa-eye"></i></a>
-			<button class="btn btn-warning"><?php echo anchor("users/edit-user/".$id,'<i class="fas fa-edit"></i>');?></button>
-				<?php
-				if($check==0){
-					echo anchor("users/activate-user/".$id,'<i class="far fa-thumbs-up"></i>', array("onclick"=>"return confirm('Are you sure to activate?')", "class"=>"btn btn-success"));
-				
-				}
-				else
-				{
-					echo anchor("users/deactivate-user/".$id,'<i class="far fa-thumbs-down"></i>', array("onclick"=>"return confirm('Are you sure to deactivate?')","class"=>"btn btn-danger", 'data-toggle'=>'modal'));
-				}
-				?>
-				<button class="btn btn-danger" data-toggle='modal' onclick="return confirm('Are you sure to delete?')"> <?php echo anchor("users/delete-user/".$id,"<i class='fas fa-trash-alt'></i>");?></button>
-		</td> <!-- Button trigger modal -->
-		<div class="modal fade" id="modalLoginAvatar<?php echo $id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<img  src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->profile_thumb; ?>" alt="avatar" class="rounded-circle img-responsive"/>
-					</div>
-					<div class="modal-body  mb-1">
-						<div class="md-form">
-							<b>First Name:</b> <label data-error="wrong" data-success="right" for="form29" class="ml-0"><?php echo $first_name;?></label>
-						</div>
-						<div class="md-form ml-0 mr-0">
-							<b>Last Name:</b> <label data-error="wrong" data-success="right" for="form29" class="ml-0"><?php echo $last_name;?></label>
-						</div>
-						<div class="md-form ml-0 mr-0">
-							<b>Phone Number:</b> <label data-error="wrong" data-success="right" for="form29" class="ml-0"><?php echo $phone_number;?></label>
-						</div>
-						<div class="md-form ml-0 mr-0">
-							<b>Username: </b><label data-error="wrong" data-success="right" for="form29" class="ml-0"><?php echo $username;?></label>
-						</div>
-						<div class="md-form ml-0 mr-0">
-							<b>Email: </b><label data-error="wrong" data-success="right" for="form29" class="ml-0"><?php echo $user_email;?></label>
-						</div>	
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary"data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</tr><?php }} ?>
+	<?php echo $result;
+	echo $this->load->view("admin/users/view_user", $model_data);?>
 </table>
 <?php echo $links;?>
 

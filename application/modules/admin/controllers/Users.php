@@ -66,7 +66,8 @@ class Users extends Admin
             "order" => $order,
             "order_method" => $order_method,
             "page" => $page,
-            "links" => $this->pagination->create_links()
+            "links" => $this->pagination->create_links(),
+            //"view_user"=>$this->load->view("admin/users/view_user")
         );
         $data = array(
             "title" => "Users",

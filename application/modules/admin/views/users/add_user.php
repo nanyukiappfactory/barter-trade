@@ -1,4 +1,27 @@
 <?php
+	$option='';
+	if($user_type->result()!=null)
+	{
+		foreach ($user_type->result() as $rows)
+		{
+			$user_type_id = $rows->user_type_id;
+			$user_type_name = $rows->user_type_name;
+			if($user_type_id==$user_types)
+			{
+				$option ='<option value="'.$user_types.'">'. $user_type_name.'?></option>';
+			}
+		}
+	}
+	if($user_type->result()!=null)
+	{
+		foreach ($user_type->result() as $rows)
+		{
+			$user_type_id = $rows->user_type_id;
+			$user_type_name = $rows->user_type_name;
+			$option .='<option value="'.$user_type_id.'">'.$user_type_name.'</option>';
+		}
+	}
+									
 echo form_open_multipart($this->uri->uri_string()); ?>
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
 		<div class="card shadow mb-4 mt-4">
@@ -16,35 +39,7 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 						<div class="col-md-6 mb-3">
 							<label> User Type</label>
 							<select class="selectpicker form-control" data-style="btn-outline-primary"  name="user_type">
-								<?php
-									if($user_type->result()!=null)
-									{
-										foreach ($user_type->result() as $rows)
-										{
-											$user_type_id = $rows->user_type_id;
-											$user_type_name = $rows->user_type_name;
-											if($user_type_id==$user_types)
-											{?>
-												<option value="<?php echo $user_types;?>"><?php echo $user_type_name;?></option>
-								<?php 
-											}
-										}
-									}
-								?>
-								<?php
-									if($user_type->result()!=null)
-									{
-										foreach ($user_type->result() as $rows)
-										{
-											$user_type_id = $rows->user_type_id;
-											$user_type_name = $rows->user_type_name;?>
-											<option value="<?php echo $user_type_id; ?>">
-											<?php echo $user_type_name; ?>
-								<?php 
-										}
-									}
-								?>
-									</option>
+								<?php echo $option;?>
 							</select>
 						</div>
 						<div class="col-md-6 mb-3">

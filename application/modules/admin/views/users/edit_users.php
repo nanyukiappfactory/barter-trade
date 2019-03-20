@@ -1,4 +1,30 @@
+
 <?php
+	$option='';
+ 	if($users->result()>0)
+	{
+		foreach($users->result() as $row)
+		{
+			$user_type_id_FK=$row->user_type_id;
+			foreach($user_type->result() as $rows)
+			{
+				$user_type_id_PK=$rows->user_type_id;
+				$user_type_name=$rows->user_type_name;
+
+				if($user_type_id_PK==$user_types)
+				{ 
+					$option .='<option value="'. $user_types.'">'.$user_type_name.'</option>';
+					break;
+				}                                
+		}  
+	}
+		foreach ($user_type->result() as $rows)
+		{
+			$user_type_id = $rows->user_type_id;
+			$user_type_name = $rows->user_type_name;
+			$option .='<option value=" $user_type_id">'.$user_type_name.'</option>';
+		}
+	}
 echo form_open_multipart($this->uri->uri_string()); ?>
 <div class="container col-md-9 ml-sm-auto col-lg-10 px-4 pt-5">
 	<div class="shadow-lg p-3 mb-5 bg-white rounded">
@@ -9,34 +35,7 @@ echo form_open_multipart($this->uri->uri_string()); ?>
 						<label>User Type</label>
 						<select class="selectpicker form-control pl-5" data-style="btn-outline-primary"  name="user_type">
 							<optgroup  data-max-options="2">
-								<option
-									<?php if($users->result()>0)
-										{
-											foreach($users->result() as $row)
-											{
-												$user_type_id_FK=$row->user_type_id;
-												foreach($user_type->result() as $rows)
-												{
-													$user_type_id_PK=$rows->user_type_id;
-													$user_type_name=$rows->user_type_name;
-
-													if($user_type_id_PK==$user_types)
-													{ ?>
-														value="<?php echo $user_types ?>" >
-											<?php 
-												echo $user_type_name; 
-												break;
-												}                                
-											}  
-										}
-										foreach ($user_type->result() as $rows) {
-											$user_type_id = $rows->user_type_id;
-											$user_type_name = $rows->user_type_name;?>
-								</option>
-								<option value="<?php echo $user_type_id ?>">
-									<?php echo $user_type_name ?>
-								</option>
-							<?php } }?>
+								<?php echo $option; ?>
 							</optgroup>
 						</select>
 					</div>
