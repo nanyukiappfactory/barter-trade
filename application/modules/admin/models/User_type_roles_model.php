@@ -1,9 +1,4 @@
-<?php
-
-if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
-
+<?php if (!defined('BASEPATH')) { exit('No direct script access allowed'); } 
 require_once "./application/modules/admin/controllers/Admin.php";
 
 class User_type_roles_model extends Admin
@@ -16,7 +11,6 @@ class User_type_roles_model extends Admin
     public function save_user_type_role()
     {
         $data = array(
-
             "role_id" => $this->input->post("role_name"),
             "user_type_id" => $this->input->post("user_type_name"),
         );
@@ -28,26 +22,31 @@ class User_type_roles_model extends Admin
         {
             return false;
         }
-
     }
     
     public function get_roles()
     {
         $this->db->where("deleted", 0);
-        return $result = $this->db->get("role");
-
+        return $this->db->get("role");
     }
 
     public function get_user_types()
     {
         $this->db->where("deleted", 0);
-        return $result = $this->db->get("user_type");
+        return $this->db->get("user_type");
     }
     public function get_single($user_type_role_id)
     {
         $this->db->where("user_type_role_id", $user_type_role_id);
         return $this->db->get("user_type_role");
     }
+    
+    public function get_results()
+    {
+        $this->db->where("user_type_role.deleted",0);
+        return $this->db->get("user_type_role");
+    }
+
     public function get_user_type_role($table=null, $where,$limit,$page,$order,$order_method)
     {
         $this->db->select('role.role_name, user_type.user_type_name,role.role_id,user_type.user_type_id, user_type_role.*');
@@ -58,27 +57,20 @@ class User_type_roles_model extends Admin
         $this->db->where($where);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
-        $result= $this->db->get();
-        return $result;
-   
-    }
-
-    public function get_results()
-    {
-        $this->db->where("user_type_role.deleted=0");
-        $query = $this->db->get("user_type_role");
-        return $query;
+        return $this->db->get();
     }
 
     public function delete($id)
     {
         $this->db->set("deleted", 1, "modified_on", date("Y-m-d H:i:s"), "deleted_on", date("Y-m-d H:i:s"));
         $this->db->where("user_type_role_id", $id);
-
-        if ($this->db->update("user_type_role")) {
+        if ($this->db->update("user_type_role")) 
+        {
             $this->session->set_flashdata("success", "You have deleted" . $id);
             return true;
-        } else {
+        }
+        else 
+        {
             $this->session->set_flashdata("error", "Unable to delete" . $id);
             return false;
         }
@@ -88,11 +80,13 @@ class User_type_roles_model extends Admin
     {
         $this->db->where("user_type_role_id", $id);
         $this->db->set("user_type_role_status", 0);
-        if ($this->db->update("user_type_role")) {
-            $remain = $this->get_results();
+        if ($this->db->update("user_type_role"))
+        {
             $this->session->set_flashdata("success", "You have deactivated" . $id);
-            return $remain;
-        } else {
+            return $this->get_results();
+        } 
+        else
+        {
             $this->session->set_flashdata("error", "Unable to deactivate" . $id);
             return false;
         }
@@ -102,11 +96,13 @@ class User_type_roles_model extends Admin
     {
         $this->db->where("user_type_role_id", $id);
         $this->db->set("user_type_role_status", 1);
-        if ($this->db->update("user_type_role")) {
-            $remain = $this->get_results();
+        if ($this->db->update("user_type_role")) 
+        { 
             $this->session->set_flashdata("success", "You have activated" . $id);
-            return $remain;
-        } else {
+            return $this->get_results();
+        } 
+        else
+        {
             $this->session->set_flashdata("error", "Unable to activate" . $id);
             return false;
         }
@@ -125,7 +121,9 @@ class User_type_roles_model extends Admin
         {
             $this->db->update("user_type_role", $data);
             return true;
-        } else {
+        } 
+        else 
+        {
             return false;
         }
     }
@@ -136,8 +134,7 @@ class User_type_roles_model extends Admin
         $this->db->from("role");
         $this->db->join("user_type_role","role.role_id=user_type_role.role_id");
         $this->db->join("user_type", "user_type_role.user_type_id=user_type.user_type_id");
-        $this->db->where("user_type_role.deleted", 0);
-        $query = $this->db->get();
-        return $query;
+        $this->db->where("user_type_role.deleted", 0, "role.deleted",0,"user_type.deleted");
+        return $this->db->get();
     }
 }

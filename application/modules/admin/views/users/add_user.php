@@ -8,7 +8,7 @@
 			$user_type_name = $rows->user_type_name;
 			if($user_type_id==$user_types)
 			{
-				$option ='<option value="'.$user_types.'">'. $user_type_name.'?></option>';
+				$option .='<option value="'.$user_types.'">'. $user_type_name.'?></option>';
 			}
 		}
 	}
@@ -22,7 +22,8 @@
 		}
 	}
 									
-echo form_open_multipart($this->uri->uri_string()); ?>
+echo form_open_multipart($this->uri->uri_string());
+?>
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
 		<div class="card shadow mb-4 mt-4">
 			<div class="card-header py-3">

@@ -1,11 +1,7 @@
-<?php
-
-if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
-
+<?php if (!defined('BASEPATH')) { exit('No direct script access allowed');}
 class User_type_roles extends MX_Controller
 {
+    public $where='';
     public function __construct()
     {
         parent::__construct();
@@ -17,14 +13,7 @@ class User_type_roles extends MX_Controller
     {
         $segment = 5;
         $table = 'user_type_role';
-        $where = 'user_type_role.deleted = 0'; 
-        $search="user-type-roles/search-user-type-role";    
-        $close="user-type-roles/close-search"; 
-        $search_user_type_role=$this->session->userdata("search_user_type_role");    
-        if (!empty($search_user_type_role) && $search_user_type_role != null) 
-        {
-            $where .= ' AND (role.role_name LIKE "'.$search_user_type_role.'" OR user_type.user_type_name "'.$search_user_type_role.'")';
-        }    
+        $where = 'user_type_role.deleted = 0';
         $config['base_url'] = site_url() . 'user-type-roles/all-user-type-roles/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -63,51 +52,33 @@ class User_type_roles extends MX_Controller
         }
         $user_type_role=$this->User_type_roles_model->retrieve_roles_and_user_types();           
         $v_data = array(
-        "all_user_type_roles"=>$query,
-        "order" => $order,
-        "order_method" => $order_method,
-        "page" => $page,
-        "links" => $this->pagination->create_links(),
-        "user_type_role" =>$user_type_role
+            "all_user_type_roles"=>$query,
+            "order" => $order,
+            "order_method" => $order_method,
+            "page" => $page,
+            "links" => $this->pagination->create_links(),
+            "user_type_role" =>$user_type_role
         );
         $data = array(
             "title" => "user_type_roles",
-            "search"=>$search,
-            "close"=>$close,
             "content" => $this->load->view("admin/user_type_roles/all_user_type_roles", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
     }
 
-    public function execute_search($search_user_type_role=null)
-    {
-        $search_user_type_role = $this->input->post('search');
-        if (!empty($search_user_type_role) && $search_user_type_role != null)
-        {
-        $this->session->set_userdata("search_user_type_role",$search_user_type_role);
-        }           
-        redirect("user-type-roles/all-user-type-roles");
-    }
-
-    public function unset_search()
-        {
-        $this->session->unset_userdata('search_user_type_role');
-        redirect("user-type-roles/all-user-type-roles");
-        }
-
     public function add_user_type_role()
     {
-        $search="user-type-roles/search-user-type-role";    
-        $close="user-type-roles/close-search"; 
         $this->form_validation->set_rules("role_name", "Select role", "required");
         $this->form_validation->set_rules("user_type_name", "Select user type", "required");
-
-        if ($this->form_validation->run()) {
+        if ($this->form_validation->run())
+        {
             $assigned_role_user = $this->User_type_roles_model->save_user_type_role();
-
-            if ($assigned_role_user == false) {
+            if ($assigned_role_user == false)
+            {
                 $this->session->set_flashdata("error. ", "Error when assigning a role");
-            } else {
+            } 
+            else
+            {
                 $this->session->set_flashdata("success. ", "You have assigned a role");
             }
             redirect("user-type-roles/all-user-type-roles");
@@ -123,8 +94,6 @@ class User_type_roles extends MX_Controller
 
         $v_data = array(
             "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
             "content" => $this->load->view("admin/user_type_roles/assign_roles", $data, true),
         );
 
@@ -133,62 +102,28 @@ class User_type_roles extends MX_Controller
     public function delete_user_type_role($user_type_role_id)
     {
         $this->User_type_roles_model->delete($user_type_role_id);
-
         redirect("user-type-roles/all-user-type-roles");
     }
     
     public function deactivate_user_type_role($id)
     {
-        $search="user-type-roles/search-user-type-role";    
-        $close="user-type-roles/close-search"; 
-        $load_deactivate = $this->User_type_roles_model->deactivate_user_type_role($id);
-        $role_and_user_type=$this->User_type_roles_model->retrieve_roles_and_user_types();
-        $v_data = array(
-            "all_user_type_roles" => $load_deactivate,
-            "user_type_role" => $this->User_type_roles_model->retrieve_roles_and_user_types(),
-        );
-        $data = array(
-            "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
-            "content" => $this->load->view("admin/user_type_roles/all_user_type_roles", $v_data, true),
-        );
-        $this->load->view("site/layouts/layout", $data);
+        $this->User_type_roles_model->deactivate_user_type_role($id);
         redirect("user-type-roles/all-user-type-roles");
     }
 
     public function activate_user_type_role($id)
     {
-        $search="user-type-roles/search-user-type-role";    
-        $close="user-type-roles/close-search"; 
-        $segment=5;
-        $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
-        $load_activate = $this->User_type_roles_model->activate_user_type_role($id);
-        $v_data = array(
-            "all_user_type_roles" => $load_activate,
-            "user_type_role" => $this->User_type_roles_model->retrieve_roles_and_user_types(),
-            "page"=>$page
-        );
-        $data = array(
-            "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
-            "content" => $this->load->view("admin/user_type_roles/all_user_type_roles", $v_data, true),
-        );
-        $this->load->view("site/layouts/layout", $data);
+        $this->User_type_roles_model->activate_user_type_role($id);
         redirect("user-type-roles/all-user-type-roles");
     }
 
     public function edit_user_type_role($id)
     {
-        $search="user-type-roles/search-user-type-role";    
-        $close="user-type-roles/close-search"; 
         $this->form_validation->set_rules("role", 'Role', "required");
         $this->form_validation->set_rules("user_type", 'User Type', "required");
         if ($this->form_validation->run())
         { 
             $single_user_type_role = $this->User_type_roles_model->edit_update_user_type_role($id);
-
             if ($single_user_type_role== false)
             {
                 $this->session->set_flashdata("error. ", "unable to assign role . Try again!!");
@@ -201,16 +136,28 @@ class User_type_roles extends MX_Controller
         $all_user_type_roles=$this->User_type_roles_model->get_single($id);
         $user_type_role=$this->User_type_roles_model->retrieve_roles_and_user_types();        
         $v_data= array(                     
-            'user_type_role' =>  $user_type_role,
-            'all_user_type_roles'=>$all_user_type_roles,
+            'user_type_role' => $user_type_role,
+            'all_user_type_roles'=> $all_user_type_roles, 
+            'roles' => $this->User_type_roles_model->get_roles(),
+            'user_types' => $this->User_type_roles_model->get_user_types(),
             "validation_errors" => validation_errors(),
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
             "content" => $this->load->view("admin/user_type_roles/edit_user_type_role", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
     }
+
+    public function execute_search($search_user_type_role=null)
+    {
+           //incomplete   
+        redirect("user-type-roles/all-user-type-roles");
+    }
+
+    public function unset_search()
+        { 
+        $this->session->unset_userdata($where);
+        redirect("user-type-roles/all-user-type-roles");
+        }
 }
