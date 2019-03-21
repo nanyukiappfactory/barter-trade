@@ -42,15 +42,14 @@
             <td>'.$count.'</td>
             <td>'.$user_type_name.'</td>
             <td>'.$status_activation.'</td>
-            <td> <a href="#modalLoginAvatar"' .$id.' class="btn btn-primary" data-toggle="modal"
-            data-target="#modalLoginAvatar"'.$id.'><i class="fas fa-eye"></i></a>
+            <td> <a href="#modalLoginAvatar' .$id.'" class="btn btn-primary" data-toggle="modal"
+            data-target="#modalLoginAvatar'.$id.'"><i class="fas fa-eye"></i></a>
             <button class="btn btn-warning">'.anchor($edit_url, $edit_icon).'</button>
             ' . $status . 
 					'<button class="btn btn-danger" data-toggle="modal" onclick="return confirm(' . $delete_prompt . ')">' .anchor($delete_url, $delete_icon) . 
 					'</button>
             </td></tr>';
-
-            $this->load->view("user_types/view_user_type", $model_data);
+            $this->load->view("admin/user_types/view_user_type",$model_data);
         }
     }
 ?>
@@ -74,10 +73,10 @@
             <th><a href="<?php echo site_url() . "user-types/all-user-types/user_type_status/" . $order_method . "/" . $page; ?>">Status</a></th>
             <th>Actions</th>
         </tr>
-        <?php 
+            <?php 
             echo $result;
-            echo $this->load->view("user_types/view_user_type", $model_data);
-        ?>
+            ?>            
+
     </table>
-        <?php echo $links; ?>
+            <?php   echo $links;    ?>
 </div>
