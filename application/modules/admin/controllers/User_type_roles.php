@@ -83,7 +83,6 @@ class User_type_roles extends MX_Controller
             }
             redirect("user-type-roles/all-user-type-roles");
         }
-
         $user_type_role=$this->User_type_roles_model->retrieve_roles_and_user_types();
         $data = array(
             'roles' => $this->User_type_roles_model->get_roles(),
@@ -91,7 +90,6 @@ class User_type_roles extends MX_Controller
             'user_types' => $this->User_type_roles_model->get_user_types(),
             "validation_errors" => validation_errors(),
         );
-
         $v_data = array(
             "title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("admin/user_type_roles/assign_roles", $data, true),
@@ -99,6 +97,7 @@ class User_type_roles extends MX_Controller
 
         $this->load->view('site/layouts/layout', $v_data);
     }
+
     public function delete_user_type_role($user_type_role_id)
     {
         $this->User_type_roles_model->delete($user_type_role_id);

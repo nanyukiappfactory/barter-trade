@@ -1,7 +1,9 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php 
+if (!defined('BASEPATH')) exit('No direct script access allowed'); 
 class Users_model extends CI_Model
 {
     public $table = "user";
+
     public function add_user($upload_response)
     {
         $file_name = $upload_response['file_name'];
@@ -19,7 +21,7 @@ class Users_model extends CI_Model
             "user_status"=>1,
             "user_type_id"=>$this->input->post("user_type"),
         ); 
-        if( $this->db->insert("user", $data))
+        if($this->db->insert("user", $data))
         {
            return true;
         }
@@ -45,7 +47,9 @@ class Users_model extends CI_Model
         $this->db->where("user_id", $user_id);
         return $this->db->get("user");
     }
-    public function delete($user_id){
+
+    public function delete($user_id)
+    {
         $deleted = array(
             "deleted" => 1,
             "modified_on" => date("Y-m-d H:i:s"),
@@ -74,11 +78,11 @@ class Users_model extends CI_Model
             $this->session->set_flashdata("success","Successfully deactivated a user");
             return $remain;
         }
-       else 
-       {
+        else 
+        {
             $this->session->set_flashdata("error","Unable to deactivate a user");
             return FALSE;
-       }
+        }
     }  
 
     public function activate_user($user_id)

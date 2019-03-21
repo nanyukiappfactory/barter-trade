@@ -1,18 +1,18 @@
 <?php
 	$option='';
-	if($user_type->result()!=null)
+	if($user_type->result() != null)
 	{
 		foreach ($user_type->result() as $rows)
 		{
 			$user_type_id = $rows->user_type_id;
 			$user_type_name = $rows->user_type_name;
-			if($user_type_id==$user_types)
+			if($user_type_id == $user_types)
 			{
 				$option .='<option value="'.$user_types.'">'. $user_type_name.'?></option>';
 			}
 		}
 	}
-	if($user_type->result()!=null)
+	if($user_type->result() != null)
 	{
 		foreach ($user_type->result() as $rows)
 		{
@@ -21,10 +21,9 @@
 			$option .='<option value="'.$user_type_id.'">'.$user_type_name.'</option>';
 		}
 	}
-									
-echo form_open_multipart($this->uri->uri_string());
-?>
-<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
+?>								
+<?php echo form_open_multipart($this->uri->uri_string());?>
+	<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
 		<div class="card shadow mb-4 mt-4">
 			<div class="card-header py-3">
 				<div class="row">
@@ -67,11 +66,10 @@ echo form_open_multipart($this->uri->uri_string());
 							<input type="file" id="profile_icon" name="profile_icon">
 						</div>
 						<input class="btn btn-dark" type="submit" value="Add" style="margin-left:20px;">
-						<?php echo form_close(); ?>
-						<a href="<?php echo site_url('users/all-users/'); ?>"
-						class="btn btn-secondary">View</a>
+						<a href="<?php echo site_url('users/all-users/'); ?>" class="btn btn-secondary">View</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>	
+	</div>	
+<?php echo form_close(); ?>
