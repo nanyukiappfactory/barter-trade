@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) { exit('No direct script access allowed');}
 class User_type_roles extends MX_Controller
 {
-    public $where='';
+    public $where;
     public function __construct()
     {
         parent::__construct();
@@ -11,9 +11,14 @@ class User_type_roles extends MX_Controller
     }
     public function index($order="user_type_role.user_type_id",$order_method="ASC",$id="user_type_role")
     {
+        $where = 'user_type_role.deleted = 0';
+        if($this->session->userdata("user_type_role_search_params"))
+        {
+            $search_parameters = $this->session->userdata("user_type_role_search_params");
+            $where .= $search_parameters;
+        }
         $segment = 5;
         $table = 'user_type_role';
-        $where = 'user_type_role.deleted = 0';
         $config['base_url'] = site_url() . 'user-type-roles/all-user-type-roles/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -150,13 +155,24 @@ class User_type_roles extends MX_Controller
 
     public function execute_search($search_user_type_role=null)
     {
-           //incomplete   
+        $search_role = $this->input->post("search_role");
+        $search_user_type = $this->input->post("search_user_type");;
+        if(!empty($search_role))
+        {
+        $where .= ' AND (user_type_role.role_id = '.$search_role.')';
+        }
+        if(!empty($search_user_type))
+        {
+        $where .= ' AND (user_type_role.user_type_id = '.$search_user_type.')';
+        }
+        $this->session->set_userdata("user_type_role_search_params", $where);
         redirect("user-type-roles/all-user-type-roles");
+
     }
 
     public function unset_search()
         { 
-        $this->session->unset_userdata($where);
+        $this->session->unset_userdata("user_type_role_search_params");
         redirect("user-type-roles/all-user-type-roles");
         }
 }

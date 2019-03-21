@@ -45,7 +45,8 @@
             $role_name = $rows->role_name;
                 $role_option .='<option value="'.$role_id.'">'.$role_name.'</option>';
         } 
-    }?>
+    }
+?>
 <?php echo form_open_multipart($this->uri->uri_string()); ?>
     <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
         <div class="row">

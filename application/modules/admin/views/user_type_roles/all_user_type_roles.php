@@ -1,6 +1,8 @@
 <?php
     $table_content='';
-    $modal='';
+    $search_role='';
+    $search_user_type='';
+    $header='';
     if ($all_user_type_roles->num_rows() > 0)
     {
         $count = $page;
@@ -25,6 +27,7 @@
                 if($role_id_PK==$role_id_FK)
                 {
                     $table_content .='<td>'.$role_name.'</td>';
+                    $search_role .='<option value="'. $role_id_PK.'">'. $role_name.'</option>';
                     break;
                 }
             }
@@ -35,6 +38,7 @@
                 if($user_type_id_PK==$user_type_id_FK)
                 {
                     $table_content .='<td>'.$user_type_name.'</td>';
+                    $search_user_type .='<option value="'. $user_type_id_PK.'">'. $user_type_name.'</option>';
                     break;
                 }
             } 
@@ -65,23 +69,54 @@
             $table_content .='</tr>';
             $this->load->view("admin/user_type_roles/user_type_role_modal", $modal_data);
         }
-    }    
-?>
+    }  
+     $header .= anchor("user-type-roles/add-user-type-role/", "Assign role","class='col-md-2 mb-2 btn btn-dark'"); 
+     $header .= '<button class="fas fa-search btn btn-secondary col-md-2 mb-2" id="search_icon" name="search_icon" style="display:block" ></button>';
+     $header .=  anchor("user-type-roles/close-search/",'close search session',array('class'=>"btn btn-info col-md-2 mb-2"));
+?> 
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
     <div class="card shadow mb-4 mt-4">
-        <div class="card-header py-3"><?php echo anchor("user-type-roles/add-user-type-role/", "Assign role","class='btn btn-dark'"); ?>
+        <div class="card-header py-3">
+            <div class="form-row">
+            <?php echo $header; ?>
             </div>
-                <table class="table table-md table-bordered ">
-                    <tr>
-                        <th>#</th>
-                        <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_role.role_id/". $order_method."/".$page;?>">Role </a></th>
-                        <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_role.user_type_id/". $order_method."/".$page;?>">User Type </a> </th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                    <?php echo $table_content; ?>
-                </table>
-    <?php echo $links ?>
-        </div>
+            <?php echo form_open("user-type-roles/search-user-type-role/");?>
+            <div class="form-row">
+                <div id="search_items" name="search_params" class="form-group search" style="display:none">
+                    <select class="selectpicker form-control  pl-2" data-style="btn-outline-primary" name="search_role">
+                        <option value="" disabled selected>Select Role...
+                        <?php echo $search_role ?>
+                    </select>
+                    <select class="selectpicker form-control  pl-2" data-style="btn-outline-primary" name="search_user_type">
+                        <option value="" disabled selected>Select User Type...
+                        <?php echo $search_user_type ?>
+                    </select>
+                    <button class ="col-md-6 mt-2 btn btn-secondary" name="Submit" type="submit">Submit</button>   
+                </div> 
+            </div>
+	        <?php echo form_close(); ?> 
+        </div> 
+        <script>
+            document.getElementById("search_icon").addEventListener("click", execute_search);
+
+            function execute_search()
+            {
+                if(document.getElementById("search_icon").clicked!=true)
+                {
+                    document.getElementById("search_items").style.display="block";
+                }
+            }
+        </script>
+        <table class="table table-md table-bordered ">
+            <tr>
+                <th>#</th>
+                <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_role.role_id/". $order_method."/".$page;?>">Role </a></th>
+                <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_role.user_type_id/". $order_method."/".$page;?>">User Type </a> </th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            <?php echo $table_content; ?>
+        </table>
+        <?php echo $links ?>
     </div>
 </div>
