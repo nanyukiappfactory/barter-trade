@@ -46,23 +46,24 @@
                 $role_option .='<option value="'.$role_id.'">'.$role_name.'</option>';
         } 
     }
-echo form_open_multipart($this->uri->uri_string()); ?>
-<div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
-	<div class="row">
-		<div class="col-md-4 col-sm-12">
-			<div class="form-group">
-				<select class="selectpicker form-control pl-2" data-style="btn-outline-primary"  name="role">
-                    <?php echo $role_option?>
-				</select >
-					<br>
-				<select class="selectpicker form-control pl-2" data-style="btn-outline-primary" name="user_type">					
-					<?php echo $option?>
-				</select>
-			</div>
-		</div>
-	</div>
-		<input type="submit" name="submit" class="btn btn-success" value="Update">
+?>
+<?php echo form_open_multipart($this->uri->uri_string()); ?>
+    <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <div class="form-group">
+                    <select class="selectpicker form-control pl-2" data-style="btn-outline-primary"  name="role">
+                        <?php echo $role_option?>
+                    </select >
+                        <br>
+                    <select class="selectpicker form-control pl-2" data-style="btn-outline-primary" name="user_type">					
+                        <?php echo $option?>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <input type="submit" name="submit" class="btn btn-success" value="Update">
         <a href="<?php echo site_url('user-type-roles/all-user-type-roles/'); ?>"
         class="btn btn-secondary">View</a>
-</div>
+    </div>
 <?php echo form_close(); ?>

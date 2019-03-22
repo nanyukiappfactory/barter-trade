@@ -1,28 +1,34 @@
 <?php
     $table_content='';
-    $status_activation='';
-    $modal_content='';
-    $status ='';
-    $edit ='';
-    if ($all_user_type_roles->num_rows() > 0) 
+    $search_role='';
+    $search_user_type='';
+    $header='';
+    if ($all_user_type_roles->num_rows() > 0)
     {
         $count = $page;
         foreach ($all_user_type_roles->result() as $row) 
-            {
-                $count++;
-                $id = $row->user_type_role_id;
-                $role_id_FK = $row->role_id;
-                $user_type_id_FK = $row->user_type_id;
-                $check = $row->user_type_role_status;
+        {
+            $count++;
+            $id = $row->user_type_role_id;
+            $role_id_FK = $row->role_id;
+            $user_type_id_FK = $row->user_type_id;
+            $check = $row->user_type_role_status;
+            $table_content .='<tr><td>'.$count.'</td>';
+            $modal_data= array(
+                "id" => $id, 
+                "role_id_FK" => $role_id_FK,
+                "user_type_id_FK" => $user_type_id_FK, 
+                "check" => $check 
+            );
             foreach($user_type_role->result() as $rows)
             {
                 $role_id_PK = $rows->role_id;
                 $role_name = $rows->role_name;
                 if($role_id_PK==$role_id_FK)
                 {
-                    $table_content.='<td>'.$count.'</td>';
-                    $table_content.='<td>'.$role_name.'</td>';
-                    $modal_content .='<td>'.$role_name.'</td>';
+                    $table_content .='<td>'.$role_name.'</td>';
+                    $search_role .='<option value="'. $role_id_PK.'">'. $role_name.'</option>';
+                    break;
                 }
             }
             foreach($user_type_role->result() as $rows)
@@ -32,91 +38,85 @@
                 if($user_type_id_PK==$user_type_id_FK)
                 {
                     $table_content .='<td>'.$user_type_name.'</td>';
-                    $modal_content .='<td>'.$user_type_name.'</td>';
+                    $search_user_type .='<option value="'. $user_type_id_PK.'">'. $user_type_name.'</option>';
+                    break;
                 }
-            }
+            } 
             if ($check == 0)
             {
-                $status_activation = "<button class='badge badge-danger'>deactivated</button>";
+                $status = "<button class='badge badge-danger'>deactivated</button>";
             }
             else 
             {
-                $status_activation = "<button class= 'badge badge-success'>active</button>";
+                $status = "<button class='badge badge-success'>active</button>";
             }
-            $table_content.='<td>'.$status_activation.'</td>';            
-        }
-    }
-    $edit .= anchor("user-type-roles/edit-user-type-role/" . $id, "<i class='fas fa-edit'></i>");
-    if ($check == 1) {
-    $status .= anchor("user-type-roles/deactivate-user-type-role/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
+                
+            if ($check == 1) 
+            {
+                $status_activation = anchor("user-type-roles/deactivate-user-type-role/" . $id, '<i class="far fa-thumbs-down"></i>', array("onclick" => "return confirm('Are you sure to deactivate?')", "class" => "btn btn-danger"));
 
-    } else {
-    $status .=  anchor("user-type-roles/activate-user-type-role/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
-    }
- ?> 
+            } 
+            else 
+            {
+                $status_activation = anchor("user-type-roles/activate-user-type-role/" . $id, '<i class="far fa-thumbs-up"></i>', array("onclick" => "return confirm('Are you sure to activate?')", "class" => "btn btn-success"));
+            }
+            $view= '<a href="#role'.$id.'" class="btn btn-primary" data-toggle="modal" data-target="#role'.$id.'"><i class="fas fa-eye"></i></a>';
+            $edit ='<button class="btn btn-warning">'.anchor("user-type-roles/edit-user-type-role/" . $id, "<i class='fas fa-edit'></i>").'</button>';
+            $delete_alert = 'Are you sure to delete?';
+            $delete='<button class="btn btn-danger" onclick="return confirm('.$delete_alert.')">'.anchor("user-type-roles/delete-user-type-role/" . $id, "<i class='fas fa-trash-alt'></i>").'</button>';
+            $table_content .='<td>'.$status.'</td>';
+            $table_content .='<td>'.$view." ".$edit." ". $status_activation." ".$delete.'</td>';
+            $table_content .='</tr>';
+            $this->load->view("admin/user_type_roles/user_type_role_modal", $modal_data);
+        }
+    }  
+     $header .= anchor("user-type-roles/add-user-type-role/", "Assign role","class='col-md-2 mb-2 btn btn-dark'"); 
+     $header .= '<button class="fas fa-search btn btn-secondary col-md-2 mb-2" id="search_icon" name="search_icon" style="display:block" ></button>';
+     $header .=  anchor("user-type-roles/close-search/",'close search session',array('class'=>"btn btn-info col-md-2 mb-2"));
+?> 
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
     <div class="card shadow mb-4 mt-4">
-        <div class="card-header py-3"><?php echo anchor("user-type-roles/add-user-type-role/", "Assign role","class='btn btn-dark'"); ?>
-        </div>
-            <table class="table table-sm table-bordered table-responsive">
-                <tr>
-                    <th>#
-                    </th>
-                    <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_role.role_id/". $order_method."/".$page;?>">Role </a>   
-                    </th>
-                    <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_role.user_type_id/". $order_method."/".$page;?>">User Type </a>   
-                    </th>
-                    <th>Status
-                    </th>
-                    <th>Actions
-                    </th>
-                </tr>
-                <tr>
-                    <?php echo $table_content?>
-                    <td>
-                        <a href="#role<?php echo $id ?>" class="btn btn-primary" data-toggle="modal" data-target="#role<?php echo $id ?>"><i class="fas fa-eye"></i></a>
-                        <div class="modal fade" id="role<?php echo $id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">
+        <div class="card-header py-3">
+            <div class="form-row">
+            <?php echo $header; ?>
+            </div>
+            <?php echo form_open("user-type-roles/search-user-type-role/");?>
+            <div class="form-row">
+                <div id="search_items" name="search_params" class="form-group search" style="display:none">
+                    <select class="selectpicker form-control  pl-2" data-style="btn-outline-primary" name="search_role">
+                        <option value="" disabled selected>Select Role...
+                        <?php echo $search_role ?>
+                    </select>
+                    <select class="selectpicker form-control  pl-2" data-style="btn-outline-primary" name="search_user_type">
+                        <option value="" disabled selected>Select User Type...
+                        <?php echo $search_user_type ?>
+                    </select>
+                    <button class ="col-md-6 mt-2 btn btn-secondary" name="Submit" type="submit">Submit</button>   
+                </div> 
+            </div>
+	        <?php echo form_close(); ?> 
+        </div> 
+        <script>
+            document.getElementById("search_icon").addEventListener("click", execute_search);
 
-                                        </h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <table class="table">
-                                            <tr>
-                                                <th>Role 
-                                                </th>
-                                                <th>User Type
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                            <?php echo $modal_content; ?>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-warning">
-                            <?php echo anchor("user-type-roles/edit-user-type-role/" . $id, "<i class='fas fa-edit'></i>"); ?></button>
-                            <?php echo  $status; ?>
-                        </button>
-                        <button class="btn btn-danger" onclick="return confirm('Are you sure to delete?')">
-                            <?php echo anchor("user-type-roles/delete-user-type-role/" . $id, "<i class='fas fa-trash-alt'></i>"); ?>
-                        </button>
-                    </td>
-                </tr>
-            </table>
-            <?php echo $links ?>
-        </div>
+            function execute_search()
+            {
+                if(document.getElementById("search_icon").clicked!=true)
+                {
+                    document.getElementById("search_items").style.display="block";
+                }
+            }
+        </script>
+        <table class="table table-md table-bordered ">
+            <tr>
+                <th>#</th>
+                <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_role.role_id/". $order_method."/".$page;?>">Role </a></th>
+                <th><a href="<?php echo site_url()."user-type-roles/all-user-type-roles/user_type_role.user_type_id/". $order_method."/".$page;?>">User Type </a> </th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            <?php echo $table_content; ?>
+        </table>
+        <?php echo $links ?>
     </div>
 </div>

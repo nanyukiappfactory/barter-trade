@@ -53,7 +53,6 @@ class User_type_roles_model extends Admin
         $this->db->from("role");
         $this->db->join("user_type_role","role.role_id=user_type_role.role_id");
         $this->db->join("user_type", "user_type_role.user_type_id=user_type.user_type_id");
-        $this->db->where("user_type_role.deleted", 0);
         $this->db->where($where);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);

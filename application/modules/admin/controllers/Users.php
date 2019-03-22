@@ -1,4 +1,5 @@
-<?php if(!defined('BASEPATH')){ exit('No direct script access allowed');}
+<?php 
+if(!defined('BASEPATH')){ exit('No direct script access allowed');}
 require_once "./application/modules/admin/controllers/Admin.php";
 class Users extends Admin
 {
@@ -130,7 +131,7 @@ class Users extends Admin
         $this->form_validation->set_rules("password", 'Password', "required");
         if($this->form_validation->run($this) == FALSE) 
         {
-             $this->session->set_flashdata('error', validation_errors());
+            $this->session->set_flashdata('error', validation_errors());
         }
         else
         {
@@ -144,7 +145,7 @@ class Users extends Admin
                 $upload_response=array(
                     "file_name" => "no_image.PNG",
                     "thumb_name" => "6cb8392a0f015455b60834952307d7fe.PNG",
-                    );
+                );
                 $this->Users_model->add_user($upload_response);
                 $this->session->set_flashdata('success', 'User Added successfully!!');
                 redirect("users/all-users");
@@ -162,7 +163,7 @@ class Users extends Admin
         } 
         try
         {
-        $user_type=$this->User_types_model->get_results();
+            $user_type=$this->User_types_model->get_results();
         }
         catch(Exception $e)
         {
@@ -170,14 +171,14 @@ class Users extends Admin
             redirect("user-types/add-user-type");die();
         }
         $v_data = array(
-                "first_name"=>$first_name,
-                "last_name"=>$last_name, 
-                "phone_number"=>$phone_number,   
-                "user_email"=>$user_email,
-                "username"=>$username,
-                "password"=>$password,
-                "user_types"=>$user_types,
-                "user_type"=>$user_type
+            "first_name"=>$first_name,
+            "last_name"=>$last_name, 
+            "phone_number"=>$phone_number,   
+            "user_email"=>$user_email,
+            "username"=>$username,
+            "password"=>$password,
+            "user_types"=>$user_types,
+            "user_type"=>$user_type
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),
@@ -185,6 +186,7 @@ class Users extends Admin
         );
         $this->load->view("site/layouts/layout", $data);
     }
+
     public function user_email_is_unique($user_email_is_unique)
     {
         $user_id = ($this->g_user_id);
@@ -202,6 +204,7 @@ class Users extends Admin
             return TRUE;
         }
     }
+
     public function username_is_unique($username_is_unique)
     {
         $user_id = ($this->g_user_id);
@@ -260,9 +263,9 @@ class Users extends Admin
                     "file_name" =>  $profile_icon ,
                     "thumb_name" => $profile_thumb,
                 );
-            $this->Users_model->edit_update_user($user_id, $upload_response);
-            $this->session->set_flashdata('success', 'User Updated successfully!!');
-            redirect("users/all-users");
+                $this->Users_model->edit_update_user($user_id, $upload_response);
+                $this->session->set_flashdata('success', 'User Updated successfully!!');
+                redirect("users/all-users");
             } 
             else 
             {
@@ -276,7 +279,7 @@ class Users extends Admin
                     $this->session->set_flashdata('error', 'unable to update user. Try again!!');
                 }
             }
-        unset($this->form_validation);
+            unset($this->form_validation);
         }
         $error_check = $this->session->flashdata('error');
         if(!empty($error_check) && $error_check != NULL)
@@ -340,30 +343,25 @@ class Users extends Admin
         {
             $where .= ' AND (first_name="'.$first_name.'")';
         }
-
         if(!empty($last_name))
         {
             $where .= ' AND (last_name="'.$last_name.'")';
         }
-
         if(!empty($user_email))
         {
             $where .= ' AND (user_email="'.$user_email.'")';
         }
-
         if(!empty($phone_number))
         {
             $where .= ' AND (phone_number="'.$phone_number.'")';
         }
         $this->session->set_userdata("user_search_params", $where);
-
         redirect("users/all-users");
     }
 
     public function unset_search()
     {
         $this->session->unset_userdata('user_search_params');
-        
         redirect("users/all-users");
     }
 }

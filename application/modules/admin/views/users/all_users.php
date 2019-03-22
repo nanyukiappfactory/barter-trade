@@ -15,8 +15,7 @@
 			$profile_icon=$row->profile_icon;
 			$profile_thumb=$row->profile_thumb;
 			$check=$row->user_status;
-
-			$model_data = array(
+			$modal_data = array(
 				"id" => $id,
 				"first_name" => $first_name,
 				"last_name" => $last_name,
@@ -27,7 +26,7 @@
 				"profile_thumb" => $profile_thumb,
 				"check" => $check,					
 			);
-			if($check==0)
+			if($check == 0)
 			{
 				$status = anchor("users/activate-user/".$id,'<i class="far fa-thumbs-up"></i>', array("onclick"=>"return confirm('Are you sure to activate?')", "class"=>"btn btn-success"));
 			}
@@ -35,7 +34,7 @@
 			{
 				$status = anchor("users/deactivate-user/".$id,'<i class="far fa-thumbs-down"></i>', array("onclick"=>"return confirm('Are you sure to deactivate?')","class"=>"btn btn-danger", 'data-toggle'=>'modal'));
 			}
-			if($check==0)
+			if($check == 0)
 			{
 				$status_activation= "<button class='badge badge-danger' data-toggle='modal'>deactivated</button>";
 			}
@@ -43,7 +42,6 @@
 			{
 				$status_activation="<button class= 'badge badge-success' data-toggle='modal'>active</button>";
 			}
-			
 			$result .= '<tr>
 				<td>'.$count.'</td>
 				<td><img class="thumbnail" style="height: 100px; width: 100px;" src="'.base_url().'assets/uploads/'. $row->profile_thumb.'" /></td>
@@ -54,26 +52,26 @@
 				<td>'.$user_email.'</td>
 				<td>'.$status_activation.'</td>
 			';
-
+			
 			$edit_url = "users/edit-user/". $id;
 			$delete_url = "users/delete-user/".$id;
 
 			$edit_icon = '<i class="fas fa-edit"></i>';
 			$delete_icon = '<i class="fas fa-trash-alt"></i>';
 
-			$delete_sms = 'Are you sure to delete?';
+			$delete_alert = 'Are you sure to delete?';
 			$result .='
 				<td>
 					<a href="#modalLoginAvatar'.$id.'" class="btn btn-primary" data-toggle="modal" data-target="#modalLoginAvatar'.$id.'">
 						<i class="fas fa-eye"></i>
 					</a>
 					<button class="btn btn-warning">' . anchor($edit_url, $edit_icon) . '</button>' . $status . 
-					'<button class="btn btn-danger" data-toggle="modal" onclick="return confirm(' . $delete_sms . ')">' .anchor($delete_url, $delete_icon) . 
+					'<button class="btn btn-danger" data-toggle="modal" onclick="return confirm(' . $delete_alert . ')">' .anchor($delete_url, $delete_icon) . 
 					'</button>
 				</td> 
 			</tr>
 			';
-			$this->load->view("admin/users/view_user", $model_data);
+			$this->load->view("admin/users/user_modal", $modal_data);
 		}
 	}		
 ?>		
@@ -85,20 +83,20 @@
 			<?php echo anchor("users/close-search",'close search session',array('class'=>"btn btn-info col-md-2 mb-2"));?>
 		</div>
 	</div>
-	<?php
-	echo form_open("users/search-user"); ?>
-	<div class="form-row">
-		<div id="search_items" name="search_parameters" class="form-group search" style="display:none">
-			<input placeholder="Enter User Name" id="first_name" name="first_name">
-			<input placeholder="Enter Last Name" id="last_name" name="last_name">
-			<input placeholder="Enter Email" id="email" name="user_email">
-			<input placeholder="Enter Phone No." id="phone_number" name="phone_number">
-			<button class ="col-md-2 mb-2 btn btn-secondary" name="Submit" type="submit">Submit</button>   
-		</div> 
-	</div>  
+	<?php echo form_open("users/search-user"); ?>
+		<div class="form-row">
+			<div id="search_items" name="search_parameters" class="form-group search" style="display:none">
+				<input placeholder="Enter User Name" id="first_name" name="first_name">
+				<input placeholder="Enter Last Name" id="last_name" name="last_name">
+				<input placeholder="Enter Email" id="email" name="user_email">
+				<input placeholder="Enter Phone No." id="phone_number" name="phone_number">
+				<button class ="col-md-2 mb-2 btn btn-secondary" name="Submit" type="submit">Submit</button>   
+			</div> 
+		</div>  
 	<?php echo form_close(); ?>
 	<script>
 		document.getElementById("search_icon").addEventListener("click", execute_search);
+
 		function execute_search()
 		{
 			if(document.getElementById("search_icon").clicked!=true)
@@ -120,8 +118,7 @@
 		<th><a href="<?php echo site_url()."users/all-users/user_status/". $order_method."/".$page;?>">Status</a></th>
 		<th>Actions</th>
 	</tr>
-	<?php echo $result;
-	echo $this->load->view("admin/users/view_user", $model_data);?>
+	<?php echo $result;?>
 </table>
 <?php echo $links;?>
 
