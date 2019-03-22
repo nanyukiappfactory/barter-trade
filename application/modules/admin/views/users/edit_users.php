@@ -58,7 +58,7 @@ echo form_open_multipart($this->uri->uri_string());
 					</div>
 					<div class="col-md-6 mb-3">
 						<label for='user_email'>Email: </label>
-						<input class="form-control" ype="email" name="user_email" value="<?php echo $user_email;?>">
+						<input class="form-control" type="email" name="user_email" value="<?php echo $user_email;?>">
 					</div>
 					<div class="col-md-6 mb-3">
 						<label for='username'>Location: </label>

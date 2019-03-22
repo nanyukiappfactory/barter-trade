@@ -11,13 +11,12 @@
                             <select name="category_parent" class="form-control">
                                 <option selected="selected">no_parent</option>
                                     <?php
-                                    foreach($category->result() as $rows) {
-                                        $category_id = $rows->category_id;
-                                        $category_name = $rows->category_name;
+                                        foreach($category->result() as $rows) 
+                                        {
+                                            $category_id = $rows->category_id;
+                                            $category_name = $rows->category_name;
                                     ?>
-                                <option value="<?php echo $category_id; ?>">
-                                            <?php echo $category_name ;?>
-                                        </option>
+                                <option value="<?php echo $category_id; ?>"><?php echo $category_name ;?></option>
                                     <?php }?>
                             </select>
                         </div>

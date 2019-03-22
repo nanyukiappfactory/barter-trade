@@ -1,12 +1,10 @@
 <?php
-if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
-
+if (!defined('BASEPATH')) {exit('No direct script access allowed');}
 require_once "./application/modules/admin/controllers/Admin.php";
 
-class Categories extends admin
+class Categories extends Admin
 //class Categories extends MX_Controller
+
 {
     public $upload_path;
     public $upload_location;
@@ -22,21 +20,23 @@ class Categories extends admin
         $this->load->library("image_lib");
         $this->load->model("file_model");
         $this->load->library('pagination');
-
     }
-    public function index($order="category.category_name",$order_method="ASC")
+
+    public function index($order = "category.category_name", $order_method = "ASC")
     {
         $segment = 5;
         $table = 'category';
         $where = 'deleted = 0';
-        $search="categories/search-category";
-        $close="categories/close-search";
-        $search_category=$this->session->userdata("search_category"); 
-        $search_category=$this->session->userdata("search_term");
-        if (!empty($search_category) && $search_category != null) 
+        $search = "categories/search-category";
+        $close = "categories/close-search";
+        $search_category = $this->session->userdata("search_category");
+        $search_category = $this->session->userdata("search_term");
+
+        if(!empty($search_category) && $search_category != null) 
         {
-            $where .= ' AND (category_name LIKE "'.$search_category.'")';
-        }       
+            $where .= ' AND (category_name LIKE "' . $search_category . '")';
+        }
+
         $config['base_url'] = site_url() . 'categories/all-categories/' . $order . '/' . $order_method;
         $config['total_rows'] = $this->site_model->get_count($table, $where);
         $config['uri_segment'] = $segment;
@@ -58,91 +58,104 @@ class Categories extends admin
         $config['last_tagl_close'] = '</span></li>';
         $this->pagination->initialize($config);
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
-        $query = $this->Categories_model->get_category($table, $where, $config["per_page"], $page, $order, $order_method); 
-        if ($order_method == 'DESC')
-        {
+        $query = $this->Categories_model->get_category($table, $where, $config["per_page"], $page, $order, $order_method);
+        
+        if ($order_method == 'DESC') {
             $order_method = 'ASC';
-        } else
+        } 
+        else 
         {
             $order_method = 'DESC';
         }
-       $v_data = array(
-        "all_categories"=>$query,
-        "order" => $order,
-        "order_method" => $order_method,
-        "page" => $page,
-        "links" => $this->pagination->create_links(),
+        $v_data = array(
+            "all_categories" => $query,
+            "order" => $order,
+            "order_method" => $order_method,
+            "page" => $page,
+            "links" => $this->pagination->create_links(),
         );
-        $data = array
-       (
+        $data = array(
             "title" => "Categories",
-            "search"=>$search,
-            "close"=>$close,
-            "search_category"=>$search_category,
+            "search" => $search,
+            "close" => $close,
+            "search_category" => $search_category,
             "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
     }
 
-    public function execute_search($search_category=null)
+    public function execute_search($search_category = null)
     {
-        $search_category = $this->input->post('search');        
-        if (!empty($search_category) && $search_category != null) {
-        $this->session->set_userdata("search_category",$search_category);
-            }           
+        $search_category = $this->input->post('search');
+
+        if (!empty($search_category) && $search_category != null) 
+        {
+            $this->session->set_userdata("search_category", $search_category);
+        }
         redirect("categories/all-categories");
     }
 
     public function unset_search()
-        {
+    {
         $this->session->unset_userdata('search_category');
-        
+
         redirect("categories/all-categories");
-        }
+    }
 
     public function add_category()
     {
-        $search="categories/search-category";
-        $close="categories/close-search";
+        $search = "categories/search-category";
+        $close = "categories/close-search";
         $this->form_validation->set_rules("category_parent", 'Category Parent', "required");
         $this->form_validation->set_rules("category_name", 'Category Name', "required");
 
-        if ($this->form_validation->run()) {
+        if ($this->form_validation->run()) 
+        {
             $resize = array(
                 "width" => 2000,
                 "height" => 2000,
             );
             $upload_response = $this->file_model->upload_image($this->upload_path, "category_image", $resize);
 
-            if ($upload_response['check'] == false) {
+            if($upload_response['check'] == false)
+            {
                 $this->session->set_flashdata('error', $upload_response['message']);
-            } else {
+            } 
+            else 
+            {
 
-                if ($this->Categories_model->save_category($upload_response)) {
+                if ($this->Categories_model->save_category($upload_response)) 
+                {
                     $this->session->set_flashdata('success', 'category Added successfully!!');
                     redirect("categories/all-categories");
-                } else {
+                } 
+                else 
+                {
                     $this->session->set_flashdata('error', 'unable to add category. Try again!!');
                 }
             }
 
-        } else {
-            if (!empty(validation_errors())) {
+        } 
+        else 
+        {
+            if (!empty(validation_errors())) 
+            {
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
 
         $v_data = array("validation_errors" => validation_errors(),
-            "category" => $this->Categories_model->get_results()
+            "category" => $this->Categories_model->get_results(),
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
+            "search" => $search,
+            "close" => $close,
             "content" => $this->load->view("admin/categories/add_category", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
     }
+
     public function delete_category($category_id)
     {
         $this->Categories_model->delete($category_id);
@@ -151,17 +164,17 @@ class Categories extends admin
 
     public function deactivate_category($id)
     {
-        $search="categories/search-category";
-        $close="categories/close-search";
+        $search = "categories/search-category";
+        $close = "categories/close-search";
         $load_deactivate = $this->Categories_model->deactivate_category($id);
+
         $v_data = array(
             "all_categories" => $load_deactivate,
         );
-
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
+            "search" => $search,
+            "close" => $close,
             "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
         );
 
@@ -171,17 +184,17 @@ class Categories extends admin
 
     public function activate_category($id)
     {
-        $search="categories/search-category";
-        $close="categories/close-search";
+        $search = "categories/search-category";
+        $close = "categories/close-search";
         $load_activate = $this->Categories_model->activate_category($id);
+        
         $v_data = array(
             "all_categories" => $load_activate,
         );
-
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
+            "search" => $search,
+            "close" => $close,
             "content" => $this->load->view("admin/Categories/all_categories", $v_data, true),
         );
 
@@ -191,12 +204,12 @@ class Categories extends admin
 
     public function edit_category($id)
     {
-        $search="categories/search-category";
-        $close="categories/close-search";
+        $search = "categories/search-category";
+        $close = "categories/close-search";
         $this->form_validation->set_rules("category_parent", 'Category Parent', "required");
         $this->form_validation->set_rules("category_name", 'Category Name', "required");
 
-        if ($this->form_validation->run())
+        if($this->form_validation->run()) 
         {
             $resize = array(
                 "width" => 2000,
@@ -204,33 +217,34 @@ class Categories extends admin
             );
             $upload_response = $this->file_model->upload_image($this->upload_path, "category_image", $resize);
 
-            if ($upload_response['check'] == false)
+            if($upload_response['check'] == false) 
             {
                 $this->session->set_flashdata('error', $upload_response['message']);
-            } else
+            } 
+            else 
             {
-
-                if ($this->Categories_model->edit_update_category($id, $upload_response))
+                if($this->Categories_model->edit_update_category($id, $upload_response)) 
                 {
                     $this->session->set_flashdata('success', 'category ,Added successfully!!');
                     redirect("categories/all-categories");
-                } else
+                } 
+                else 
                 {
                     $this->session->set_flashdata('error', 'unable to add category. Try again!!');
                 }
             }
 
-        }
-        else
+        } 
+        else 
         {
-            if (!empty(validation_errors()))
+            if(!empty(validation_errors())) 
             {
                 $this->session->set_flashdata('error', validation_errors());
             }
         }
 
         $category = $this->Categories_model->get_single($id);
-        if ($category->num_rows() > 0)
+        if($category->num_rows() > 0) 
         {
             $row = $category->row();
             $category_parent = $row->category_parent;
@@ -239,13 +253,13 @@ class Categories extends admin
         }
         $v_data = array(
             "category" => $this->Categories_model->get_results(),
-            "name"=>$category_name,
-            "category_parent"=>$category_parent
+            "name" => $category_name,
+            "category_parent" => $category_parent,
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "search"=>$search,
-            "close"=>$close,
+            "search" => $search,
+            "close" => $close,
             "content" => $this->load->view("admin/categories/edit_category", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);

@@ -3,17 +3,14 @@
         <div class="modal-content">
             <div class="modal-body  mb-1">
                 <div class="md-form">
-                    <b>User Type Name:
-                    </b>
+                    <b>User Type Name:</b>
                     <label data-error="wrong" data-success="right" for="form29" class="ml-0">
                         <?php echo $user_type_name; ?>
                     </label>
                 </div>
             </div>
             <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close
-                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

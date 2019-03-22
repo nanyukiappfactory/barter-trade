@@ -5,15 +5,15 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-row">
-                <?php echo form_open_multipart($this->uri->uri_string()); ?>
-              <div class="col-md-6">
-                <label for='user_type_name'>User Type Name: </label>
-                <input class="form-control" type="text" name="user_type_name" value="<?php echo $user_type_name; ?>">
-              </div>
-              <div>
-                  <input class="btn btn-dark" type="submit" value="Update" style="margin-left:20px;">
-              </div>
-                <?php echo form_close(); ?>
+              <?php echo form_open_multipart($this->uri->uri_string()); ?>
+                <div class="col-md-6">
+                  <label for='user_type_name'>User Type Name: </label>
+                  <input class="form-control" type="text" name="user_type_name" value="<?php echo $user_type_name; ?>">
+                </div>
+                <div>
+                    <input class="btn btn-dark" type="submit" value="Update" style="margin-left:20px;">
+                </div>
+              <?php echo form_close(); ?>
             </div>
           </div>
         </div>

@@ -4,18 +4,14 @@
                 <?php echo anchor("categories/add-category/", "add category",array('class'=>"btn btn-secondary")); ?>
                 <table class="table table-sm">
                     <tr>
-                        <th>#
+                        <th>#</th>
+                        <th>
+                        <a href="<?php echo site_url()."categories/all-categories/category_name/". $order_method."/".$page;?>">Category Name</a> 
                         </th>
-                        <th><a href="<?php echo site_url()."categories/all-categories/category_name/". $order_method."/".$page;?>">Category Name</a> 
-                        </th>
-                        <th>Parent
-                        </th>
-                        <th>Image
-                        </th>
-                        <th>Status
-                        </th>
-                        <th>Actions
-                        </th>
+                        <th>Parent</th>
+                        <th>Image</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                     <?php
                         if ($all_categories->num_rows() > 0) {
@@ -29,7 +25,7 @@
                                     $category_image = $row->category_image;
                                     $check = $row->category_status;
 
-                                    ?>
+                    ?>
                     <tr>
                         <td>
                             <?php echo $count; ?>
@@ -65,11 +61,14 @@
                         </td>
                         <td>
 
-                            <?php if ($check == 0) {
+                            <?php 
+                            if ($check == 0) 
+                            {
                                     echo "<button class='badge badge-danger'> deactivated</button>";
-                                } else {
-                                    echo "<button class= 'badge badge-success'>active</button>";
-                                }
+                            } else 
+                            {
+                                echo "<button class= 'badge badge-success'>active</button>";
+                            }
                             ?>
                         </td>
                         <td>
@@ -156,7 +155,11 @@
                                 <?php echo anchor("categories/delete-category/" . $id, "<i class='fas fa-trash-alt'></i>"); ?></button>
                         </td>
                     </tr>
-                            <?php }}}?>
+                            <?php 
+                        }
+                    }
+                        
+                }?>
                 </table>
             </div>
         </div>        

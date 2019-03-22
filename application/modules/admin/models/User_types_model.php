@@ -1,7 +1,5 @@
 <?php
-if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+if(!defined('BASEPATH')){ exit('No direct script access allowed');}
 
 class User_types_model extends CI_Model
 {
@@ -14,8 +12,7 @@ class User_types_model extends CI_Model
             "deleted" => 0,
             "user_type_status" => 1,
         );
-
-        if ($this->db->insert("user_type", $data)) 
+        if($this->db->insert("user_type", $data)) 
         {
             return true;
         } 
@@ -30,13 +27,14 @@ class User_types_model extends CI_Model
         $search_user_type = $this->session->userdata('search_user_type');
         $this->db->select("*");
         $this->db->from($table);
+        if(!empty($search_user_type))
+        {
+            $this->db->where("user_type_name", $search_user_type);
+        }
         $this->db->where($where);
-        $this->db->like("user_type_name", $search_user_type);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
-
         $result = $this->db->get();
-
         return $result;
     }
 
@@ -48,14 +46,12 @@ class User_types_model extends CI_Model
 
     public function get_count($table, $where, $limit = null)
     {
-        if ($limit != null) 
+        if($limit != null) 
         {
             $this->db->limit($limit);
         }
-
         $this->db->from($table);
         $this->db->where($where);
-
         return $this->db->count_all_results();
     }
 
@@ -65,27 +61,22 @@ class User_types_model extends CI_Model
         $this->db->where("deleted", 0);
         $this->db->from('user_type');
         $query = $this->db->get();
-
         return $query;
     }
 
     public function edit_update_user_type($user_type_id)
     {
         $this->db->where("user_type_id", $user_type_id);
-        $this->db->get("user_type");
-
-        //Capture data to be updated
+        $this->db->get("user_type");       
         $data = array(
             "user_type_name" => $this->input->post("user_type_name"),
             "deleted" => 0,
             "modified_on" => date("Y-m-d H:i:s"),
         );
-
-        if ("user_type.user_type_id>0") 
+        if("user_type.user_type_id>0") 
         {
             $this->db->where("user_type_id", $user_type_id);
             $this->db->update("user_type", $data);
-
             return true;
         } 
         else 
@@ -100,9 +91,7 @@ class User_types_model extends CI_Model
         $this->db->set("deleted", 1, "modified_on", date("Y-m-d H:i:s"), "deleted_on", date("Y-m-d H:i:s"));
         $this->db->where("user_type_id", $user_type_id, "deleted", 0);
         $this->db->update("user_type");
-
         $this->session->set_flashdata("success", "Deleted successfully ");
-
         return $this->db->get("user_type");
     }
 
@@ -112,7 +101,7 @@ class User_types_model extends CI_Model
         $this->db->where("user_type_id", $user_type_id);
         $this->db->set("user_type_status", 0);
 
-        if ($this->db->update("user_type")) 
+        if($this->db->update("user_type")) 
         {
             $this->session->set_flashdata("success", "user type deactivated successfully ");
             return $this->db->get("user_type");
@@ -131,7 +120,7 @@ class User_types_model extends CI_Model
         $this->db->where("user_type_id", $user_type_id);
         $this->db->set("user_type_status", 1);
 
-        if ($this->db->update("user_type")) 
+        if($this->db->update("user_type")) 
         {
             $this->session->set_flashdata("success", "user type activated successfully");
             return $this->db->get("user_type");
