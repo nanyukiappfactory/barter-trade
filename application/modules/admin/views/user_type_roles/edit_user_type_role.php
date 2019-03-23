@@ -1,18 +1,29 @@
  <?php
     $option='';
     $role_option='';
-    if($all_user_type_roles->result()>0)
+    if($single_user_type_roles->result()>0)
     {
-        foreach($all_user_type_roles->result() as $row)
+        foreach($single_user_type_roles->result() as $row)
         {
             $user_type_id_FK=$row->user_type_id;
-            foreach($user_type_role->result() as $rows)
+            $role_id_FK=$row->role_id;
+            foreach($user_types->result() as $rows)
             {
                 $user_type_id_PK = $rows->user_type_id;
                 $user_type_name = $rows->user_type_name;
                 if($user_type_id_PK==$user_type_id_FK)
-                $option .='<option value="" disabled selected>'.$user_type_name.'</option>';                                  
+                $option .='<option value="'.$role_id_FK.'" selected>'.$user_type_name.'</option>';                                  
             }
+            foreach($roles->result() as $rows)
+            {
+                $role_id_PK=$rows->role_id;
+                $role_name=$rows->role_name;
+
+                if($role_id_PK=$role_id_FK)
+                {   
+                    $role_option .='<option value="'.$role_id_FK.'" selected>'.$role_name.'</option>';
+                }
+        }  
             
         } 
         foreach ($user_types->result() as $rows)
@@ -20,25 +31,8 @@
             $user_type_id = $rows->user_type_id;
             $user_type_name = $rows->user_type_name;
             $option .='<option value="'. $user_type_id.'">'.$user_type_name.'</option>';
-        }
-    }
-    
-    if($all_user_type_roles->result()>0)
-    {
-        foreach($all_user_type_roles->result() as $row)
-        {
-            $role_id_FK=$row->role_id;
-            foreach($user_type_role->result() as $rows)
-            {
-                $role_id_PK=$rows->role_id;
-                $role_name=$rows->role_name;
-
-                if($role_id_PK=$role_id_FK)
-                {   
-                    $role_option .='<option value="" disabled selected>'.$role_name.'</option>';
-                }
-            }  
-        }
+        } 
+            
         foreach ($roles->result() as $rows) 
         {
             $role_id = $rows->role_id;

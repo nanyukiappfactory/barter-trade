@@ -20,7 +20,7 @@
                 "user_type_id_FK" => $user_type_id_FK, 
                 "check" => $check 
             );
-            foreach($user_type_role->result() as $rows)
+            foreach($roles->result() as $rows)
             {
                 $role_id_PK = $rows->role_id;
                 $role_name = $rows->role_name;
@@ -31,7 +31,7 @@
                     break;
                 }
             }
-            foreach($user_type_role->result() as $rows)
+            foreach($user_types->result() as $rows)
             {
                 $user_type_id_PK = $rows->user_type_id;
                 $user_type_name = $rows->user_type_name;
@@ -81,19 +81,19 @@
             <?php echo $header; ?>
             </div>
             <?php echo form_open("user-type-roles/search-user-type-role/");?>
-            <div class="form-row">
-                <div id="search_items" name="search_params" class="form-group search" style="display:none">
-                    <select class="selectpicker form-control  pl-2" data-style="btn-outline-primary" name="search_role">
-                        <option value="" disabled selected>Select Role...
-                        <?php echo $search_role ?>
-                    </select>
-                    <select class="selectpicker form-control  pl-2" data-style="btn-outline-primary" name="search_user_type">
-                        <option value="" disabled selected>Select User Type...
-                        <?php echo $search_user_type ?>
-                    </select>
-                    <button class ="col-md-6 mt-2 btn btn-secondary" name="Submit" type="submit">Submit</button>   
-                </div> 
-            </div>
+                <div class="form-row">
+                    <div id="search_items" name="search_params" class="form-group search" style="display:none">
+                        <select class="selectpicker form-control  pl-2" data-style="btn-outline-primary" name="search_role">
+                            <option value="" disabled selected>Select Role...
+                            <?php echo $search_role ?>
+                        </select>
+                        <select class="selectpicker form-control  pl-2" data-style="btn-outline-primary" name="search_user_type">
+                            <option value="" disabled selected>Select User Type...
+                            <?php echo $search_user_type ?>
+                        </select>
+                        <button class ="col-md-6 mt-2 btn btn-secondary" name="Submit" type="submit">Submit</button>   
+                    </div> 
+                </div>
 	        <?php echo form_close(); ?> 
         </div> 
         <script>

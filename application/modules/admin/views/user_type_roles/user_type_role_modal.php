@@ -1,7 +1,7 @@
 <?php
     $modal='';
     $modal .='<tr>';
-    foreach($user_type_role->result() as $rows)
+    foreach($roles->result() as $rows)
     {
         $role_id_PK = $rows->role_id;
         $role_name = $rows->role_name;
@@ -11,7 +11,7 @@
             break;
         }
     }
-    foreach($user_type_role->result() as $rows)
+    foreach($user_types->result() as $rows)
     {
         $user_type_id_PK = $rows->user_type_id;
         $user_type_name = $rows->user_type_name;
