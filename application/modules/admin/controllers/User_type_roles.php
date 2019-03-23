@@ -160,7 +160,6 @@ class User_type_roles extends MX_Controller
         }
         $this->session->set_userdata("user_type_role_search_params", $where);
         redirect("user-type-roles/all-user-type-roles");
-
     }
 
     public function unset_user_type_role_search()

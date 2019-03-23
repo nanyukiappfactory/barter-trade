@@ -19,7 +19,7 @@ class User_types extends Admin
         $this->load->model("file_model");
         $this->load->library('session');
         $table = 'user_type';
-    }//end constructor
+    }
 
     public function index($order = 'user_type.user_type_name', $order_method = 'ASC')
     {
