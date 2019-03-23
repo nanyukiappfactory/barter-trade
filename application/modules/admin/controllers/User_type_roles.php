@@ -148,6 +148,7 @@ class User_type_roles extends MX_Controller
 
     public function search_user_type_role($search_user_type_role=null)
     {
+        $where ='';
         $search_role = $this->input->post("search_role");
         $search_user_type = $this->input->post("search_user_type");;
         if(!empty($search_role))
