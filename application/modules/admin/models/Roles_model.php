@@ -47,20 +47,13 @@ class Roles_model extends CI_Model
     }
     public function get_results()
     {
-       
         $this->db->where("role.deleted=0");
-// Execute the query.
         $query = $this->db->get("role");
-        
-        // var_dump($query);die();
-// Return the results.
         return $query;
-        
     }
 
     public function delete($id)
     {
-        // Delete member data
         $this->db->set("deleted", 1, "modified_on", date("Y-m-d H:i:s"), "deleted_on", date("Y-m-d H:i:s"));
         $this->db->where("role_id", $id);
 

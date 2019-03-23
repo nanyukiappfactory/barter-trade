@@ -331,7 +331,7 @@ class Users extends Admin
         redirect("users/all-users");
     }
 
-    public function execute_search()
+    public function search_user()
     {
         $where = '';
         $first_name = $this->input->post('first_name');
@@ -359,7 +359,7 @@ class Users extends Admin
         redirect("users/all-users");
     }
 
-    public function unset_search()
+    public function unset_search_user()
     {
         $this->session->unset_userdata('user_search_params');
         redirect("users/all-users");

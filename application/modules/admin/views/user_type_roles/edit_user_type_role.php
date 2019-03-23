@@ -7,21 +7,27 @@
         {
             $user_type_id_FK=$row->user_type_id;
             $role_id_FK=$row->role_id;
+
             foreach($user_types->result() as $rows)
             {
                 $user_type_id_PK = $rows->user_type_id;
                 $user_type_name = $rows->user_type_name;
+
                 if($user_type_id_PK==$user_type_id_FK)
-                $option .='<option value="'.$role_id_FK.'" selected>'.$user_type_name.'</option>';                                  
+                {
+                $option .='<option value="'.$role_id_FK.'" selected>'.$user_type_name.'</option>';
+                break;
+                }                                  
             }
             foreach($roles->result() as $rows)
             {
                 $role_id_PK=$rows->role_id;
                 $role_name=$rows->role_name;
 
-                if($role_id_PK=$role_id_FK)
+                if($role_id_PK==$role_id_FK)
                 {   
                     $role_option .='<option value="'.$role_id_FK.'" selected>'.$role_name.'</option>';
+                    break;
                 }
         }  
             

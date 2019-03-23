@@ -24,18 +24,6 @@ class User_type_roles_model extends Admin
         }
     }
     
-    public function get_roles()
-    {
-        $this->db->where("deleted", 0);
-        return $this->db->get("role");
-    }
-
-    public function get_user_types()
-    {
-        $this->db->where("deleted", 0);
-        return $this->db->get("user_type");
-    }
-    
     public function get_single($user_type_role_id)
     {
         $this->db->where("user_type_role_id", $user_type_role_id);

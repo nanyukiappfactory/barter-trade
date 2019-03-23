@@ -27,7 +27,6 @@
                 if($role_id_PK==$role_id_FK)
                 {
                     $table_content .='<td>'.$role_name.'</td>';
-                    $search_role .='<option value="'. $role_id_PK.'">'. $role_name.'</option>';
                     break;
                 }
             }
@@ -38,7 +37,6 @@
                 if($user_type_id_PK==$user_type_id_FK)
                 {
                     $table_content .='<td>'.$user_type_name.'</td>';
-                    $search_user_type .='<option value="'. $user_type_id_PK.'">'. $user_type_name.'</option>';
                     break;
                 }
             } 
@@ -67,6 +65,8 @@
             $table_content .='<td>'.$status.'</td>';
             $table_content .='<td>'.$view." ".$edit." ". $status_activation." ".$delete.'</td>';
             $table_content .='</tr>';
+            $search_role .='<option value="'. $role_id_FK.'">'. $role_name.'</option>';
+            $search_user_type .='<option value="'. $user_type_id_FK.'">'. $user_type_name.'</option>';
             $this->load->view("admin/user_type_roles/user_type_role_modal", $modal_data);
         }
     }  
@@ -78,7 +78,7 @@
     <div class="card shadow mb-4 mt-4">
         <div class="card-header py-3">
             <div class="form-row">
-            <?php echo $header; ?>
+                <?php echo $header; ?>
             </div>
             <?php echo form_open("user-type-roles/search-user-type-role/");?>
                 <div class="form-row">
@@ -98,7 +98,6 @@
         </div> 
         <script>
             document.getElementById("search_icon").addEventListener("click", execute_search);
-
             function execute_search()
             {
                 if(document.getElementById("search_icon").clicked!=true)

@@ -6,6 +6,8 @@ class User_type_roles extends MX_Controller
     {
         parent::__construct();
         $this->load->model("User_type_roles_model");
+        $this->load->model("User_types_model");
+        $this->load->model("Roles_model");
         $this->load->model("site/site_model");
         $this->load->library("pagination");
     }
@@ -56,8 +58,8 @@ class User_type_roles extends MX_Controller
             "page" => $page,
             "links" => $this->pagination->create_links(),
             'single_user_type_roles'=> $single_user_type_roles, 
-            'roles' => $this->User_type_roles_model->get_roles(),
-            'user_types' => $this->User_type_roles_model->get_user_types(),
+            'roles' => $this->Roles_model->get_results(),
+            'user_types' => $this->User_types_model->get_results(),
         );
         $data = array(
             "title" => "user_type_roles",
@@ -84,13 +86,13 @@ class User_type_roles extends MX_Controller
             }
         }  
         $data= array(  
-            'roles' => $this->User_type_roles_model->get_roles(),
-            'user_types' => $this->User_type_roles_model->get_user_types(),
+            'roles' => $this->Roles_model->get_results(),
+            'user_types' => $this->User_types_model->get_results(),
             "validation_errors" => validation_errors(),
         );
         $v_data = array(
             "title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("admin/user_type_roles/assign_roles", $data, true),
+            "content" => $this->load->view("admin/user_type_roles/add_roles", $data, true),
         );
         $this->load->view('site/layouts/layout', $v_data);
     }
@@ -115,8 +117,8 @@ class User_type_roles extends MX_Controller
         $single_user_type_roles=$this->User_type_roles_model->get_single($id);      
         $v_data= array(  
             'single_user_type_roles'=> $single_user_type_roles, 
-            'roles' => $this->User_type_roles_model->get_roles(),
-            'user_types' => $this->User_type_roles_model->get_user_types(),
+            'roles' => $this->Roles_model->get_results(),
+            'user_types' => $this->User_types_model->get_results(),
             "validation_errors" => validation_errors(),
         );
         $data = array(
@@ -144,7 +146,7 @@ class User_type_roles extends MX_Controller
         redirect("user-type-roles/all-user-type-roles");
     }
 
-    public function execute_search($search_user_type_role=null)
+    public function search_user_type_role($search_user_type_role=null)
     {
         $search_role = $this->input->post("search_role");
         $search_user_type = $this->input->post("search_user_type");;
@@ -161,7 +163,7 @@ class User_type_roles extends MX_Controller
 
     }
 
-    public function unset_search()
+    public function unset_user_type_role_search()
         { 
         $this->session->unset_userdata("user_type_role_search_params");
         redirect("user-type-roles/all-user-type-roles");
