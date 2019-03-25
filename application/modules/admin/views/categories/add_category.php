@@ -9,7 +9,7 @@
                         <div class="col-md-6 mb-3">
                             <label>Category Parent</label>
                             <select name="category_parent" class="form-control">
-                                <option selected="selected">no_parent</option>
+                                <option selected="selected">select category</option>
                                     <?php
                                         foreach($category->result() as $rows) 
                                         {
@@ -23,7 +23,7 @@
                         <div class="col-md-6 mb-3">
                             <label>Category Name</label>
                             <input type="text" class="form-control" name="category_name"
-                                placeholder="Enter category name">
+                                placeholder="Enter category name" value="<?php echo set_value('category_name'); ?>">
                         </div>
                         <div class="form-group">
                             <label>Category Image</label>
