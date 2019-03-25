@@ -14,13 +14,24 @@ class User_type_roles_model extends Admin
             "role_id" => $this->input->post("role_name"),
             "user_type_id" => $this->input->post("user_type_name"),
         );
-
-        if ($this->db->insert("user_type_role", $data))
+        $role_id = $this->input->post("role_name");
+        $user_type_id = $this->input->post("user_type_name");
+        $this->db->select("*");
+        $this->db->from("user_type_role");
+        $this->db
+                ->where("user_type_role.role_id",$role_id)
+                ->where("user_type_role.user_type_id",$user_type_id)
+                ->where("user_type_role.deleted",0);
+        $where=$this->db->get();
+        if ($where->num_rows()>0)
         {
-            return true;
-        } else
-        {
+            $this->session->set_flashdata("error", "You had already assigned this role");
             return false;
+        }
+        else
+        {
+            $this->db->insert("user_type_role", $data);            
+            return true; 
         }
     }
     
@@ -105,14 +116,26 @@ class User_type_roles_model extends Admin
             "deleted" => 0,
             "modified_on" => date("Y-m-d H:i:s"),
         );
-        if ($this->db->where("user_type_role_id", $id))
+        $role_id = $this->input->post("role_name");
+        $user_type_id = $this->input->post("user_type_name");
+        $this->db->select("*");
+        $this->db->from("user_type_role");
+        $this->db
+                ->where("user_type_role.role_id",$role_id)
+                ->where("user_type_role.user_type_id",$user_type_id)
+                ->where("user_type_role.deleted",0);        
+        $where=$this->db->get();
+        
+        if ($where->num_rows()>0)
         {
-            $this->db->update("user_type_role", $data);
-            return true;
+            $this->session->set_flashdata("error", "You had already assigned this role");
+            return false;            
         } 
         else 
         {
-            return false;
+            $this->db->where("user_type_role_id", $id);
+            $this->db->update("user_type_role", $data);
+            return true;
         }
     }
 }
