@@ -8,7 +8,7 @@ class User_type_roles extends MX_Controller
         $this->load->model("User_type_roles_model");
         $this->load->model("User_types_model");
         $this->load->model("Roles_model");
-        $this->load->model("site/site_model");
+        $this->load->model("site/Site_model_user_type_role");
         $this->load->library("pagination");
     }
     public function index($order="user_type_role.user_type_id",$order_method="ASC",$id="user_type_role")
@@ -22,7 +22,7 @@ class User_type_roles extends MX_Controller
         $segment = 5;
         $table = 'user_type_role';
         $config['base_url'] = site_url() . 'user-type-roles/all-user-type-roles/' . $order . '/' . $order_method;
-        $config['total_rows'] = $this->site_model->get_count($table, $where);
+        $config['total_rows'] = $this->Site_model_user_type_role->get_count($table, $where);
         $config['uri_segment'] = $segment;
         $config["per_page"] = 2;
         $config['num_links'] = 5;
@@ -91,7 +91,7 @@ class User_type_roles extends MX_Controller
             'user_types' => $this->User_types_model->get_results()
         );
         $v_data = array(
-            "title" => $this->site_model->display_page_title(),
+            "title" => $this->Site_model_user_type_role->display_page_title(),
             "content" => $this->load->view("admin/user_type_roles/add_roles", $data, true),
         );
         $this->load->view('site/layouts/layout', $v_data);
@@ -122,7 +122,7 @@ class User_type_roles extends MX_Controller
             'user_types' => $this->User_types_model->get_results()
         );
         $data = array(
-            "title" => $this->site_model->display_page_title(),
+            "title" => $this->Site_model_user_type_role->display_page_title(),
             "content" => $this->load->view("admin/user_type_roles/edit_user_type_role", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
