@@ -15,7 +15,7 @@
 
                 if($user_type_id_PK==$user_type_id_FK)
                 {
-                $option .='<option value="'.$role_id_FK.'" selected>'.$user_type_name.'</option>';
+                $option .='<option value="'.$user_type_id_FK.'" selected>'.$user_type_name.'</option>';
                 break;
                 }                                  
             }
@@ -38,7 +38,6 @@
             $user_type_name = $rows->user_type_name;
             $option .='<option value="'. $user_type_id.'">'.$user_type_name.'</option>';
         } 
-            
         foreach ($roles->result() as $rows) 
         {
             $role_id = $rows->role_id;
@@ -53,12 +52,12 @@
             <div class="col-md-4 col-sm-12">
                 <div class="form-group">
                 <label for='role_name'>Role Name: </label>
-                    <select class="selectpicker form-control pl-2" data-style="btn-outline-primary"  name="role">
+                    <select class="selectpicker form-control pl-2" data-style="btn-outline-primary"  name="role_name">
                         <?php echo $role_option?>
                     </select >
                         <br>
                     <label for='user_type_name'>User Type Name: </label>
-                    <select class="selectpicker form-control pl-2" data-style="btn-outline-primary" name="user_type">					
+                    <select class="selectpicker form-control pl-2" data-style="btn-outline-primary" name="user_type_name">					
                         <?php echo $option?>
                     </select>
                 </div>

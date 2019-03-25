@@ -70,11 +70,6 @@ class User_type_roles extends MX_Controller
 
     public function add_user_type_role()
     {
-        if((empty(validation_errors())))
-        {
-            $role_name = set_value("role_name");
-            $user_type_name = set_value("user_type_name");
-        }
         $this->form_validation->set_rules("role_name", "Select role", "required");
         $this->form_validation->set_rules("user_type_name", "Select user type", "required");
         if ($this->form_validation->run())
@@ -82,20 +77,18 @@ class User_type_roles extends MX_Controller
             $assigned_role_user = $this->User_type_roles_model->save_user_type_role();
             if ($assigned_role_user == false)
             {
-                $this->session->set_flashdata("error. ", "Error when assigning a role");
+                $this->session->set_flashdata('error', validation_errors());
             } 
             else
             {
                 $this->session->set_flashdata("success. ", "You have assigned a role");
                 redirect("user-type-roles/all-user-type-roles");
             }
+            unset($this->form_validation);
         }  
         $data= array(  
             'roles' => $this->Roles_model->get_results(),
-            'user_types' => $this->User_types_model->get_results(),
-            "role_name"=>$role_name,
-            "user_type_name"=>$user_type_name, 
-            "validation_errors" => validation_errors(),
+            'user_types' => $this->User_types_model->get_results()
         );
         $v_data = array(
             "title" => $this->site_model->display_page_title(),
@@ -106,8 +99,8 @@ class User_type_roles extends MX_Controller
 
     public function edit_user_type_role($id)
     {
-        $this->form_validation->set_rules("role", 'Role', "required");
-        $this->form_validation->set_rules("user_type", 'User Type', "required");
+        $this->form_validation->set_rules("role_name", 'Role', "required");
+        $this->form_validation->set_rules("user_type_name", 'User Type', "required");
         if ($this->form_validation->run())
         { 
             $edit_user_type_role = $this->User_type_roles_model->edit_update_user_type_role($id);
@@ -120,13 +113,13 @@ class User_type_roles extends MX_Controller
                 $this->session->set_flashdata("success. ", "Assigned successfully!!");
                 redirect("user-type-roles/all-user-type-roles");
             }
+            unset($this->form_validation);
         }
         $single_user_type_roles=$this->User_type_roles_model->get_single($id);      
         $v_data= array(  
             'single_user_type_roles'=> $single_user_type_roles, 
             'roles' => $this->Roles_model->get_results(),
-            'user_types' => $this->User_types_model->get_results(),
-            "validation_errors" => validation_errors(),
+            'user_types' => $this->User_types_model->get_results()
         );
         $data = array(
             "title" => $this->site_model->display_page_title(),

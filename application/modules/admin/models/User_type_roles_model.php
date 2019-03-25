@@ -9,20 +9,20 @@ class User_type_roles_model extends Admin
     }
 
     public function save_user_type_role()
-    {
+    { 
         $role_id = $this->input->post("role_name");
         $user_type_id = $this->input->post("user_type_name");
         $data = array(
-            "role_id" =>  $role_id,
-            "user_type_id" => $user_type_id ,
+            "role_id" => $role_id,
+            "user_type_id" =>  $user_type_id
         );
         $this->db->select("*");
         $this->db->from("user_type_role");
         $this->db
-                ->where("user_type_role.role_id",$role_id)
-                ->where("user_type_role.user_type_id",$user_type_id)
-                ->where("user_type_role.deleted",0);
-        $result=$this->db->get();
+            ->where("user_type_role.role_id",$role_id)
+            ->where("user_type_role.user_type_id",$user_type_id)
+            ->where("user_type_role.deleted",0);
+        $result = $this->db->get();
         if ($result->num_rows()>0)
         {
             $this->session->set_flashdata("error", "You had already assigned this role");
@@ -109,33 +109,41 @@ class User_type_roles_model extends Admin
 
     public function edit_update_user_type_role($id)
     {
-        $this->db->get("user_type_role");
         $role_id = $this->input->post("role_name");
         $user_type_id = $this->input->post("user_type_name");
-        $data = array(
-            "role_id" => $role_id,
-            "user_type_id" => $user_type_id,
-            "deleted" => 0,
-            "modified_on" => date("Y-m-d H:i:s"),
-        );
         $this->db->select("*");
         $this->db->from("user_type_role");
         $this->db
-                ->where("user_type_role.role_id",$role_id)
-                ->where("user_type_role.user_type_id",$user_type_id)
-                ->where("user_type_role.deleted",0);        
-        $result=$this->db->get();
-        
-        if ($result->num_rows()>0)
+            ->where("user_type_role.role_id",$role_id)
+            ->where("user_type_role.user_type_id",$user_type_id)
+            ->where("user_type_role.user_type_role_id !=", $id)
+            ->where("user_type_role.deleted",0);
+        if($this->db->get()->num_rows()<=0)
         {
-            $this->session->set_flashdata("error", "You had already assigned this role");
-            return false;            
+            $this->db->where("user_type_role_id", $id);
+            $this->db->get("user_type_role");
+            $data = array(
+                "role_id" => $role_id,
+                "user_type_id" => $user_type_id,
+                "deleted" => 0,
+                "modified_on" => date("Y-m-d H:i:s"),
+            );
+            if("user_type_role_id.user_type_role_id > 0")
+            {
+                $this->db->where("user_type_role_id", $id);
+                $this->db->update("user_type_role", $data);
+                return true;
+            }
+            else
+            {
+                $this->session->set_flashdata("error", "Could not assign this role.");
+                return false;
+            }
         } 
         else 
         {
-            $this->db->where("user_type_role_id", $id);
-            $this->db->update("user_type_role", $data);
-            return true;
+            $this->session->set_flashdata("error", "You had already assigned this role");
+            return false;             
         }
     }
 }
