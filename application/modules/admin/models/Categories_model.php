@@ -125,4 +125,12 @@ class Categories_model extends CI_Model
             return false;
         }
     }
+
+    /**
+     * this gets all rows from categories table
+     */
+    public function all_cats()
+    {
+        return $this->db->get('category');
+    }
 }

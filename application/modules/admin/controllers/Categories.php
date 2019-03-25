@@ -73,6 +73,7 @@ class Categories extends Admin
             "order_method" => $order_method,
             "page" => $page,
             "links" => $this->pagination->create_links(),
+            "categories" => $this->Categories_model->all_cats()
         );
         $data = array(
             "title" => "Categories",
@@ -225,12 +226,12 @@ class Categories extends Admin
             {
                 if($this->Categories_model->edit_update_category($id, $upload_response)) 
                 {
-                    $this->session->set_flashdata('success', 'category ,Added successfully!!');
+                    $this->session->set_flashdata('success', 'category updated successfully!!');
                     redirect("categories/all-categories");
                 } 
                 else 
                 {
-                    $this->session->set_flashdata('error', 'unable to add category. Try again!!');
+                    $this->session->set_flashdata('error', 'unable to update category. Try again!!');
                 }
             }
 
@@ -252,7 +253,7 @@ class Categories extends Admin
             $category_image = $row->category_image;
         }
         $v_data = array(
-            "category" => $this->Categories_model->get_results(),
+            "categories" => $this->Categories_model->all_cats(),
             "name" => $category_name,
             "category_parent" => $category_parent,
         );

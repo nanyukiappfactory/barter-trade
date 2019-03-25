@@ -16,14 +16,14 @@
                                             $category_id = $rows->category_id;
                                             $category_name = $rows->category_name;
                                     ?>
-                                <option value="<?php echo $category_id; ?>"><?php echo $category_name ;?></option>
+                                <option value="<?php echo  $category_id ; ?>" <?php echo set_select('category_parent',  $category_id, False); ?> ><?php echo $category_name; ?> </option>
                                     <?php }?>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>Category Name</label>
                             <input type="text" class="form-control" name="category_name"
-                                placeholder="Enter category name" value="<?php echo set_value('category_name'); ?>">
+                                placeholder="enter category name" value="<?php echo set_value('category_name'); ?>">
                         </div>
                         <div class="form-group">
                             <label>Category Image</label>

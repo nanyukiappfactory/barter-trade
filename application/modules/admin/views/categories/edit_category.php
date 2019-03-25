@@ -9,34 +9,31 @@
                             <div class="col-md-6 mb-3">
                                 <label>Category Parent</label>
                                 <select name="category_parent" class="form-control">
-                                <option value="0">no_parent</option>
+                                <option value="0">select category</option>
                                     <option selected="selected">
                                   <?php
-                                  if($category_parent==0)
-                                  {
-                                      echo "no_parent";
-                                  }
-                                  else
-                                  {
-                                  foreach ($category->result() as $row)
-                                  {
-                                      if($row->category_id==$category_parent)
-                                      {
-                                          echo $row->category_name;
-                                          break; 
-                                      }
-                                  }
-                                }
-                                        foreach ($category->result() as $rows) {
-                                            $category_id = $rows->category_id;
-                                            $category_name = $rows->category_name;
-
-                                            ?>
-
-                                    <option value="<?php echo $category_id ?>">
-                                        <?php echo $category_name ?>
-                                    </option>
-                                    <?php }
+                                    if($category_parent==0)
+                                    {
+                                        echo "no_parent";
+                                    }
+                                    else
+                                    {
+                                        foreach ($categories->result() as $row)
+                                        {
+                                            if($row->category_id == $category_parent)
+                                            {
+                                                echo $row->category_name;
+                                                break; 
+                                            }
+                                        }
+                                    }
+                                    foreach ($categories->result() as $rows) 
+                                    {
+                                        $category_id = $rows->category_id;
+                                        $category_name = $rows->category_name;
+                                    ?>
+                                <option value="<?php echo  $category_id ; ?>" <?php echo set_select('category_parent',  $category_id, False); ?> ><?php echo $category_name; ?> </option>
+                            <?php   }
                                     ?>
 
                                 </select>
@@ -44,7 +41,7 @@
                             <div class="col-md-6 mb-3">
                                 <label>Category Name</label>
                                 <input type="text" class="form-control" name="category_name"
-                                    placeholder="Enter category name" value="<?php echo $name?>">
+                                    placeholder="Enter category name" value="<?php echo $name; ?>" <?php echo set_value("category_name"); ?>>
                             </div>
                             <div class="form-group">
                                 <label>Category Image</label>
