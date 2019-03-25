@@ -48,7 +48,6 @@ class Migration_Add_user_type_role extends CI_Migration
                 'table' => 'role', // table to
                 'field' => 'role_id', // field to
                 )),
-            
         ));
         $this->dbforge->add_field("`created_by` int NOT NULL ");
         $this->dbforge->add_field("`created_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");
