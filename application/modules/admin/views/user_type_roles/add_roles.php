@@ -19,10 +19,12 @@
 		<div class="row">
 			<div class="col-md-4 col-sm-12">
 				<div class="form-group">
+					<label for='role_name'>Role Name: </label>
 					<select class="selectpicker form-control pl-5" data-style="btn-outline-primary"  name="role_name">
 						<option value="" disabled selected>Select Role Name...</option>
 						<?php echo $option ?>
 					</select><br>
+					<label for='user_type_name'>User Type Name: </label>
 					<select class="selectpicker form-control pl-5" data-style="btn-outline-primary" name="user_type_name">
 						<option value="" disabled selected>Select User Type Name...</option>
 						<?php echo $user_type?>

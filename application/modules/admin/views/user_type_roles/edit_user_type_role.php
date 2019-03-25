@@ -52,10 +52,12 @@
         <div class="row">
             <div class="col-md-4 col-sm-12">
                 <div class="form-group">
+                <label for='role_name'>Role Name: </label>
                     <select class="selectpicker form-control pl-2" data-style="btn-outline-primary"  name="role">
                         <?php echo $role_option?>
                     </select >
                         <br>
+                    <label for='user_type_name'>User Type Name: </label>
                     <select class="selectpicker form-control pl-2" data-style="btn-outline-primary" name="user_type">					
                         <?php echo $option?>
                     </select>
