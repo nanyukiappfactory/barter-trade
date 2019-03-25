@@ -58,18 +58,10 @@ class Categories_model extends CI_Model
     public function delete($category_id)
     {
         $this->db->set("deleted", 1, "modified_on", date("Y-m-d H:i:s"), "deleted_on", date("Y-m-d H:i:s"));
-        $this->db->where("category_id", $category_id);
-
-        if($this->db->update("category"))
-        {
-            $this->session->set_flashdata("success", "You have deleted" . $category_id);
-            return true;
-        } 
-        else 
-        {
-            $this->session->set_flashdata("error", "Unable to delete" . $category_id);
-            return false;
-        }
+        $this->db->where("category_id", $category_id,  "deleted", 0);
+        $this->db->update("category");
+        $this->session->set_flashdata("success", "category deleted successfully ");
+        return $this->db->get("category");
     }
 
     public function deactivate_category($category_id)
@@ -78,13 +70,12 @@ class Categories_model extends CI_Model
         $this->db->set("category_status", 0);
         if($this->db->update("category"))
         {
-            $remain = $this->get_results();
-            $this->session->set_flashdata("success", "You have deactivated" . $category_id);
-            return $remain;
+            $this->session->set_flashdata("success", "you have deactivated category");
+            return $this->db->get("category");
         } 
         else 
         {
-            $this->session->set_flashdata("error", "Unable to deactivate" . $category_id);
+            $this->session->set_flashdata("error", "unable to deactivate category");
             return false;
         }
     }
@@ -97,13 +88,12 @@ class Categories_model extends CI_Model
 
         if($this->db->update("category")) 
         {
-            $remain = $this->get_results();
-            $this->session->set_flashdata("success", "You have activated" . $category_id);
-            return $remain;
+            $this->session->set_flashdata("success", "you have activated category");
+            return $this->db->get("category");
         } 
         else 
         {
-            $this->session->set_flashdata("error", "Unable to activate" . $category_id);
+            $this->session->set_flashdata("error", "unable to activate category");
             return false;
         }
     }
