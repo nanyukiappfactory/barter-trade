@@ -70,6 +70,11 @@ class User_type_roles extends MX_Controller
 
     public function add_user_type_role()
     {
+        if((empty(validation_errors())))
+        {
+            $role_name = set_value("role_name");
+            $user_type_name = set_value("user_type_name");
+        }
         $this->form_validation->set_rules("role_name", "Select role", "required");
         $this->form_validation->set_rules("user_type_name", "Select user type", "required");
         if ($this->form_validation->run())
@@ -88,6 +93,8 @@ class User_type_roles extends MX_Controller
         $data= array(  
             'roles' => $this->Roles_model->get_results(),
             'user_types' => $this->User_types_model->get_results(),
+            "role_name"=>$role_name,
+            "user_type_name"=>$user_type_name, 
             "validation_errors" => validation_errors(),
         );
         $v_data = array(
