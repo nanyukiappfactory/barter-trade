@@ -37,21 +37,16 @@
                         <?php
                         if($category_parent == 0)
                         {
-                            echo " ";
+                            echo "no parent ";
                         }
                         else
                         {
-
-                            foreach ($all_categories->result() as $rows)
+                            foreach ($categories->result() as $rows)
                             {
-                                if($rows->category_id==$category_parent)
-                                {
+                                if($category_parent == $rows->category_id){
                                     echo $rows->category_name;
-                                    break; 
-                                }
-                                
-                            }
-                        
+                                } 
+                            }   
                         }   ?>                       
                         
                         </td>
