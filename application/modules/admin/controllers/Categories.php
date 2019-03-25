@@ -118,7 +118,7 @@ class Categories extends Admin
             $upload_response = $this->file_model->upload_image($this->upload_path, "category_image", $resize);
 
             if($upload_response['check'] == false)
-            {
+            { 
                 $this->session->set_flashdata('error', $upload_response['message']);
             } 
             else 
