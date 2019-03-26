@@ -4,7 +4,6 @@ if (!defined('BASEPATH')) {exit('No direct script access allowed');}
 require_once "./application/modules/admin/controllers/Admin.php";
 
 class Categories extends Admin
-//class Categories extends MX_Controller
 {
     public $upload_path;
     public $upload_location;
