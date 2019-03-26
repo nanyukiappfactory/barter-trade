@@ -26,7 +26,7 @@ class User_type_roles_model extends Admin
         if ($result->num_rows()>0)
         {
             $this->session->set_flashdata("error", "You had already assigned this role");
-            return false;
+            return false; 
         }
         else
         {

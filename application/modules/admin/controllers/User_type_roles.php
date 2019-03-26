@@ -70,25 +70,37 @@ class User_type_roles extends MX_Controller
 
     public function add_user_type_role()
     {
+        $role_name_validate = "";
+        $user_type_name_validate = "";
         $this->form_validation->set_rules("role_name", "Select role", "required");
         $this->form_validation->set_rules("user_type_name", "Select user type", "required");
+
         if ($this->form_validation->run())
         {
             $assigned_role_user = $this->User_type_roles_model->save_user_type_role();
             if ($assigned_role_user == false)
             {
-                $this->session->set_flashdata('error', validation_errors());
+                $this->session->set_flashdata("error. ", "unable to assign role . Try again!!");
             } 
             else
             {
-                $this->session->set_flashdata("success. ", "You have assigned a role");
+                $this->session->set_flashdata("success. ", "You have successfully assigned a role");
                 redirect("user-type-roles/all-user-type-roles");
             }
             unset($this->form_validation);
         }  
+
+        if($this->session->flashdata("error") || validation_errors())
+        {
+            $role_name_validate =  $this->input->post("role_name");
+            $user_type_name_validate = $this->input->post("user_type_name");
+        }
+
         $data= array(  
             'roles' => $this->Roles_model->get_results(),
-            'user_types' => $this->User_types_model->get_results()
+            'user_types' => $this->User_types_model->get_results(),
+            "role_name_validate" =>  $role_name_validate,
+            "user_type_name_validate" => $user_type_name_validate
         );
         $v_data = array(
             "title" => $this->Site_model_user_type_role->display_page_title(),
@@ -99,6 +111,9 @@ class User_type_roles extends MX_Controller
 
     public function edit_user_type_role($id)
     {
+        $role_name_validate = "";
+        $user_type_name_validate = "";
+
         $this->form_validation->set_rules("role_name", 'Role', "required");
         $this->form_validation->set_rules("user_type_name", 'User Type', "required");
         if ($this->form_validation->run())
@@ -106,7 +121,7 @@ class User_type_roles extends MX_Controller
             $edit_user_type_role = $this->User_type_roles_model->edit_update_user_type_role($id);
             if ($edit_user_type_role== false)
             {
-                $this->session->set_flashdata("error. ", "unable to assign role . Try again!!");
+                $this->session->set_flashdata("error", "unable to assign role . Try again!!");                
             } 
             else 
             {
@@ -115,10 +130,19 @@ class User_type_roles extends MX_Controller
             }
             unset($this->form_validation);
         }
+
+        if($this->session->flashdata("error") || validation_errors())
+        {
+            $role_name_validate =  $this->input->post("role_name");
+            $user_type_name_validate = $this->input->post("user_type_name");
+        }
+
         $single_user_type_roles=$this->User_type_roles_model->get_single($id);      
         $v_data= array(  
             'single_user_type_roles'=> $single_user_type_roles, 
             'roles' => $this->Roles_model->get_results(),
+            "role_name_validate" =>  $role_name_validate,
+            "user_type_name_validate" => $user_type_name_validate,
             'user_types' => $this->User_types_model->get_results()
         );
         $data = array(

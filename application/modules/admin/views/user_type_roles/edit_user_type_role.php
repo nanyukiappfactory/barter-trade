@@ -12,37 +12,61 @@
             {
                 $user_type_id_PK = $rows->user_type_id;
                 $user_type_name = $rows->user_type_name;
-
-                if($user_type_id_PK==$user_type_id_FK)
+                
+                if($this->session->flashdata('error'))
                 {
-                $option .='<option value="'.$user_type_id_FK.'" selected>'.$user_type_name.'</option>';
-                break;
-                }                                  
+                    if($user_type_id_PK == $user_type_name_validate)
+                    {
+                        $selected = "selected";
+                    }
+                    else
+                    {
+                        $selected = "";
+                    } 
+                }
+                else
+                {
+                    if($user_type_id_PK == $user_type_id_FK)
+                    {
+                        $selected = "selected";
+                    } 
+                    else{
+                        $selected = "";
+                    } 
+                }
+                  
+                $option .='<option value="'.$user_type_id_PK.'"' .  $selected .'>'.$user_type_name.'</option>';        
             }
             foreach($roles->result() as $rows)
             {
-                $role_id_PK=$rows->role_id;
-                $role_name=$rows->role_name;
+                $role_id_PK = $rows->role_id;
+                $role_name = $rows->role_name;
 
-                if($role_id_PK==$role_id_FK)
-                {   
-                    $role_option .='<option value="'.$role_id_FK.'" selected>'.$role_name.'</option>';
-                    break;
+                if($this->session->flashdata('error'))
+                {
+                    if($role_id_PK == $role_name_validate)
+                    {
+                        $selected = "selected";
+                    }
+                    else
+                    {
+                        $selected = "";
+                    } 
                 }
-        }  
+                else
+                {
+                    if($role_id_PK == $role_id_FK)
+                    {
+                        $selected = "selected";
+                    } 
+                    else{
+                        $selected = "";
+                    } 
+                }
+                  
+                $role_option .='<option value="'.$role_id_PK.'"' .  $selected .'>'.$role_name.'</option>';   
+            }  
             
-        } 
-        foreach ($user_types->result() as $rows)
-        {
-            $user_type_id = $rows->user_type_id;
-            $user_type_name = $rows->user_type_name;
-            $option .='<option value="'. $user_type_id.'">'.$user_type_name.'</option>';
-        } 
-        foreach ($roles->result() as $rows) 
-        {
-            $role_id = $rows->role_id;
-            $role_name = $rows->role_name;
-                $role_option .='<option value="'.$role_id.'">'.$role_name.'</option>';
         } 
     }
 ?>

@@ -5,12 +5,11 @@ class Site_model_user_type_role extends CI_Model{
         $page = explode("/",uri_string());
         $total = count($page);
         $last = $total - 1;
-        $name = $this->site_model->decode_web_name($page[$last]);
-        
+        $name = $this->Site_model_user_type_role->decode_web_name($page[$last]);
         if(is_numeric($name))
         {
             $last = $last - 1;
-            $name = $this->site_model->decode_web_name($page[$last]);
+            $name = $this->Site_model_user_type_role->decode_web_name($page[$last]);
         }
         $page_url = ucwords(strtolower($name));
         return $page_url;

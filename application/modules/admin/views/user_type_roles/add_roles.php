@@ -1,17 +1,42 @@
 <?php
 	$option='';
 	$user_type='';
+	$selected = "";
 	foreach ($roles->result() as $new)
 	{
 		$role_id = $new->role_id;
 		$role_name = $new->role_name;
-		$option .='<option value="'.$role_id.'">'.$role_name.'</option>';
+
+		if($this->session->flashdata('error')){
+			if($role_id == $role_name_validate)
+			{
+				$selected = "selected";
+			}
+			else
+			{
+				$selected = "";
+			} 
+		}
+
+		$option .='<option value="'.$role_id.'"' . $selected . '>'.$role_name.'</option>';
 	}
 	foreach ($user_types->result() as $rows)
 	{
 		$user_type_id = $rows->user_type_id;
 		$user_type_name = $rows->user_type_name;
-		$user_type .='<option value="'.$user_type_id.'">'.$user_type_name.'</option>';
+
+		if($this->session->flashdata('error')){
+			if($user_type_id == $user_type_name_validate)
+			{
+				$selected = "selected";
+			}
+			else
+			{
+				$selected = "";
+			} 
+		}
+
+		$user_type .='<option value="'.$user_type_id.'"' . $selected . '>'.$user_type_name.'</option>';
 	}
 ?>
 <?php echo form_open_multipart($this->uri->uri_string()); ?>
