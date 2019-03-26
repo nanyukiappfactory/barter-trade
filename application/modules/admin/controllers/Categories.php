@@ -4,7 +4,6 @@ if (!defined('BASEPATH')) {exit('No direct script access allowed');}
 require_once "./application/modules/admin/controllers/Admin.php";
 
 class Categories extends Admin
-//class Categories extends MX_Controller
 {
     public $upload_path;
     public $upload_location;
@@ -122,10 +121,6 @@ class Categories extends Admin
 
             if($upload_response['check'] == false)
             { 
-                $this->session->set_flashdata('error', $upload_response['message']);
-            } 
-            else 
-            {
                 if ($this->Categories_model->save_category($upload_response)) 
                 {
                     $this->session->set_flashdata('success', 'category Added successfully!!');
@@ -135,6 +130,22 @@ class Categories extends Admin
                 {
                     $this->session->set_flashdata('error', 'unable to add category. Try again!!');
                 }
+                
+                //$this->session->set_flashdata('error', $upload_response['message']);
+            } 
+            else 
+            {
+                // if ($this->Categories_model->save_category($upload_response)) 
+                // {
+                //     $this->session->set_flashdata('success', 'category Added successfully!!');
+                //     redirect("categories/all-categories");
+                // } 
+                // else 
+                // {
+                //     $this->session->set_flashdata('error', 'unable to add category. Try again!!');
+                // }
+
+                $this->session->set_flashdata('error', $upload_response['message']);
             }
 
         } 
@@ -167,41 +178,13 @@ class Categories extends Admin
 
     public function deactivate_category($id)
     {
-        $search = "categories/search-category";
-        $close = "categories/close-search";
-        $load_deactivate = $this->Categories_model->deactivate_category($id);
-
-        $v_data = array(
-            "all_categories" => $load_deactivate,
-        );
-        $data = array(
-            "title" => $this->site_model->display_page_title(),
-            "search" => $search,
-            "close" => $close,
-            "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
-        );
-
-        $this->load->view("site/layouts/layout", $data);
+        $this->Categories_model->deactivate_category($id);
         redirect("categories/all-categories");
     }
 
     public function activate_category($id)
     {
-        $search = "categories/search-category";
-        $close = "categories/close-search";
-        $load_activate = $this->Categories_model->activate_category($id);
-        
-        $v_data = array(
-            "all_categories" => $load_activate,
-        );
-        $data = array(
-            "title" => $this->site_model->display_page_title(),
-            "search" => $search,
-            "close" => $close,
-            "content" => $this->load->view("admin/Categories/all_categories", $v_data, true),
-        );
-
-        $this->load->view("site/layouts/layout", $data);
+        $this->Categories_model->activate_category($id);
         redirect("categories/all-categories");
     }
 

@@ -57,7 +57,13 @@
                         </td>
 
                         <td><img class="thumbnail" style="height: 100px; width: 100px;"
-                                src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->category_image; ?>" />
+                                src="<?php echo base_url(); ?>assets/uploads/<?php 
+                                                            if($row->category_image !== NULL){
+                                                                echo $row->category_image;
+                                                            }else{
+                                                                echo "default_image.JPG";
+                                                            }
+                                                             ?>" />
                         </td>
                         <td>
 
@@ -128,7 +134,13 @@
                                                         <?php echo $category_name; ?>
                                                     </td>
                                                     <td><img class="thumbnail" style="height: 100px; width: 100px;"
-                                                            src="<?php echo base_url(); ?>assets/uploads/<?php echo $row->category_image; ?>" />
+                                                            src="<?php echo base_url(); ?>assets/uploads/<?php 
+                                                            if($row->category_image !== NULL){
+                                                                echo $row->category_image;
+                                                            }else{
+                                                                echo "default_image.JPG";
+                                                            }
+                                                             ?>" />
                                                     </td>
                                                 </tr>
                                             </table>
