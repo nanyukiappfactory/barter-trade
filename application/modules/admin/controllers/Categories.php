@@ -122,10 +122,6 @@ class Categories extends Admin
 
             if($upload_response['check'] == false)
             { 
-                $this->session->set_flashdata('error', $upload_response['message']);
-            } 
-            else 
-            {
                 if ($this->Categories_model->save_category($upload_response)) 
                 {
                     $this->session->set_flashdata('success', 'category Added successfully!!');
@@ -135,6 +131,22 @@ class Categories extends Admin
                 {
                     $this->session->set_flashdata('error', 'unable to add category. Try again!!');
                 }
+                
+                //$this->session->set_flashdata('error', $upload_response['message']);
+            } 
+            else 
+            {
+                // if ($this->Categories_model->save_category($upload_response)) 
+                // {
+                //     $this->session->set_flashdata('success', 'category Added successfully!!');
+                //     redirect("categories/all-categories");
+                // } 
+                // else 
+                // {
+                //     $this->session->set_flashdata('error', 'unable to add category. Try again!!');
+                // }
+
+                $this->session->set_flashdata('error', $upload_response['message']);
             }
 
         } 
