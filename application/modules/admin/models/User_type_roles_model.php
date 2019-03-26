@@ -26,7 +26,7 @@ class User_type_roles_model extends Admin
         if ($result->num_rows()>0)
         {
             $this->session->set_flashdata("error", "You had already assigned this role");
-            return false;
+            return false; 
         }
         else
         {
@@ -49,11 +49,16 @@ class User_type_roles_model extends Admin
 
     public function get_user_type_role($table=null, $where,$limit,$page,$order,$order_method)
     {
-        $this->db->select('role.role_name, user_type.user_type_name,role.role_id,user_type.user_type_id, user_type_role.*');
+        $this->db->select('role.role_name, role.role_status, role.deleted, user_type.deleted, user_type.user_type_status, user_type.user_type_name,role.role_id,user_type.user_type_id, user_type_role.*');
         $this->db->from("role");
         $this->db->join("user_type_role","role.role_id=user_type_role.role_id");
         $this->db->join("user_type", "user_type_role.user_type_id=user_type.user_type_id");
-        $this->db->where($where);
+        $this->db
+                ->where($where)
+                ->where("user_type.user_type_status",1)
+                ->where("role.role_status",1)
+                ->where("role.deleted",0)
+                ->where("user_type.deleted",0);
         $this->db->limit($limit, $page);
         $this->db->order_by($order, $order_method);
         return $this->db->get();

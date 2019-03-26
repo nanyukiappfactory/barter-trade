@@ -24,7 +24,7 @@
             {
                 $role_id_PK = $rows->role_id;
                 $role_name = $rows->role_name;
-                if($role_id_PK==$role_id_FK)
+                if($role_id_PK == $role_id_FK)
                 {
                     $table_content .='<td>'.$role_name.'</td>';
                     break;

@@ -12,18 +12,6 @@ class Migration_Add_user_type_role extends CI_Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ),
-            'parent' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'null' => false,
-            ),
-            
-            'user_type_role_name' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'null' => false,
-            
-            ),
             'user_type_id' => array(
                 'type' => 'int',
                 'constraint' => 10,
@@ -48,7 +36,6 @@ class Migration_Add_user_type_role extends CI_Migration
                 'table' => 'role', // table to
                 'field' => 'role_id', // field to
                 )),
-            
         ));
         $this->dbforge->add_field("`created_by` int NOT NULL ");
         $this->dbforge->add_field("`created_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");
