@@ -1,10 +1,10 @@
 <?php
 if (!defined('BASEPATH')) {exit('No direct script access allowed');}
+
 require_once "./application/modules/admin/controllers/Admin.php";
 
 class Categories extends Admin
 //class Categories extends MX_Controller
-
 {
     public $upload_path;
     public $upload_location;
@@ -30,7 +30,6 @@ class Categories extends Admin
         $search = "categories/search-category";
         $close = "categories/close-search";
         $search_category = $this->session->userdata("search_category");
-        $search_category = $this->session->userdata("search_term");
 
         if(!empty($search_category) && $search_category != null) 
         {
@@ -60,13 +59,15 @@ class Categories extends Admin
         $page = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         $query = $this->Categories_model->get_category($table, $where, $config["per_page"], $page, $order, $order_method);
         
-        if ($order_method == 'DESC') {
+        if ($order_method == 'DESC') 
+        {
             $order_method = 'ASC';
         } 
         else 
         {
             $order_method = 'DESC';
         }
+
         $v_data = array(
             "all_categories" => $query,
             "order" => $order,
@@ -75,6 +76,7 @@ class Categories extends Admin
             "links" => $this->pagination->create_links(),
             "categories" => $this->Categories_model->all_cats()
         );
+
         $data = array(
             "title" => "Categories",
             "search" => $search,
@@ -82,13 +84,13 @@ class Categories extends Admin
             "search_category" => $search_category,
             "content" => $this->load->view("admin/categories/all_categories", $v_data, true),
         );
+
         $this->load->view("site/layouts/layout", $data);
     }
 
     public function execute_search($search_category = null)
     {
         $search_category = $this->input->post('search');
-
         if (!empty($search_category) && $search_category != null) 
         {
             $this->session->set_userdata("search_category", $search_category);
@@ -124,7 +126,6 @@ class Categories extends Admin
             } 
             else 
             {
-
                 if ($this->Categories_model->save_category($upload_response)) 
                 {
                     $this->session->set_flashdata('success', 'category Added successfully!!');
@@ -148,6 +149,7 @@ class Categories extends Admin
         $v_data = array("validation_errors" => validation_errors(),
             "category" => $this->Categories_model->get_results(),
         );
+
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search" => $search,
@@ -245,6 +247,7 @@ class Categories extends Admin
         }
 
         $category = $this->Categories_model->get_single($id);
+
         if($category->num_rows() > 0) 
         {
             $row = $category->row();
@@ -257,12 +260,14 @@ class Categories extends Admin
             "name" => $category_name,
             "category_parent" => $category_parent,
         );
+
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "search" => $search,
             "close" => $close,
             "content" => $this->load->view("admin/categories/edit_category", $v_data, true),
         );
+
         $this->load->view("site/layouts/layout", $data);
     }
 }

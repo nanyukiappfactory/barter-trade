@@ -13,6 +13,7 @@ class Categories_model extends CI_Model
     {
         $file_name = $upload_response['file_name'];
         $thumb_name = $upload_response['thumb_name'];
+
         $data = array(
             "category_parent" => $this->input->post("category_parent"),
             "category_name" => $this->input->post("category_name"),
@@ -68,6 +69,7 @@ class Categories_model extends CI_Model
     {
         $this->db->where("category_id", $category_id);
         $this->db->set("category_status", 0);
+
         if($this->db->update("category"))
         {
             $this->session->set_flashdata("success", "you have deactivated category");
@@ -104,6 +106,7 @@ class Categories_model extends CI_Model
         $thumb_name = $upload_response['thumb_name'];
         $this->db->where("category_id", $category_id);
         $this->db->get("category");
+
         //Capture data to be updated
         $data = array(
             "category_parent" => $this->input->post("category_parent"),
@@ -126,9 +129,6 @@ class Categories_model extends CI_Model
         }
     }
 
-    /**
-     * this gets all rows from categories table
-     */
     public function all_cats()
     {
         return $this->db->get('category');

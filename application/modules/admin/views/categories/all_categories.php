@@ -1,7 +1,12 @@
 <div class="shadow-lg p-3 mb-5  mt-5 bg-white rounded">
     <div class="card shadow mb-4 mt-4">
         <div class="card-header py-3">
-                <?php echo anchor("categories/add-category/", "add category",array('class'=>"btn btn-secondary")); ?>
+            <?php echo form_open("categories/search-category", array('class' => "form-control form-control-dark w-100 bg-white")); ?>
+                <input type="search" placeholder="search by category" name="search">
+                <button name="Submit" type="submit">search</button>
+            <?php echo form_close(); ?>
+            <?php echo anchor("categories/close-search/", "clear search", array('class' => "btn btn-secondary")); ?>
+            <?php echo anchor("categories/add-category/", "add category",array('class'=>"btn btn-secondary")); ?>
                 <table class="table table-sm">
                     <tr>
                         <th>#</th>
