@@ -8,7 +8,7 @@
 			$user_type_name = $rows->user_type_name;
 			if($user_type_id == $user_types)
 			{
-				$option .='<option value="'.$user_types.'">'. $user_type_name.'?></option>';
+				$option .='<option value="'.$user_types.'">'. $user_type_name.'</option>';
 			}
 		}
 	}

@@ -16,8 +16,8 @@
     $error=$this->session->flashdata("error");
     $success=$this->session->flashdata("success");?>
   <div class="container">
-          <?php
-        if(!empty($error))
+        <?php
+        if((!empty(validation_errors())) && !empty($error))
         {
         ?>
             <div class="alert alert-danger">

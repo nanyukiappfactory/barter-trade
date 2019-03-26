@@ -78,9 +78,9 @@
         $role_id_PK = $rows->role_id;
         $role_names = $rows->role_name;
         if(!in_array($role_names, $role_arr))
-             {
-                array_push($role_arr, $role_names);
-             }
+        {
+            array_push($role_arr, $role_names);
+        }
      }
     foreach($role_arr as $key=>$value)
     {

@@ -133,9 +133,8 @@ class User_type_roles_model extends Admin
                 "deleted" => 0,
                 "modified_on" => date("Y-m-d H:i:s"),
             );
-            if("user_type_role_id.user_type_role_id > 0")
+            if( $this->db->where("user_type_role_id", $id))
             {
-                $this->db->where("user_type_role_id", $id);
                 $this->db->update("user_type_role", $data);
                 return true;
             }

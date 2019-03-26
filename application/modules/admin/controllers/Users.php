@@ -6,7 +6,6 @@ class Users extends Admin
     public $upload_path;
     public $upload_location;
     public $g_user_id;
-    public $where;
     public function __construct()
     {
         parent::__construct();
@@ -144,7 +143,7 @@ class Users extends Admin
             { 
                 $upload_response=array(
                     "file_name" => "no_image.PNG",
-                    "thumb_name" => "6cb8392a0f015455b60834952307d7fe.PNG",
+                    "thumb_name" => "no_image_thumbnail.PNG",
                 );
                 $this->Users_model->add_user($upload_response);
                 $this->session->set_flashdata('success', 'User Added successfully!!');
@@ -159,7 +158,6 @@ class Users extends Admin
                     redirect("users/all-users");
                 } 
             }
-            unset($this->form_validation);
         } 
         try
         {
@@ -279,7 +277,6 @@ class Users extends Admin
                     $this->session->set_flashdata('error', 'unable to update user. Try again!!');
                 }
             }
-            unset($this->form_validation);
         }
         $error_check = $this->session->flashdata('error');
         if(!empty($error_check) && $error_check != NULL)
@@ -341,19 +338,19 @@ class Users extends Admin
 
         if(!empty($first_name))
         {
-            $where .= ' AND (first_name="'.$first_name.'")';
+            $where .= ' AND `first_name` LIKE "%'.$first_name.'%"';
         }
         if(!empty($last_name))
         {
-            $where .= ' AND (last_name="'.$last_name.'")';
+            $where .= ' AND `last_name` LIKE "%'.$last_name.'%"';
         }
         if(!empty($user_email))
         {
-            $where .= ' AND (user_email="'.$user_email.'")';
+            $where .= ' AND `user_email` LIKE "%'.$user_email.'%"';
         }
         if(!empty($phone_number))
         {
-            $where .= ' AND (phone_number="'.$phone_number.'")';
+            $where .= ' AND `phone_number` LIKE "%'.$phone_number.'%"';
         }
         $this->session->set_userdata("user_search_params", $where);
         redirect("users/all-users");

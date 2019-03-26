@@ -80,7 +80,16 @@
 		<div class="form-row">
 			<?php echo anchor ("users/add-user/", "add user", array('class'=>"btn btn-primary col-md-2 mb-2")). " "; ?>
 			<button class="fas fa-search btn btn-secondary col-md-2 mb-2" id="search_icon" name="search_icon" style="display:block" ></button>
-			<?php echo anchor("users/close-search",'close search session',array('class'=>"btn btn-info col-md-2 mb-2"));?>
+			<?php
+				if($this->session->userdata("user_search_params"))
+				{
+					echo anchor("users/close-search",'close search session',array('class'=>"btn btn-info col-md-2 mb-2", 'style'=>"display:block"));
+				}
+				else
+				{
+					echo anchor("users/close-search",'close search session',array('class'=>"btn btn-info col-md-2 mb-2", 'style'=>"display:none"));
+				}
+			?>
 		</div>
 	</div>
 	<?php echo form_open("users/search-user"); ?>
@@ -90,7 +99,7 @@
 				<input placeholder="Enter Last Name" id="last_name" name="last_name">
 				<input placeholder="Enter Email" id="email" name="user_email">
 				<input placeholder="Enter Phone No." id="phone_number" name="phone_number">
-				<button class ="col-md-2 mb-2 btn btn-secondary" name="Submit" type="submit">Submit</button>   
+				<button class ="col-md-2 mb-2 btn btn-secondary" name="Submit" type="submit">Submit</button> 
 			</div> 
 		</div>  
 	<?php echo form_close(); ?>
