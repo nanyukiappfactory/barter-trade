@@ -12,18 +12,6 @@ class Migration_Add_user_type_role extends CI_Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ),
-            'parent' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'null' => false,
-            ),
-            
-            'user_type_role_name' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'null' => false,
-            
-            ),
             'user_type_id' => array(
                 'type' => 'int',
                 'constraint' => 10,

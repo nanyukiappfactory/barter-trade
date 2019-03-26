@@ -17,7 +17,7 @@ class Roles_model extends CI_Model
             "parent" => $this->input->post("role_parent"),
             "role_name" => $this->input->post("role_name"),
             "deleted" => 0,
-            "role_status"=>0
+            "role_status"=>1
 
         );
 
