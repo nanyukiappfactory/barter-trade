@@ -3,6 +3,8 @@
     $search_role='';
     $search_user_type='';
     $header='';
+    $role_arr=[];
+    $user_type_arr=[];
     if ($all_user_type_roles->num_rows() > 0)
     {
         $count = $page;
@@ -34,7 +36,7 @@
             {
                 $user_type_id_PK = $rows->user_type_id;
                 $user_type_name = $rows->user_type_name;
-                if($user_type_id_PK==$user_type_id_FK)
+                if($user_type_id_PK == $user_type_id_FK)
                 {
                     $table_content .='<td>'.$user_type_name.'</td>';
                     break;
@@ -65,14 +67,40 @@
             $table_content .='<td>'.$status.'</td>';
             $table_content .='<td>'.$view." ".$edit." ". $status_activation." ".$delete.'</td>';
             $table_content .='</tr>';
-            $search_role .='<option value="'. $role_id_FK.'">'. $role_name.'</option>';
-            $search_user_type .='<option value="'. $user_type_id_FK.'">'. $user_type_name.'</option>';
             $this->load->view("admin/user_type_roles/user_type_role_modal", $modal_data);
         }
-    }  
+    }
      $header .= anchor("user-type-roles/add-user-type-role/", "Assign role","class='col-md-2 mb-2 btn btn-dark'"); 
      $header .= '<button class="fas fa-search btn btn-secondary col-md-2 mb-2" id="search_icon" name="search_icon" style="display:block" ></button>';
      $header .=  anchor("user-type-roles/close-search/",'close search session',array('class'=>"btn btn-info col-md-2 mb-2"));
+     foreach($roles->result() as $rows)
+     {
+        $role_id_PK = $rows->role_id;
+        $role_names = $rows->role_name;
+        if(!in_array($role_names, $role_arr))
+             {
+                array_push($role_arr, $role_names);
+             }
+     }
+    foreach($role_arr as $key=>$value)
+    {
+        $search_role .='<option value="'. $role_id_PK.'">'. $value.'</option>';
+    }
+
+    foreach($user_types->result() as $rows)
+    {
+         $user_type_id_PK = $rows->user_type_id;
+         $user_type_names = $rows->user_type_name;
+            if(!(in_array($user_type_names, $user_type_arr)))
+            {
+                array_push($user_type_arr, $user_type_names);
+            }
+    }
+    foreach($user_type_arr as $key=>$value)
+    {
+        $search_user_type .='<option value="'. $user_type_id_PK.'">'. $value.'</option>';
+    }
+    
 ?> 
 <div class="shadow-lg p-3 mb-5 mt-5 bg-white rounded">
     <div class="card shadow mb-4 mt-4">
