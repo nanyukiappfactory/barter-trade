@@ -11,6 +11,8 @@ class Locations extends MX_Controller
     public function index()
     {
         $all_locations = $this->Locations_model->get_locations();
+
+        echo json_encode($all_locations);
     }
     
 public function importResult() { 

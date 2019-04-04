@@ -17,7 +17,8 @@ class Locations_model extends CI_Model
                 ->where("constituency.constituency_status", 1)
                
                 ->where("nearby_location.nearby_location_status",1);
-        $my_locations=json_encode($this->db->get()->result()); 
+        $my_locations = $this->db->get()->result();
+         
         return $my_locations;
     }
     public function insertCounties($insert_data)
