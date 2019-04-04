@@ -18,8 +18,7 @@ class Locations_model extends CI_Model
                
                 ->where("nearby_location.nearby_location_status",1);
         $my_locations=json_encode($this->db->get()->result()); 
-        var_dump($my_locations);//die();
-        return true;
+        return $my_locations;
     }
     public function insertCounties($insert_data)
     {

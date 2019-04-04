@@ -10,12 +10,7 @@ class Locations extends MX_Controller
     }
     public function index()
     {
-        
-        $v_data = array(
-            "title" => $this->site_model->display_page_title(),
-            "content"=>$this->Locations_model->get_locations(),
-        );
-        $this->load->view('site/layouts/layout', $v_data);
+        $all_locations = $this->Locations_model->get_locations();
     }
     
 public function importResult() { 
