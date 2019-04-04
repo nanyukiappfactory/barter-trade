@@ -118,3 +118,16 @@ $route['user-type-roles/deactivate-user-type-role/(:num)']= 'admin/user_type_rol
 $route['user-type-roles/delete-user-type-role/(:num)'] ='admin/user_type_roles/delete_user_type_role/$1';
 $route['user-type-roles/search-user-type-role'] = 'admin/user_type_roles/search_user_type_role';
 $route['user-type-roles/close-search'] = 'admin/user_type_roles/unset_user_type_role_search';
+
+//locations
+$route['location/add-location']='admin/locations/add_location';
+$route['location/all-locations']='admin/locations/index';
+$route['location/all-locations/(:any)/(:any)/(:num)'] ='admin/locations/index/$1/$2/$3';
+$route['location/all-locations/(:any)/(:any)'] ='admin/locations/index/$1/$2';
+$route['location/edit-location/(:num)'] ='admin/locations/edit_location/$1';
+$route['location/activate-location/(:num)'] = 'admin/locations/activate_location/$1';
+$route['location/deactivate-location/(:num)']= 'admin/locations/deactivate_location/$1';
+$route['location/delete-location/(:num)'] ='admin/locations/delete_location/$1';
+$route['location/search-location'] = 'admin/locations/search_location';
+$route['location/close-search'] = 'admin/locations/unset_location_search';
+$route['csv_import/load_data'] ='admin/locations/import_csv';
