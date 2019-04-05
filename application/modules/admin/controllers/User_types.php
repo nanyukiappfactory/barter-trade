@@ -1,8 +1,8 @@
 <?php
 if(!defined('BASEPATH')){  exit('No direct script access allowed');}
-require_once "./application/modules/admin/controllers/Admin.php";
+//require_once "./application/modules/admin/controllers/Admin.php";
 
-class User_types extends Admin
+class User_types extends MX_Controller
 {
     public $upload_path;
     public $upload_location;
@@ -20,7 +20,11 @@ class User_types extends Admin
         $this->load->library('session');
         $table = 'user_type';
     }
-
+    public function user_type_endpoint()
+    {
+        $all_user_types = $this->User_types_model->get_user_types();
+        echo json_encode($all_user_types);
+    }
     public function index($order = 'user_type.user_type_name', $order_method = 'ASC')
     {
         $search="user-types/search-user-type";        

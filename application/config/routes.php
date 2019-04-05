@@ -106,6 +106,7 @@ $route['user-types/deactivate-user-type/(:num)']= 'admin/user_types/deactivate_u
 $route['user-types/delete-user-type/(:num)'] ='admin/user_types/delete_user_type/$1';
 $route['user-types/search-user-type'] = 'admin/user_types/execute_search';
 $route['user-types/close-search'] = 'admin/user_types/unset_search';
+$route['user-types/all-user-types-endpoint']='admin/user_types/user_type_endpoint';
 
 //$route['user-types/all-user-types/user-type-name/(:any)/(:any)'] = 'admin/user_types/all_user_types/user_type_name/$1/$2';
 $route['user-type-roles/add-user-type-role']='admin/user_type_roles/add_user_type_role';
