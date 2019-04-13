@@ -21,7 +21,7 @@ class Categories_model extends CI_Model
             "profile_thumb" => $thumb_name,
             "deleted" => 0,
         );
-
+//var_dump( $data);die();
         if ($this->db->insert("category", $data)) 
         {
             return true;
