@@ -1233,7 +1233,7 @@ class CI_Form_validation {
 		{
 			$domain = defined('INTL_IDNA_VARIANT_UTS46')
 				? idn_to_ascii($matches[2], 0, INTL_IDNA_VARIANT_UTS46)
-				: idn_to_ascii($matches[2]);
+				: idn_to_ascii($matches[2],0);
 
 			if ($domain !== FALSE)
 			{

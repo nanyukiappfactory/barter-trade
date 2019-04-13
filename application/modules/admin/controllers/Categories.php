@@ -135,17 +135,10 @@ class Categories extends Admin
             } 
             else 
             {
-                // if ($this->Categories_model->save_category($upload_response)) 
-                // {
-                //     $this->session->set_flashdata('success', 'category Added successfully!!');
-                //     redirect("categories/all-categories");
-                // } 
-                // else 
-                // {
-                //     $this->session->set_flashdata('error', 'unable to add category. Try again!!');
-                // }
-
-                $this->session->set_flashdata('error', $upload_response['message']);
+               
+                $this->session->set_flashdata('error', 'unable to add category. Try again!!');
+                
+                //$this->session->set_flashdata('error', $upload_response['message']);
             }
 
         } 
